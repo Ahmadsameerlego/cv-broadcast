@@ -5,6 +5,11 @@ import register from '../views/registerPage.vue';
 import compeleteRegister from '../views/compeleteRegister.vue';
 import exploreJobs from '@/views/exploreJobs.vue';
 import jobDetails from '@/views/jobDetails.vue'
+import termsCondition from '@/views/termsCondition.vue';
+import whoAreWe from '@/views/whoUs.vue';
+import notificationPage from '@/views/notificationPage.vue'
+import personalAccount from '@/views/personalAccount.vue'
+
 
 const routes = [
   {
@@ -36,7 +41,30 @@ const routes = [
     path : '/jobDetails/:id',
     name : 'jobDetails',
     component : jobDetails
-  }
+  },
+  {
+    path : '/termsCondition',
+    name : 'termsCondition',
+    component : termsCondition
+  },
+  {
+    path : '/whoUs',
+    name : 'whoUs',
+    component : whoAreWe
+  },
+  {
+    path: '/notificationPage',
+    name: 'notificationPage',
+    component: notificationPage
+  },
+  {
+    path: '/personalAccount',
+    name: 'personalAccount',
+    component: personalAccount
+  },
+  
+
+  // whoAreWe.vue
 
 ]
 

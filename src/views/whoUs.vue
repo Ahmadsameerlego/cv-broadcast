@@ -4,7 +4,7 @@
     <!-- bread-crumb -->
     <div class="breadcrumb d-flex externalBreadcrumb mb-0">
         <router-link to="/" class="inActive"> الرئيسية </router-link>&nbsp; - &nbsp;
-        <p class="active mainColor">  الشروط والاحكام </p>
+        <p class="active mainColor">   {{ whoAreWeTitle }} </p>
     </div>
     <!-- terms and condition  -->
     <section class="mt-3 mb-3">
@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-md-10 col-12">
                     <h5 class="fw-bold red mb-3">
-                        {{ termsConditionTitile }}
+                        {{ whoAreWeTitle }}
                     </h5>
                     <p>
                         <span class="m-end-5">-</span>
@@ -66,7 +66,7 @@ export default {
     },
     data() {
         return {
-            termsConditionTitile: 'الشروط والاحكام',
+            whoAreWeTitle: ' من نحن',
             termsConditionContent: 'نص نص نص نص نص نص نص نص نص نص نص نص نص  نص نص نص نص  نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص  نص نص نص نص  نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص  نص نص نص نص  نص نص نص نص نص نص نص نص نص نص نص '
         }
     }
