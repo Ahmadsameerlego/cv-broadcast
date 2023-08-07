@@ -437,13 +437,91 @@ export default {
 }
 </script>
 
-<style scoped>
+<style  >
   .p-dropdown{
-    top:0;padding-left:12px;padding-right: 24px;
+    top:0 ;
+    padding-left:12px;
+    padding-right: 24px;
   }
  
 </style>
 <style lang="scss">
+.sec_btn{
+  background-color: #CACACA;
+  color:#333;
+    padding: 7px 19px;
+    border-radius: 5px;
+    border: none;
+}
+.ifExist{
+  color:#CE3932;
+  font-weight: normal !important;
+  svg{
+    font-size: 9px !important;
+    transform: translateY(-5px);
+  }
+}
+.p-multiselect .p-multiselect-trigger {
+    position: absolute;
+    top: 17px;
+    left:0;
+}
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+}
+.p-fluid .p-button {
+    width: 100% !important;
+    border: 1px solid #ccc;
+    color: #6c757d;
+}
+.p-button .p-button-icon-left {
+    margin-left: 0.5rem;
+    margin-right: 0;
+    position: absolute;
+    left: 10px;
+}
+.p-button-label{
+      text-align: right;
+    font-weight: normal !important;
+}
+.p-button-label:hover , .p-button .p-button-icon-left:hover, .p-fluid .p-button:hover .p-button-label , .p-fluid .p-button:hover  .p-button-icon-left{
+  color : #6c757d !important
+}
+  .pac-container{
+    z-index: 9999 !important;
+  }
+  .vue-map-hidden{
+    position: absolute  !important;
+    top: 92px !important;
+    right: 50% !important;
+    transform: translate(50%, 50%) !important;
+  }
+ .p-dropdown-label{
+    font-family: inherit !important;
+  }
+  .p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+      padding-left: 1.75rem !important;
+      margin-left: -1.75rem !important;
+      padding-right: 35px !important;
+      margin-right: 0 !important;
+  }
+  .p-datepicker .p-datepicker-header .p-datepicker-prev, .p-datepicker .p-datepicker-header .p-datepicker-next{
+    transform: rotate(180deg);
+  }
+  .inputIcon2{
+    position: absolute;
+    top: 57%;
+    left: 10px;
+  }
+  .vue-map{
+    width: 100% !important;
+    height: 72vh !important;
+    position: relative;
+    overflow: hidden;
+  }
+
+
 .sec_btn{
   background-color: #CACACA;
   color:#333;

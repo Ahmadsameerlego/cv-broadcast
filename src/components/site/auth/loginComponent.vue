@@ -490,7 +490,7 @@ export default {
   .p-dropdown {
     position: absolute;
     left: 0px;
-    top: 32px;
+    top: 32px !important;
     width: 17%;
     background-color: #f8f8f8 !important;
   }

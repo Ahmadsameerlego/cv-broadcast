@@ -15,6 +15,9 @@ body{
 #app{
     font-family: 'Cairo', sans-serif !important;
 }
+.mainColor{
+    color: #293255;
+}
 // color variables
 
 $main-color1: #293255;
@@ -144,6 +147,21 @@ $main-color2: #6D98DB   ;
 .fs-18{
     font-size: 18px;
 }
+// ---------------- spaces ---------------- //
+.m-end-5{
+    margin-inline-end: 5px;
+}
+.m-end-10{
+    margin-inline-end: 10px;
+}
+// component
+.grow-1{
+    flex-grow: 1;
+}
+.gap-10{
+    gap:10px;
+}
+// 
 // .opacityMainColor{color: $opacity-main-color;}
 // .opacityMainColor2{color: $opacity-main-color2;}
 

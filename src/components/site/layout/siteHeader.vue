@@ -20,11 +20,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <router-link class="nav-link fw-bold" to="/"> {{ $t('nav.terms') }} </router-link>
+                        <router-link class="nav-link fw-bold" to="/termsCondition"> {{ $t('nav.terms') }} </router-link>
                     </li>
 
                     <li class="nav-item">
-                        <router-link class="nav-link fw-bold" to="/"> {{ $t('nav.whoUs') }} </router-link>
+                        <router-link class="nav-link fw-bold" to="/whoUs"> {{ $t('nav.whoUs') }} </router-link>
                     </li>
                 </ul>
             </nav>
@@ -32,7 +32,7 @@
             <!-- user interaction  -->
             <div class="user_interaction d-flex justify-content-between align-items-center">
                 <!-- alert  -->
-                <router-link to="/" class="alert flex_center mb-0 mx-2">
+                <router-link to="/notificationPage" class="alert flex_center mb-0 mx-2">
                     <i class="fa-regular fa-bell"></i>
                 </router-link>
                 <!-- lang  -->

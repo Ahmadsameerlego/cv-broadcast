@@ -168,6 +168,7 @@ export default {
 </script>
 
 <style lang="scss">
+
   .registerParagraph{
     position: relative;
     font-size: 17px !important;
