@@ -1,7 +1,7 @@
 <template>
   <section id="about" class="mt-5">
     <div class="container">
-        <h5 class="site_title fw-bold text-center"> عن سيڤي برودكاست </h5>
+        <h5 class="site_title fw-bold text-center"> {{  $t('home.about')  }} </h5>
         <div class="row mt-5">
             <div class="col-md-4">
                 <div class="single_about flex_column">

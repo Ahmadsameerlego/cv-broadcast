@@ -1,7 +1,7 @@
 <template>
   <section id="partners" class="mt-5">
     <div class="container">
-        <h5 class="site_title fw-bold text-center"> شركاء النجاح </h5>
+        <h5 class="site_title fw-bold text-center"> {{  $t('home.part')  }} </h5>
 
         <swiper
           class="mt-5"

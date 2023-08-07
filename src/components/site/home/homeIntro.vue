@@ -23,9 +23,9 @@
                     <div class="intro_btns mt-4 d-flex align-items-center">
                         <router-link to="/" class="main_btn d-flex"> 
                             <img :src="require('@/assets/imgs/search.png')" alt="">
-                            <span>البحث عن وظيفة</span>
+                            <span> {{ $t('home.search')  }} </span>
                         </router-link>
-                        <router-link to="/" class="bordered_btn"> اكتشف الوظائف </router-link>
+                        <router-link to="/" class="bordered_btn"> {{ $t('home.explore')  }} </router-link>
                     </div>
                 </div>
             </div>
