@@ -31,13 +31,13 @@
         <!-- time  -->
         <div class="abs_time d-flex align-items-baseline">
             <img :src="require('@/assets/imgs/clock.svg')" alt="">
-            <span class="grayColor mx-2"> تاريخ النشر: </span>
+            <span class="grayColor mx-2"> {{  $t('common.date')  }}: </span>
             <span > منذ ساعة </span>
         </div>
 
         <!-- details  -->
         <router-link to="/jobDetails/1" class="abs_details mainColor2"> 
-            عرض التفاصيل
+            {{  $t('common.showDetails')  }}
             <i class="fa-solid fa-chevron-left"></i> 
         </router-link>
     </div>

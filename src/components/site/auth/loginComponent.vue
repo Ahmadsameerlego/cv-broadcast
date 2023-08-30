@@ -3,26 +3,26 @@
     <div class="container">
       <!-- start breadcrumb  -->
       <div class="breadcrumb d-flex">
-        <router-link to="/" class="inActive"> الرئيسية </router-link>&nbsp; - &nbsp;
-        <p class="active mainColor"> تسجيل الدخول </p>
+        <router-link to="/" class="inActive"> {{  $t('nav.main')  }} </router-link>&nbsp; - &nbsp;
+        <p class="active mainColor"> {{ $t('auth.login')  }} </p>
       </div>
 
       <!-- start login section  -->
       <section class="loginSection" style="width:93%;margin:auto" >
-        <h3 class="fw-bold mb-3"> تسجيل الدخول </h3>
-        <p class="loginParagraph fw-bold"> برجاء ادخال البيانات التاليه لتتمكن من تسجيل الدخول الي حسابك </p>
+        <h3 class="fw-bold mb-3"> {{ $t('auth.login') }} </h3>
+        <p class="loginParagraph fw-bold"> {{ $t('auth.desc')  }} </p>
         <div class="row" style="width:93%;margin:auto">
 
           <!-- right side  -->
           <div class="col-md-6 mb-2">
 
-            <form ref="loginForm" class="flex flex-wrap gap-3 p-fluid">
+            <form ref="loginForm" class="flex flex-wrap gap-3 p-fluid" @submit.prevent="login">
 
               <!-- phone  -->
-              <div class="position-relative flex-auto">
+              <div class="position-relative flex-auto defaultInput">
+                  <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.phone')  }} </label>
 
-                  <label for="integeronly" class="label fw-bold block mb-2"> رقم الجوال </label>
-                  <InputNumber v-model="value1" class="defaultInput" inputId="integeronly" placeholder="الرجاء ادخال رقم الجوال" />
+                  <input type="number" class="form-control defaultInput" :placeholder="$t('auth.phonePlc')" v-model="phone" @input="showValid">
 
                   <!-- icon  -->
                   <div class="inputIcon">
@@ -31,42 +31,53 @@
 
                   <!-- select phone  -->
                   <Dropdown v-model="selectedCity" :options="cities" optionLabel="name"  class="w-full md:w-14rem" />
-
               </div>
 
-
+              <!-- start phone validations  -->
+              <!-- phone required  -->
+              <div class="text-danger" v-if="required"> حقل الهاتف مطلوب </div>
+              <!-- phone length  -->
+              <div class="text-danger" v-if="lengthValid"> يجب ان يكون رقم الهاتف اكثر من ٩ ارقام </div>
+              <!-- end phone validations  -->
+      
               <!-- password  -->
               <div class="position-relative flex-auto mt-3">
 
-                  <label for="integeronly" class="label fw-bold block mb-2"> كلمة المرور </label>
-                  <Password v-model="value" :feedback="false" toggleMask class="defaultInput" placeholder="الرجاء ادخال كلمة المرور" />
+                  <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.pass')  }} </label>
+                  <Password v-model="password" :feedback="false" toggleMask class="defaultInput" :placeholder="$t('auth.passPlc')" @input="showValid" />
 
                   <!-- icon  -->
                   <div class="inputIcon">
                     <img :src="require('@/assets/imgs/lock.svg')" alt="">
                   </div>
 
-
               </div>
 
+              <!-- phone error  -->
+              <div class="error" v-if="passwordRequied">
+                <span class="text-danger" > حقل كلمة المرور مطلوب </span>
+              </div>
+
+
+              <!-- forget password  -->
               <div class="d-flex justify-content-end mt-2">
-                <button class="btn forgetPass" type="button" @click="visible=true"> نسيت كلمة المرور </button>
+                <button class="btn forgetPass" type="button" @click="openForget()"> {{  $t('auth.fotgetPass')  }} </button>
               </div>
-
+              
               <!-- submit  -->
               <div class="mt-4">
-                <button class="main_btn w-100 pt-3 pb-3 fs-5"> تسجيل الدخول </button>
+                <button class="main_btn w-100 pt-3 pb-3 fs-5" :disabled="disabled"> {{ $t('auth.login')  }} </button>
               </div>
 
               <!-- new account  -->
               <div class="flex_center newAcc">
-                <p class="fs-6 mt-4 fw-6"> هل لديك حساب ؟  <router-link to="/register" class="mainColor fw-bold"> حساب جديد </router-link> </p>  
+                <p class="fs-6 mt-4 fw-6"> {{ $t('auth.newAcc')  }} <router-link to="/register" class="mainColor fw-bold"> {{  $t('auth.reg')  }} </router-link> </p>  
               </div>
 
 
               <!-- register problem  -->
               <div class="flex_center newAcc">
-                <p class="fs-6 mt-0 fw-6"> هل لديك مشكلة اثناء التسجيل <button  class="btn  mainColor contactUs" @click="visible2=true" type="button"> يرجى التواصل معنا </button> </p>  
+                <p class="fs-6 mt-0 fw-6"> {{ $t('auth.p1')  }} <button  class="btn  mainColor contactUs" @click="openContact" type="button"> {{  $t('auth.p2')  }} </button> </p>  
               </div>
 
             </form>
@@ -75,332 +86,135 @@
           <!-- left side  -->
           <div class="col-md-6 mb-2">
             <div class="">
-              <img  class="loginImage w-100 h-100" :src="require('@/assets/imgs/login.png')" alt="">
+              <img  class="loginImage w-100 h-100 lazy" :src="require('@/assets/imgs/login.png')" alt="">
             </div>
           </div>
         </div>
       </section>
 
 
-      <!-- forget pass modal  -->      
-      <Dialog v-model:visible="visible" modal :style="{ width: '50vw' }">
-          <h5 class="fw-bold text-center"> نسيت كلمة المرور </h5>
-          <p class=" text-center"> الرجاء ادخال رقم الجوال ليتم ارسال كود التحقق الخاص بك </p>
-          <div class="logo">
-            <img :src="require('@/assets/imgs/forget1.svg')" alt="">
-          </div>
+      <!-- forget password modal -->
+      <forgetPass  :visible="visible"/>
 
-          <form ref="loginForm" @submit.prevent="sendPhone" class="flex flex-wrap gap-3 p-fluid">
-
-              <!-- phone  -->
-              <div class="position-relative flex-auto">
-
-                  <label for="integeronly" class="label fw-bold block mb-2"> رقم الجوال </label>
-                  <InputNumber v-model="value1" class="defaultInput" inputId="integeronly" placeholder="الرجاء ادخال رقم الجوال" />
-
-                  <!-- icon  -->
-                  <div class="inputIcon">
-                    <img :src="require('@/assets/imgs/phone.svg')" alt="">
-                  </div>
-
-                  <!-- select phone  -->
-                  <Dropdown v-model="selectedCity" :options="cities" optionLabel="name"  class="w-full md:w-14rem" />
-
-              </div>
-
-
-
-              <!-- submit  -->
-              <div class="mt-4">
-                <button class="main_btn  pt-3 pb-3 fs-5 w-75 mx-auto flex_center"> تحقق </button>
-              </div>
-
-            </form>
-      </Dialog>
-
-       <!-- otp modal  -->      
-      <Dialog v-model:visible="otp" modal :style="{ width: '50vw' }">
-          <h5 class="fw-bold text-center"> كود التحقق </h5>
-          <p class=" text-center"> الرجاء ادخال كود التحقق الذي تم ارساله الي رقم جوالك ليتم تفعيل الحساب الخاص بك </p>
-          <div class="logo">
-            <img :src="require('@/assets/imgs/forget2.svg')" alt="">
-          </div>
-
-          <form ref="loginForm" @submit.prevent="sendOtp" class="flex flex-wrap gap-3 p-fluid">
-
-              <!-- otp  -->
-              <div class="position-relative flex-auto">
-                  <div
-                      style="
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: space-evenly;
-                      "
-                    >
-                      <v-otp-input
-                        ref="otpInput"
-                        v-model:value="code"
-                        name="code"
-                        input-classes="otp-input"
-                        separator=""
-                        :num-inputs="6"
-                        :should-auto-focus="true"
-                        input-type="letter-numeric"
-                      />
-                  </div>
-
-                  
-              </div>
-
-
-
-              <!-- submit  -->
-              <div class="mt-4">
-                <button class="main_btn  pt-3 pb-3 fs-5 w-75 mx-auto flex_center"> تحقق </button>
-              </div>
-
-
-              <div class="flex_between w-75 mx-auto d-flex">
-                    <div class="flex_center newAcc">
-                      <p class="fs-6 mt-4 fw-6"> لم تستلم الكود ؟  <button type="button" class="mainColor fw-bold btn p-0"> اعد الارسال </button> </p>  
-                    </div>
-                    
-                    <p v-if="timer > 0" class="text-center mt-3">الوقت المتبقي  <span class="mainColor">{{ timer }} ثانية</span> </p>
-
-              </div>
-
-            </form>
-      </Dialog>
+       
 
       <!-- contact problem  -->
-      <Dialog class="contactModal" v-model:visible="visible2" modal :style="{ width: '50vw' }">
-          <div class="logo">
-            <img :src="require('@/assets/imgs/logo.png')" alt="">
-          </div>
-
-          <p class="fw-6 text-center mt-2 mb-2"> هذا النص هو مثال على نص يمكن ان يستبدل </p>
-
-          <form class="flex flex-wrap gap-3 p-fluid">
-            <div class="row">
-              <div class="col-md-6 mb-2">
-                <!-- phone  -->
-                <div class="position-relative flex-auto">
-
-                    <label for="integeronly" class="label fw-bold block mb-2"> اسم المستخدم </label>
-                    <InputText type="text" class="defaultInput2" v-model="name" placeholder="الرجاء ادخال اسم المستخدم" />
-                    <!-- icon  -->
-                    <div class="inputIcon">
-                      <img :src="require('@/assets/imgs/user.svg')" alt="">
-                    </div>
-
-                </div>
-              </div>
-
-              <div class="col-md-6 mb-2">
-                <!-- phone  -->
-                <div class="position-relative flex-auto">
-
-                    <label for="integeronly" class="label fw-bold block mb-2"> رقم الجوال </label>
-                    <InputNumber v-model="value1" class="defaultInput" inputId="integeronly" placeholder="الرجاء ادخال رقم الجوال" />
-
-                    <!-- icon  -->
-                    <div class="inputIcon">
-                      <img :src="require('@/assets/imgs/phone.svg')" alt="">
-                    </div>
-
-                    <!-- select phone  -->
-                    <Dropdown v-model="selectedCity" :options="cities" optionLabel="name"  class="w-full md:w-14rem" />
-
-                </div>
-              </div>
-
-              <div class="col-md-12">
-                <!-- phone  -->
-                <div class="position-relative flex-auto">
-
-                    <label for="integeronly" class="label fw-bold block mb-2"> الرسالة </label>
-                    <Textarea v-model="value" rows="5" cols="30" placeholder="الرجاء اكتب رسالتك هنا" class="defaultInput2" />
-
-                </div>
-              </div>
-
-              <div class="mt-4">
-                <button class="main_btn w-100 pt-3 pb-3 fs-5"> ارسال </button>
-              </div>
-
-
-
-            </div>
-          </form>
-
-      </Dialog>
-
-
-      <!-- reset password  -->
-      <Dialog class="contactModal" v-model:visible="resetPassword" modal :style="{ width: '50vw' }">
-          
-          <h5 class="fw-bold text-center mb-3"> اعادة تعيين كلمة المرور </h5>
-          <div class="logo">
-            <img :src="require('@/assets/imgs/logo.png')" alt="">
-          </div>
-
-
-          <form class="flex flex-wrap gap-3 p-fluid">
-            <div class="row">
-              <div class="col-md-12 mb-2">
-                <!-- password  -->
-                <div class="position-relative flex-auto mt-3">
-
-                    <label for="integeronly" class="label fw-bold block mb-2"> كلمة المرور </label>
-                    <Password v-model="oldPass"  toggleMask class="defaultInput" placeholder="الرجاء ادخال كلمة المرور" />
-
-                    <!-- icon  -->
-                    <div class="inputIcon">
-                      <img :src="require('@/assets/imgs/lock.svg')" alt="">
-                    </div>
-
-
-                </div>
-
-                <!-- confirm password  -->
-                <div class="position-relative flex-auto mt-3">
-
-                    <label for="integeronly" class="label fw-bold block mb-2"> تأكيد كلمة المرور </label>
-                    <Password v-model="newPass" :feedback="false" toggleMask class="defaultInput" placeholder="الرجاء تأكيد كلمة المرور" />
-
-                    <!-- icon  -->
-                    <div class="inputIcon">
-                      <img :src="require('@/assets/imgs/lock.svg')" alt="">
-                    </div>
-
-
-                </div>
-
-                <div v-if="showValid">
-                  <p v-if="passwordMatch" class="passwordConfirmed d-flex align-items-center text-success">
-                    <i class="fa-regular fa-circle-check"></i>
-                    <span>كلمة السر متطابقة</span>
-                  </p>
-                  <p v-else class="passwordWrong d-flex align-items-center text-danger">
-                      <i class="fa-regular fa-circle-xmark"></i>
-                      <span>كلمة السر غير متطابقة</span>
-                  </p>
-                </div>
-              </div>
-
-
-
-              <div class="mt-4">
-                <button class="main_btn w-100 pt-3 pb-3 fs-5"> تعيين </button>
-              </div>
-
-
-
-            </div>
-          </form>
-
-      </Dialog>
-
-
+      <contactProblem :openContactModal="openContactModal" />
     </div>
   </section>
 </template>
 
 <script>
-import InputNumber from 'primevue/inputnumber';
-import Dropdown from 'primevue/dropdown';
 import Password from 'primevue/password';
-import Dialog from 'primevue/dialog';
-import Textarea from 'primevue/textarea';
-import InputText from 'primevue/inputtext';
 
-
+// import components 
+import forgetPass from './forgetPass.vue';
+import contactProblem from './contactProblem.vue';
 
 export default {
   data(){
     return{
-      value1 : null,
-      value : null ,
-      selectedCity: null,
-      visible : false ,
-      visible2 : false ,
-      otp : false,
-      name : null ,
-      timer: 180,
-      intervalId: null,
-      resetPassword : false,
-      oldPass : null,
-      newPass : null,
-
       cities: [
           { name: 'New York', code: 'NY' },
           { name: 'Rome', code: 'RM' },
           { name: 'London', code: 'LDN' },
           { name: 'Istanbul', code: 'IST' },
           { name: 'Paris', code: 'PRS' }
-      ]
+      ],
+
+      phone : '',
+      password : '',
+
+      disabled : true,
+      lengthValid : false,
+      required : false,
+      passwordRequied : false
 
 
     }
   },
+
   watch:{
-        // oldPass(){
-        //     // if( this.passwordMatch == true ){
-        //     //     this.disabled = false;
-        //     // }else{
-        //     //     this.disabled = true;
-        //     // }
-        //     this.showValid = true ;
-        // },
-        newPass(){
-            // if( this.passwordMatch == true ){
-            //     this.disabled = false;
-            // }else{
-            //     this.disabled = true;
-            // }
-            this.showValid = true ;
-        }
+    phone(){
+      this.disabled = false ;
+    }
+  }, 
+   
+  components:{
+    Password,
+    forgetPass,
+    contactProblem
+  },
+  methods:{  
+    // open forget password modal 
+    openForget(){
+      if(this.visible == true || this.visible == false){
+        this.visible = !this.visible ;
+      }
+    },
+    // open contact problem modal 
+    openContact(){
+      if( this.openContactModal == true || this.openContactModal == false ){
+        this.openContactModal = !this.openContactModal ;
+      }
+    },
+    // login 
+    login(){
+    },
+
+    // valid phone 
+    showValid(){
+      let phoneToString = this.phone.toString();
+      // submit button check 
+      if( this.phone == '' || phoneToString.length < 9  || this.password == ''){
+        this.disabled = true ;
+      }else{
+        this.disabled = false ;
+      }
+      // phone length check 
+      if(phoneToString.length < 9){
+        this.lengthValid = true;
+      }else{
+        this.lengthValid = false;
+      }
+      // phone required check 
+      if(this.phone == ''){
+        this.required = true ;
+      }else{
+        this.required = false ;
+      }
+      // password required check 
+      if( this.password == '' ){
+        this.passwordRequied = true ;
+      }else{
+        this.passwordRequied = false ;
+      }
+    },
+    // // valid password 
+    // passwordValid(){
+    //   if( this.password == '' ){
+    //     this.disabled = true ;
+    //   }else{
+    //     this.disabled = false ;
+    //   }
+    // }
+
 
   },
-  components:{
-    InputNumber ,
-    Dropdown,
-    Password,
-    Dialog,
-    Textarea,
-    InputText
-  },
-  computed:{
-      passwordMatch() {
-          return this.oldPass === this.newPass;  
-      }
-  },
-  methods:{
-    sendPhone(){
-      this.visible = false;
-      this.otp = true;
-    },
-    startTimer() {
-      this.intervalId = setInterval(() => {
-        if (this.timer > 0) {
-          this.timer--;
-        } else {
-          clearInterval(this.intervalId);
-          this.disabled = false
-        }
-      }, 1000);
-    },
-  },
-  beforeUnmount() {
-    clearInterval(this.intervalId);
-  },
-  mounted() {
-    this.startTimer();
-  },
+  
 }
 </script>
 
 <style lang="scss">
+  .main_btn{
+    &:disabled{
+      opacity: .6;
+      cursor: not-allowed;
+    }
+  }
+  .form-control{
+    height: 50px;
+  }
   .otp-input{
     width: 60px;
     height: 60px;

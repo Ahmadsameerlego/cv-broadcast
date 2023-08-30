@@ -1,28 +1,21 @@
 <template>
     <!-- header  -->
     <siteHeaderVue />
-
-    <!-- login  -->
-    <loginVue data-aos="zoom-in" data-aos-duration="1000"  data-aos-easing="ease-out-cubic" />
-    
+    <!-- contact form  -->
+    <contactFormVue />
     <!-- footer  -->
     <siteFooterVue />
 </template>
 
 <script>
 import siteHeaderVue from '@/components/site/layout/siteHeader.vue';
-import loginVue from '@/components/site/auth/loginComponent.vue'
 import siteFooterVue from '@/components/site/layout/siteFooter.vue';
-import AOS from "aos";
-
+import contactFormVue from '@/components/site/contact/contactForm.vue'
 export default {
     components:{
         siteHeaderVue,
         siteFooterVue,
-        loginVue
-    },
-    mounted(){
-        AOS.init();
+        contactFormVue
     }
 }
 </script>

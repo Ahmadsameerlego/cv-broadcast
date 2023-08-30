@@ -17,60 +17,39 @@
             </div>
             <div class="col-lg-2 col-md-6 col-12 mb-4">
               <div class="footer-colomn-me">
-                <h6>عن سيڤي</h6>
+                <h6>
+                  {{  $t('home.about_footer')  }}
+                </h6>
                 <ul>
                   <li>
-                    <router-link to="/"
-                      >
-                      <div class="my-l">من نحن</div>
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link to="/"
-                      >
-                      <div class="my-l">الشروط والأحكام</div>
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link to="/"
-                      >
-                      <div class="my-l">تواصل معنا</div>
-                    </router-link>
-                  </li>
-                  <li>
-                    <router-link to="/"
-                      >
-                      <div class="my-l">سياسة الخصوصية</div>
-                    </router-link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-12 mb-4">
-              <div class="footer-colomn-me">
-                <h6>روابط تهمك</h6>
-                <ul>
-                  <li>
-                    <router-link to="/"
+                    <router-link to="/whoUs"
                       >
                       <div class="my-l">
-                        اكتشف الوظائف
+                        {{  $t('nav.whoUs')  }}
                       </div>
                     </router-link>
                   </li>
-                   <li>
-                    <router-link to="/"
+                  <li>
+                    <router-link to="/termsCondition  "
                       >
                       <div class="my-l">
-                        انضم الينا
+                        {{ $t('nav.terms')  }}
                       </div>
                     </router-link>
                   </li>
-                   <li>
+                  <li>
+                    <router-link to="/contact"
+                      >
+                      <div class="my-l">
+                        {{  $t('home.contact')  }}
+                      </div>
+                    </router-link>
+                  </li>
+                  <li>
                     <router-link to="/"
                       >
                       <div class="my-l">
-                        طلباتي
+                        {{  $t('home.privacy')  }}
                       </div>
                     </router-link>
                   </li>
@@ -79,7 +58,42 @@
             </div>
             <div class="col-lg-3 col-md-6 col-12 mb-4">
               <div class="footer-colomn-me">
-                <h6>تابعنا على</h6>
+                <h6>
+                  {{ $t('home.links')  }}
+                </h6>
+                <ul>
+                  <li>
+                    <router-link to="/"
+                      >
+                      <div class="my-l">
+                        {{  $t('nav.exploreJobs')  }}
+                      </div>
+                    </router-link>
+                  </li>
+                   <li>
+                    <router-link to="/"
+                      >
+                      <div class="my-l">
+                        {{  $t('home.join')  }}
+                      </div>
+                    </router-link>
+                  </li>
+                   <li>
+                    <router-link to="/"
+                      >
+                      <div class="my-l">
+                        {{  $t('home.orders')  }}
+                      </div>
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12 mb-4">
+              <div class="footer-colomn-me">
+                <h6>
+                  {{  $t('home.follow')  }}
+                </h6>
                 <ul>
                   <div class="flex-socials">
                     <a href="#"
@@ -97,9 +111,13 @@
       </div>
       <div class="down-footer">
         <div class="container down-footer1">
-          <div class="down-footer-r font14">جميع الحقوق محفوظة لموقع سيڤي</div>
+          <div class="down-footer-r font14">
+            {{  $t('home.rights')  }}
+          </div>
           <div class="down-footer-l font14">
-            <span>تصميم وبرمجه مؤسسه أوامر الشبكه</span>
+            <span>
+              {{  $t('home.awamer')  }}
+            </span>
             <img class="awamerLogo" :src="require('@/assets/imgs/awamrtLogo.png')" alt="">
           </div>
         </div>

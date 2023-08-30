@@ -1,71 +1,76 @@
 <template>
     <section id="explore">
         <div class="breadcrumb d-flex externalBreadcrumb mb-0">
-            <router-link to="/" class="inActive"> الرئيسية </router-link>&nbsp; - &nbsp;
-            <p class="active mainColor"> اكتشف الوظائف </p>
+            <router-link to="/" class="inActive"> {{ $t('nav.main')  }} </router-link>&nbsp; - &nbsp;
+            <p class="active mainColor"> {{ $t('nav.exploreJobs') }} </p>
         </div>
 
         <section id="searchJob" class="pt-5 pb-5">
             <div class="container">
-                <h5 class="fw-bold red mb-5"> اكتشف الوظائف </h5>
+                <h5 class="fw-bold red mb-5"> {{  $t('home.explore')  }} </h5>
                 <form>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="" class="fw-bold mb-2"> المسمى الوظيفي </label>
-                                <Dropdown v-model="jobName" :options="jobsName" optionLabel="name"
+                                <label for="" class="fw-bold mb-2"> {{ $t('auth.jobName') }} </label>
+                                <!-- <Dropdown v-model="jobName" :options="jobsName" optionLabel="name"
                                     placeholder="الرجاء اختيار المسمى الوظيفي"
-                                    class="jobInput position-relative w-100 w-full md:w-14rem" />
+                                    class="jobInput position-relative w-100 w-full md:w-14rem" /> -->
+
+                                <InputText type="text" v-model="qualification" :placeholder="$t('auth.namePlc')"
+                                class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <!-- <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="" class="fw-bold mb-2"> فئة الوظيفة </label>
                                 <Dropdown v-model="jobType" :options="jobTypes" optionLabel="name"
                                     placeholder="الرجاء اختيار فئة الوظيفة"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
+                        </div> -->
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="" class="fw-bold mb-2"> {{  $t('common.jobField')  }} </label>
+                                <Dropdown v-model="specialize" :options="specializes" optionLabel="name"
+                                    :placeholder="$t('common.fieldPlc')"
+                                    class="jobInput position-relative w-100 w-full md:w-14rem" />
+                            </div>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="" class="fw-bold mb-2"> نوع الوظيفية </label>
+                                <label for="" class="fw-bold mb-2"> {{ $t('common.jobType')  }} </label>
                                 <Dropdown v-model="type" :options="types" optionLabel="name"
-                                    placeholder="الرجاء اختيار نوع الوظيفية"
+                                    :placeholder="$t('common.typePlc')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="" class="fw-bold mb-2"> المؤهل التعليمي </label>
-                                <InputText type="text" v-model="qualification" placeholder="الرجاء اختيار المؤهل التعليمي"
+                                <label for="" class="fw-bold mb-2"> {{ $t('commom.edQual') }} </label>
+                                <InputText type="text" v-model="qualification" :placeholder="$t('common.qualPlc')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
                         </div>
 
+
+
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="" class="fw-bold mb-2"> التخصص العلمي </label>
+                                <label for="" class="fw-bold mb-2"> {{ $t('common.exper') }} </label>
                                 <Dropdown v-model="specialize" :options="specializes" optionLabel="name"
-                                    placeholder="الرجاء ادخال التخصص العلمي"
-                                    class="jobInput position-relative w-100 w-full md:w-14rem" />
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                                <label for="" class="fw-bold mb-2"> الخبرة </label>
-                                <Dropdown v-model="specialize" :options="specializes" optionLabel="name"
-                                    placeholder="الرجاء اختيار الخبرة"
+                                    :placeholder="$t('common.experPlc')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-center">
-                        <button class="main_btn search"> بحث </button>
+                        <button class="main_btn search"> {{  $t('common.search')  }} </button>
                     </div>
                 </form>
             </div>
@@ -73,7 +78,7 @@
 
         <section id="jobs" class="mt-4">
             <div class="container">
-                <h5 class="fw-bold red mb-4 mt-3"> 14 وظيفة متاحة </h5>
+                <h5 class="fw-bold red mb-4 mt-3"> 14 {{ $t('common.avilabe') }} </h5>
                 <section class="cards">
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -112,6 +117,13 @@ export default {
 } 
 </script>
 
+<style scoped>
+.p-dropdown{
+    top:0 !important;
+    padding-left:0 !important;
+    padding-right: 0 !important ;
+  }
+</style>
 <style lang="scss">
 .single_card {
     position: relative;

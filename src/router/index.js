@@ -8,8 +8,14 @@ import jobDetails from '@/views/jobDetails.vue'
 import termsCondition from '@/views/termsCondition.vue';
 import whoAreWe from '@/views/whoUs.vue';
 import notificationPage from '@/views/notificationPage.vue'
-import personalAccount from '@/views/personalAccount.vue'
-
+import personalAccount from '@/views/personalAccount.vue';
+import orders from '@/views/accOrders.vue';
+import company from '@/views/companyProfile.vue';
+import contact from '@/views/contactUs.vue';
+import rooms from '@/views/chatRooms.vue';
+import singleChat from '@/views/singleChatRoom.vue';
+import profile from '@/views/personalAccount.vue';
+import error404 from '@/views/notFound.vue'
 
 const routes = [
   {
@@ -62,7 +68,41 @@ const routes = [
     name: 'personalAccount',
     component: personalAccount
   },
-  
+  {
+    path : '/orders',
+    name : 'orders',
+    component : orders
+  },
+  {
+    path : '/company',
+    name : 'company',
+    component : company
+  },
+  {
+    path : '/contact',
+    name : 'contact',
+    component : contact
+  },
+  {
+    path : '/rooms',
+    name : 'rooms',
+    component : rooms
+  },
+  {
+    path : '/singleChat/:id',
+    name : 'singleChat',
+    component : singleChat
+  },
+  {
+    path : '/profile',
+    name : 'profile',
+    component : profile
+  },
+  {
+    path: '/:catchAll(.*)*',
+    name: "error404",
+    component: error404,
+  },
 
   // whoAreWe.vue
 

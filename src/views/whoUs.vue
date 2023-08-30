@@ -7,7 +7,7 @@
         <p class="active mainColor">   {{ whoAreWeTitle }} </p>
     </div>
     <!-- terms and condition  -->
-    <section class="mt-3 mb-3">
+    <section class="mt-3 mb-3" data-aos="fade-left" data-aos-duration="1000" data-aos-easing="ease-out-cubic" >
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-12">
@@ -57,6 +57,7 @@
 <script>
 import siteHeaderVue from '@/components/site/layout/siteHeader.vue';
 import siteFooterVue from '@/components/site/layout/siteFooter.vue';
+import AOS from "aos";
 
 export default {
     components: {
@@ -69,6 +70,9 @@ export default {
             whoAreWeTitle: ' من نحن',
             termsConditionContent: 'نص نص نص نص نص نص نص نص نص نص نص نص نص  نص نص نص نص  نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص  نص نص نص نص  نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص  نص نص نص نص  نص نص نص نص نص نص نص نص نص نص نص '
         }
+    },
+    mounted(){
+        AOS.init();
     }
 }
 </script>

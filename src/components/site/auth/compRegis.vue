@@ -4,15 +4,15 @@
 
       <!-- breadcrumb  -->
       <div class="breadcrumb d-flex">
-        <router-link to="/" class="inActive"> الرئيسية </router-link>&nbsp; - &nbsp;
-        <p class="active mainColor"> حساب جديد </p>
+        <router-link to="/" class="inActive"> {{ $t('nav.main')  }} </router-link>&nbsp; - &nbsp;
+        <p class="active mainColor"> {{ $t('auth.reg') }} </p>
       </div>
 
       <section class="loginSection" style="width:93%;margin:auto" >
-          <h3 class="fw-bold mb-3"> حساب جديد </h3>
+          <h3 class="fw-bold mb-3"> {{ $t('auth.reg') }} </h3>
           <p class="registerParagraph fw-bold d-flex align-items-center"> 
             <span class="step flex_center">2</span>
-            برجاء ادخال البيانات التاليه لتتمكن من انشاء حساب جديد خاص بك لتستطيع البحث عن الوظائف الجديدة التي تناسبك في اسرع وقت  
+            {{  $t('auth.regPlc')  }}
           </p>
 
           <form class="flex flex-wrap gap-3 p-fluid mt-4">
@@ -22,8 +22,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> البريد الألكتروني </label>
-                    <InputText type="email" class="defaultInput2" v-model="name" placeholder="الرجاء ادخال البريد الألكتروني" />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.email')  }} </label>
+                    <InputText type="email" class="defaultInput2" v-model="name" :placeholder="$t('auth.emailPlc')" />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/sms.svg')" alt="">
@@ -36,8 +36,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> الجنس </label>
-                    <Dropdown v-model="gender" :options="genders" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" placeholder="الرجاء تحديد الجنس"  />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.gender')  }} </label>
+                    <Dropdown v-model="gender" :options="genders" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.genderPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/sms.svg')" alt="">
@@ -50,8 +50,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> تاريخ الميلاد </label>
-                    <Calendar v-model="date" class="defaultInput" placeholder="الرجاء ادخال تاريخ الميلاد" />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.birth')  }} </label>
+                    <Calendar v-model="date" class="defaultInput" :placeholder="$t('auth.birthPlc')" />
 
                     <!-- icon  -->
                     <div class="inputIcon">
@@ -65,8 +65,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> الجنسية </label>
-                    <InputText type="email" class="defaultInput2" v-model="name" placeholder="الرجاء ادخال الجنسية" />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.nat')  }} </label>
+                    <InputText type="email" class="defaultInput2" v-model="name" :placeholder="$t('auth.natPlc')" />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/card-pos.svg')" alt="">
@@ -80,15 +80,15 @@
 
                 <div class="position-relative    flex justify-content-center">
                   
-                  <label for="integeronly" class="label fw-bold block mb-2"> المدينة </label>
+                  <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.city')  }} </label>
 
-                  <Dropdown v-model="selectedCity" :options="cities" filter optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" placeholder="الرجاء تحديد المدينة">
+                  <Dropdown v-model="selectedCity" :options="cities" filter optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.cityPlc')">
                       <template #value="slotProps">
                           <div v-if="slotProps.value" class="d-flex align-items-center">
                               <div>{{ slotProps.value.name }}</div>
                           </div>
                           <span v-else>
-                              لا توجد مدينة
+                              {{ $t('auth.noCity') }}
                           </span>
                       </template>
                       <template #option="slotProps">
@@ -109,8 +109,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> مكان الإقامة </label>
-                    <InputText type="text" class="defaultInput2" v-model="address" @focus="googleMap=true" placeholder="الرجاء ادخال مكان الإقامة" />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.place')  }} </label>
+                    <InputText type="text" class="defaultInput2" v-model="address" @focus="googleMap=true" :placeholder="$t('auth.placePlc')" />
                     <!-- icon  -->
                     <div class="inputIcon2">
                       <img :src="require('@/assets/imgs/location.svg')" alt="">
@@ -148,7 +148,7 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> السيرة الذاتية </label>
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.cv') }} </label>
                             <Toast />
 
                     <FileUpload mode="basic" name="demo[]" url="./upload.php" accept=".pdf" class="defaultInput2" :maxFileSize="100000000000" @upload="onUpload" />
@@ -164,8 +164,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> المؤهل </label>
-                    <Dropdown v-model="qualification" :options="qualifications" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" placeholder="الرجاء تحديد المؤهل"  />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.qual')  }} </label>
+                    <Dropdown v-model="qualification" :options="qualifications" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.qualPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/book.svg')" alt="">
@@ -178,8 +178,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> مجال العمل </label>
-                    <Dropdown v-model="workField" :options="workFields" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" placeholder="الرجاء تحديد مجال العمل"  />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.field')  }} </label>
+                    <Dropdown v-model="workField" :options="workFields" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.fieldPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -193,8 +193,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> التخصص </label>
-                    <Dropdown v-model="specialize" :options="specializes" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" placeholder="الرجاء تحديد التخصص"  />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.special')  }} </label>
+                    <Dropdown v-model="specialize" :options="specializes" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.specialPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -207,8 +207,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> الشهادات المهنية </label>
-                    <Dropdown v-model="certification" :options="certifications" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" placeholder="الرجاء تحديد الشهادات المهنية"  />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.cer') }} </label>
+                    <Dropdown v-model="certification" :options="certifications" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.cerPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -222,8 +222,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> المهارات </label>
-                    <MultiSelect v-model="skill" :options="skills" optionLabel="name" placeholder="الرجاء تحديد المهارات"
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.skills')  }} </label>
+                    <MultiSelect v-model="skill" :options="skills" optionLabel="name" :placeholder="$t('auth.skillsPlc')"
                       :maxSelectedLabels="5" class="w-full md:w-20rem defaultInput2 position-relative" />
 
                     <!-- icon  -->
@@ -239,13 +239,13 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> 
-                      المسمى الوظيفي 
+                      {{  $t('auth.jobName')  }} 
                       <span class="ifExist mx-2">
-                        ان وجد
+                        {{  $t('auth.ifExist')  }}
                         <i class="fa-solid fa-star-of-life"></i>
                       </span>
                     </label>
-                    <InputText type="email" class="defaultInput2" v-model="jobName" placeholder="الرجاء ادخال المسمى الوظيفي" />
+                    <InputText type="email" class="defaultInput2" v-model="jobName" :placeholder="$t('auth.namePlc')" />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -258,8 +258,8 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
-                    <label for="integeronly" class="label fw-bold block mb-2"> سنوات الخبرة </label>
-                    <Dropdown v-model="yearsExperience" :options="yearsExperiences" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" placeholder="الرجاء تحديد سنوات الخبرة"  />
+                    <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.yearsExper')  }} </label>
+                    <Dropdown v-model="yearsExperience" :options="yearsExperiences" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.yearPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -273,13 +273,13 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> 
-                      الشركة الحالية 
+                      {{  $t('auth.current')  }} 
                       <span class="ifExist mx-2">
-                        ان وجد
+                        {{  $t('auth.ifExist')  }}
                         <i class="fa-solid fa-star-of-life"></i>
                       </span>
                     </label>
-                    <InputText type="email" class="defaultInput2" v-model="currentCompany" placeholder="الرجاء ادخال الشركة الحالية" />
+                    <InputText type="email" class="defaultInput2" v-model="currentCompany" :placeholder="$t('auth.currentPlc')" />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -293,8 +293,8 @@
             </div>
 
             <div class="d-flex justify-content-center">
-              <button class="main_btn pt-3 pb-3 w-25"> استكمال البيانات </button>
-              <button class="sec_btn pt-3 pb-3 w-25 mx-3 fw-bold"> تخطي </button>
+              <button class="main_btn pt-3 pb-3 w-25"> {{ $t('auth.keep') }} </button>
+              <button class="sec_btn pt-3 pb-3 w-25 mx-3 fw-bold"> {{  $t('auth.skip')  }} </button>
 
             </div>
           </form>
@@ -316,7 +316,8 @@ import MultiSelect from 'primevue/multiselect';
 export default {
   data(){
     return{
-      genders : [],
+      genders : [
+      ],
       gender : null,
       date : null,
       selectedCity : null,
@@ -342,7 +343,20 @@ export default {
 
       ],
       googleMap : false,
-      qualifications : [],
+      qualifications : [
+          {
+            id : 1,
+            name : '1'
+          },
+          {
+            id : 2,
+            name : '2'
+          },
+          {
+            id : 3,
+            name : '3'
+          },
+      ],
       qualification : null,
       workFields : [],
       workField: null,
@@ -439,9 +453,9 @@ export default {
 
 <style  >
   .p-dropdown{
-    top:0 ;
-    padding-left:12px;
-    padding-right: 24px;
+    top:0 !important;
+    padding-left:12px ;
+    padding-right: 24px ;
   }
  
 </style>

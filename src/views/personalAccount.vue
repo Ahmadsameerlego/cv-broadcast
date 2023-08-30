@@ -10,7 +10,8 @@
         <!-- <h5 class="fw-bold red mb-3">الشروط والاحكام</h5> -->
         <section class="loginSection" style="width:93%;margin:auto">
             <form action="" class="flex flex-wrap gap-3 p-fluid mt-4" @submit.prevent>
-                <div class="base-card">
+
+                <div class="base-card" data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
                     <header class="p-3">
                         <h6 class="font-weight-bold"> {{ personalAccTitle }}</h6>
                     </header>
@@ -108,7 +109,7 @@
 
                     </div>
                 </div>
-                <div class="base-card">
+                <div class="base-card" data-aos="fade-left" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
                     <header class="p-3">
                         <h6 class="font-weight-bold"> {{ location }}</h6>
                     </header>
@@ -177,7 +178,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="base-card">
+                <div class="base-card" data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
                     <header class="p-3">
                         <h6 class="font-weight-bold"> {{ qualification }}</h6>
                     </header>
@@ -343,7 +344,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="base-card">
+                <div class="base-card" data-aos="fade-left" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
                     <header class="p-3">
                         <h6 class="font-weight-bold"> {{ video }}</h6>
                     </header>
@@ -413,23 +414,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center" data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
                     <router-link to="/" class="main_btn pt-3 pb-3 w-25 text-center"> اعادة تعيين كلمة المرور
                     </router-link>
                     <button class="sec_btn pt-3 pb-3 w-25 mx-3 fw-bold" @click="done = true, routeHome()"> حفظ التغييرات
                     </button>
 
                 </div>
-
-
-
-
-
-
-
-
-
-
 
             </form>
         </section>
@@ -667,6 +658,7 @@ import FileUpload from 'primevue/fileupload';
 import MultiSelect from 'primevue/multiselect';
 import Password from 'primevue/password';
 // import Galleria from 'primevue/Galleria'
+import AOS from "aos";
 
 
 // import router from '@/router';
@@ -841,6 +833,7 @@ export default {
     },
     mounted() {
         this.geolocation();
+        AOS.init();
         let filePlaceholder = document.querySelector('.p-button-label');
         filePlaceholder.innerHTML = 'الرجاء اختيار السيرة الذاتية'
     }
@@ -848,7 +841,7 @@ export default {
 </script>
 <style>
 .base-card {
-    background: #EBEBEB;
+    background: #FBFBFB;
     border-radius: 10px;
     margin-bottom: 30px;
 }

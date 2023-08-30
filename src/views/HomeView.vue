@@ -1,12 +1,12 @@
 <template>
   <!-- header  -->
   <siteHeaderVue />
-  <!-- intro  -->
-  <homeIntroVue />
+  <homeIntroVue data-aos="zoom-in" data-aos-duration="1000"  data-aos-easing="ease-out-cubic" />
   <!-- about  -->
-  <homeAboutVue />
+  <homeAboutVue data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic"  />
   <!-- vision -->
-  <homeVisionVue />
+  <homeVisionVue data-aos="fade-left" data-aos-duration="1000" data-aos-easing="ease-out-cubic" />
+
   <!-- download app   -->
   <downloadAppVue />
   <!-- partners  -->
@@ -25,6 +25,8 @@ import homeVisionVue from '@/components/site/home/homeVision.vue';
 import downloadAppVue from '@/components/site/home/downloadApp.vue';
 import homePartenersVue from '@/components/site/home/homeParteners.vue';
 import siteFooterVue from '@/components/site/layout/siteFooter.vue';
+import AOS from "aos";
+
 export default {
 
   name: 'HomeView',
@@ -36,6 +38,9 @@ export default {
     downloadAppVue,
     homePartenersVue,
     siteFooterVue
+  },
+  mounted(){
+      AOS.init();
   }
 }
 </script>

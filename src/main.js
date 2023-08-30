@@ -16,6 +16,9 @@ import "primevue/resources/themes/lara-light-indigo/theme.css";
 //core
 import "primevue/resources/primevue.min.css";
 
+import ToastService from 'primevue/toastservice';
+
+
 
 // import fontawesome
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
@@ -34,8 +37,7 @@ import VueGoogleMaps from '@fawmi/vue-google-maps'
 
 // import axios
 import axios from 'axios';
-axios.defaults.baseURL = 'https://admin.advisersgate.com/api/';
-// axios.defaults.baseURL = ' https://accept.paymob.com/api/';
+axios.defaults.baseURL = 'https://cvbroadcast.com/api/v1/';
 // axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');   
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.headers.lang = localStorage.getItem('locale');
@@ -48,6 +50,12 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 // import pagination
 import Paginate from "vuejs-paginate-next";
 
+// importing AOS css style globally
+import 'aos/dist/aos.css'
+
+
+// import scss 
+import './assets/css/style_responsive.scss';
 
 createApp(App)
 .use(i18n)
@@ -59,6 +67,7 @@ createApp(App)
 .component('v-otp-input', VOtpInput)
 .use(store)
 .use(PrimeVue)
+.use(ToastService)
 .use(VueGoogleMaps, {
     load: {
         key: 'AIzaSyB4d19CAL7u_hJ8k4P7EaQFcnner_Q9KEo',

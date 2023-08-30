@@ -25,13 +25,15 @@
                             <img :src="require('@/assets/imgs/search.png')" alt="">
                             <span> {{ $t('home.search')  }} </span>
                         </router-link>
+
                         <router-link to="/" class="bordered_btn"> {{ $t('home.explore')  }} </router-link>
+
                     </div>
                 </div>
             </div>
             <div class="col-md-5 mb-3">
                 <div class="job_image">
-                    <img class="w-100 h-100" :src="require('@/assets/imgs/job.png')" alt="job canvas">
+                    <img class="w-100 h-100 lazy" :src="require('@/assets/imgs/job.png')" alt="job canvas">
                 </div>
             </div>
         </div>
@@ -69,6 +71,54 @@ export default {
             height: 320px;
             img{
                 object-fit: contain;
+            }
+        }
+    }
+
+    .bordered_btn{
+        position: relative;
+        transition: .3s all;
+        &::before{
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            background-color: #6D98DB;
+            transition: .3s all;
+            z-index: -1;
+            border-radius: 20px;
+        }  
+        &:hover{
+            color:#fff;
+            z-index:1 ;
+            &::before{
+                width: 100%;
+            }
+        }
+    }
+    .main_btn{
+        position: relative;
+        transition: .3s all;
+        &::before{
+            content: '';
+            border-radius: 20px !important;
+            position: absolute;
+            width: 100%;
+            height: 0%;
+            bottom: 0;
+            right: 0;
+            background-color: #fff;
+            transition: .3s all;
+            z-index: -1;
+        }  
+        &:hover{
+            color:#293255;
+            z-index:1 ;
+            &::before{
+                height: 100%;
+                border: 1px solid #293255;
             }
         }
     }
