@@ -10,15 +10,17 @@
           @swiper="onSwiper"
           @slideChange="onSlideChange"
         >
-          <swiper-slide>
-            <img :src="require('@/assets/imgs/total-logo.png')" alt="">
+          <swiper-slide v-for="partner in partners" :key="partner.id">
+            <!-- <img :src="require('@/assets/imgs/total-logo.png')" alt=""> -->
+            <img :src="partner.image" alt="">
+
           </swiper-slide>
-          <swiper-slide>
+          <!-- <swiper-slide>
                         <img :src="require('@/assets/imgs/total-logo.png')" alt="">
           </swiper-slide>
           <swiper-slide>
                         <img :src="require('@/assets/imgs/total-logo.png')" alt="">
-          </swiper-slide>
+          </swiper-slide> -->
         </swiper>
     </div>
   </section>
@@ -48,6 +50,14 @@ export default {
       onSlideChange,
     };
   },
+    computed: {
+        partners() {
+            return this.$store.state.partners;
+        }
+    },
+    created() {
+        this.$store.dispatch('partners');
+    }
 
 }
 </script>
