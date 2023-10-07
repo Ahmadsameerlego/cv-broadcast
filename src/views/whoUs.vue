@@ -1,10 +1,10 @@
 <template>
     <!-- header  -->
-    <siteHeaderVue />
+    <siteHeaderVue /> 
     <!-- bread-crumb -->
     <div class="breadcrumb d-flex externalBreadcrumb mb-0">
-        <router-link to="/" class="inActive"> الرئيسية </router-link>&nbsp; - &nbsp;
-        <p class="active mainColor">   {{ whoAreWeTitle }} </p>
+        <router-link to="/" class="inActive"> {{  $t('nav.main')  }} </router-link>&nbsp; - &nbsp;
+        <p class="active mainColor"> {{  $t('nav.whoUs')  }}  </p>
     </div>
     <!-- terms and condition  -->
     <section class="mt-3 mb-3" data-aos="fade-left" data-aos-duration="1000" data-aos-easing="ease-out-cubic" >
@@ -12,36 +12,13 @@
             <div class="row">
                 <div class="col-md-10 col-12">
                     <h5 class="fw-bold red mb-3">
-                        {{ whoAreWeTitle }}
+                        {{  $t('nav.whoUs')  }}
                     </h5>
                     <p>
                         <span class="m-end-5">-</span>
-                        <span>{{ termsConditionContent }}</span>
+                        <span v-html="about">  </span>
                     </p>
-                    <p>
-                        <span class="m-end-5">-</span>
-                        <span>{{ termsConditionContent }}</span>
-                    </p>
-                    <p>
-                        <span class="m-end-5">-</span>
-                        <span>{{ termsConditionContent }}</span>
-                    </p>
-                    <p>
-                        <span class="m-end-5">-</span>
-                        <span>{{ termsConditionContent }}</span>
-                    </p>
-                    <p>
-                        <span class="m-end-5">-</span>
-                        <span>{{ termsConditionContent }}</span>
-                    </p>
-                    <p>
-                        <span class="m-end-5">-</span>
-                        <span>{{ termsConditionContent }}</span>
-                    </p>
-                    <p>
-                        <span class="m-end-5">-</span>
-                        <span>{{ termsConditionContent }}</span>
-                    </p>
+                    
                 </div>
             </div>
         </div>
@@ -58,6 +35,7 @@
 import siteHeaderVue from '@/components/site/layout/siteHeader.vue';
 import siteFooterVue from '@/components/site/layout/siteFooter.vue';
 import AOS from "aos";
+import {mapGetters , mapActions} from 'vuex';
 
 export default {
     components: {
@@ -67,12 +45,17 @@ export default {
     },
     data() {
         return {
-            whoAreWeTitle: ' من نحن',
-            termsConditionContent: 'نص نص نص نص نص نص نص نص نص نص نص نص نص  نص نص نص نص  نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص  نص نص نص نص  نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص  نص نص نص نص  نص نص نص نص نص نص نص نص نص نص نص '
         }
+    },
+    computed:{
+        ...mapGetters('setting',['about'])
+    },
+    methods:{
+        ...mapActions('setting',['getAbout']),
     },
     mounted(){
         AOS.init();
+        this.getAbout();
     }
 }
 </script>

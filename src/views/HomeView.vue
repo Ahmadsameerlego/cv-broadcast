@@ -1,7 +1,8 @@
 <template>
   <!-- header  -->
   <siteHeaderVue />
-  <homeIntroVue data-aos="zoom-in" data-aos-duration="1000"  data-aos-easing="ease-out-cubic" />
+  <homeIntroVue data-aos="fade-left" data-aos-duration="1000"  data-aos-easing="ease-out-cubic" />
+  <allAds v-if="isLoggedIn" data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic" />
   <!-- about  -->
   <homeAboutVue data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic"  />
   <!-- vision -->
@@ -25,11 +26,16 @@ import homeVisionVue from '@/components/site/home/homeVision.vue';
 import downloadAppVue from '@/components/site/home/downloadApp.vue';
 import homePartenersVue from '@/components/site/home/homeParteners.vue';
 import siteFooterVue from '@/components/site/layout/siteFooter.vue';
+import allAds from '@/components/site/home/allAds.vue'
 import AOS from "aos";
 
 export default {
-
   name: 'HomeView',
+  data(){
+    return{
+      isLoggedIn : false
+    }
+  },
   components: {
     siteHeaderVue,
     homeIntroVue,
@@ -37,10 +43,14 @@ export default {
     homeVisionVue,
     downloadAppVue,
     homePartenersVue,
-    siteFooterVue
+    siteFooterVue,
+    allAds 
   },
   mounted(){
       AOS.init();
+      if( localStorage.getItem('token') ){
+        this.isLoggedIn = true ;
+      }
   }
 }
 </script>

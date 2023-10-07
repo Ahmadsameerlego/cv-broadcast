@@ -6,15 +6,15 @@
                 <div class="col-md-6 mb-2">
                     <h4 class="whiteColor mt-5"> {{  $t('home.download')  }} </h4>
                     <p class="whiteColor down_desc"> 
-                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة 
+                        {{  download_app_ar  }}
                     </p>
 
                     <div class="d-flex mt-5">
-                        <a href="#" class="downloadIcon">
+                        <a :href="google_play_link" target="_blank" class="downloadIcon">
                             <img :src="require('@/assets/imgs/googlePlay.png')" alt="">
                         </a>
 
-                        <a href="#" class="downloadIcon mx-3">
+                        <a :href="app_store_link" target="_blank" class="downloadIcon mx-3">
                             <img :src="require('@/assets/imgs/appStore.png')" alt="">
                         </a>
                     </div>
@@ -22,7 +22,7 @@
 
                 <div class="col-md-6">
                     <div class="downloadImage">
-                        <img class="w-100 h-100" :src="require('@/assets/imgs/half_back.png')" alt="">
+                        <img class="w-100 h-100" :src="download_app_image" alt="">
                     </div>
                 </div>
 
@@ -33,8 +33,17 @@
 </template>
 
 <script>
+import { mapGetters , mapActions } from 'vuex';
 export default {
-
+    computed:{
+        ...mapGetters('setting', ['settings', 'google_play_link', 'app_store_link', 'download_app_ar', 'download_app_image'])
+    },
+    methods:{
+        ...mapActions( 'setting' , ['getSettings'] )
+    },
+    mounted(){
+        this.getSettings();
+    }
 }
 </script>
 

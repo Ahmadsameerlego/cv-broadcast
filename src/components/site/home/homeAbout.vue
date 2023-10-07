@@ -2,8 +2,18 @@
   <section id="about" class="mt-5">
     <div class="container">
         <h5 class="site_title fw-bold text-center"> {{  $t('home.about')  }} </h5>
-        <div class="row mt-5">
-            <div class="col-md-4">
+        <div class="row mt-5" v-if="services">
+            <div class="col-md-4 mb-2" v-for="service in services" :key="service">
+                <div class="single_about flex_column">
+                    <img :src="service.image" class="about_img" alt="svg">
+                    <p>مجالات العمل</p>
+                    <span>
+                        {{  service.description  }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-4">
                 <div class="single_about flex_column">
                     <img :src="require('@/assets/imgs/tree_blue.png')" class="about_img" alt="svg">
                     <p>مجالات العمل</p>
@@ -17,23 +27,24 @@
                     <p>مجالات العمل</p>
                     <span>هناك أكثر من 60 فئة في مجال العمل.</span>
                 </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="single_about flex_column">
-                    <img :src="require('@/assets/imgs/tree_blue.png')" class="about_img" alt="svg">
-                    <p>مجالات العمل</p>
-                    <span>هناك أكثر من 60 فئة في مجال العمل.</span>
-                </div>
-            </div>
+            </div> -->
         </div>
     </div>
   </section>
 </template>
 
 <script>
+import { mapGetters ,mapActions } from 'vuex';
 export default {
-
+    computed:{
+        ...mapGetters('setting', ['services'])
+    },
+    methods:{
+        ...mapActions('setting', ['getServices'])
+    },
+    mounted(){
+        this.getServices();
+    }
 }
 </script>
 
@@ -68,9 +79,9 @@ export default {
             p,span{
                 color: #fff;
             }
-            img{
-                filter: brightness(0) invert(1);
-            }
+            // img{
+            //     filter: brightness(0) invert(1);
+            // }
         }
         .about_img{
             width: 100px;

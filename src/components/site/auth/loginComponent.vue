@@ -30,7 +30,7 @@
                   </div>
 
                   <!-- select phone  -->
-                  <Dropdown v-model="selectedCity" :options="cities" optionLabel="name"  class="w-full md:w-14rem" />
+                  <Dropdown v-model="selectedCity" :options="common.countries" optionLabel="key" @change="chooseCountry"  class="w-full md:w-14rem" style="top: 32px !important;" />
               </div>
 
               <!-- start phone validations  -->
@@ -66,7 +66,13 @@
               
               <!-- submit  -->
               <div class="mt-4">
-                <button class="main_btn w-100 pt-3 pb-3 fs-5" :disabled="disabled"> {{ $t('auth.login')  }} </button>
+                <button class="main_btn w-100 pt-3 pb-3 fs-5" :disabled="disabled"> 
+                  
+                  <span v-if="!spinner"> {{ $t('auth.login')  }}  </span>
+                  <div class="spinner-border mx-2" role="status" v-if="spinner">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </button>
               </div>
 
               <!-- new account  -->
@@ -102,6 +108,7 @@
       <contactProblem :openContactModal="openContactModal" />
     </div>
   </section>
+  <Toast />
 </template>
 
 <script>
@@ -110,30 +117,36 @@ import Password from 'primevue/password';
 // import components 
 import forgetPass from './forgetPass.vue';
 import contactProblem from './contactProblem.vue';
+import Dropdown from 'primevue/dropdown';
+import Toast from 'primevue/toast';
 
+import { mapActions, mapState } from 'vuex';
 export default {
   data(){
     return{
-      cities: [
-          { name: 'New York', code: 'NY' },
-          { name: 'Rome', code: 'RM' },
-          { name: 'London', code: 'LDN' },
-          { name: 'Istanbul', code: 'IST' },
-          { name: 'Paris', code: 'PRS' }
-      ],
-
+      
       phone : '',
       password : '',
 
       disabled : true,
+      spinner : false ,
+      visible : false ,
       lengthValid : false,
+      openContactModal : false ,
       required : false,
-      passwordRequied : false
-
+      passwordRequied : false,
+      selectedCity : {
+            "id": 1,
+            "name": "السعودية",
+            "key": "+966"
+        },
 
     }
   },
+  computed:{
+    ...mapState(["common"])  
 
+  },
   watch:{
     phone(){
       this.disabled = false ;
@@ -143,9 +156,13 @@ export default {
   components:{
     Password,
     forgetPass,
-    contactProblem
+    contactProblem,
+    Dropdown,
+    Toast
   },
   methods:{  
+    ...mapActions('common',['getCountries']),
+
     // open forget password modal 
     openForget(){
       if(this.visible == true || this.visible == false){
@@ -159,7 +176,33 @@ export default {
       }
     },
     // login 
-    login(){
+    async login(){
+      this.disabled = true ;
+      this.spinner = true ;
+      const fd = new FormData();
+      fd.append('country_code', this.selectedCity.key);
+      fd.append( 'password', this.password );
+      fd.append( 'phone', this.phone );
+      fd.append('device_id', localStorage.getItem('device_id'));
+      fd.append( 'device_type', 'web');
+
+      try{
+        const res = await this.$store.dispatch('auth/login', fd)
+          if( res.success == true ){
+              this.$toast.add({ severity: 'success', summary: res.message, life: 3000 });
+              this.disabled = false ;
+              this.spinner = false ;
+              setTimeout(() => {
+                this.$router.push('/');
+              }, 3000);
+          }else{
+              this.$toast.add({ severity: 'error', summary: res.message, life: 3000 });
+              this.disabled = false ;
+              this.spinner = false ;
+          }
+      }catch(err){
+        console.error(`login error is ${err}`)
+      }
     },
 
     // valid phone 
@@ -190,21 +233,35 @@ export default {
         this.passwordRequied = false ;
       }
     },
-    // // valid password 
-    // passwordValid(){
-    //   if( this.password == '' ){
-    //     this.disabled = true ;
-    //   }else{
-    //     this.disabled = false ;
-    //   }
-    // }
+    chooseCountry(){
+      document.querySelector('.p-dropdown-label').innerHTML = this.selectedCity.key ;
+    },
 
 
   },
-  
+  mounted(){
+    // this.getCountries();
+    document.querySelector('.p-dropdown-label').innerHTML = this.selectedCity.key ;
+
+    fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => localStorage.setItem('device_id', data.ip))
+    .catch(error => console.error(error));
+
+  },
+
+  created(){
+    this.getCountries();
+  }
 }
 </script>
 
+<style scoped>
+.p-dropdown{
+  width:25%;
+  top: 32px !important;
+}
+</style>
 <style lang="scss">
   .main_btn{
     &:disabled{

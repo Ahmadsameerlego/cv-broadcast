@@ -10,8 +10,7 @@
                 </div>
 
                 <p class="font15 main-p">
-                  هذا النص هو مثال لنص يمكن أن يستبدل ببساطة نص شكلي (بمعنى أن
-                  الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات الم
+                  {{  footer_description_ar }}
                 </p>
               </div>
             </div>
@@ -30,7 +29,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="/termsCondition  "
+                    <router-link to="/termsCondition"
                       >
                       <div class="my-l">
                         {{ $t('nav.terms')  }}
@@ -46,7 +45,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="/"
+                    <router-link to="/privacy"
                       >
                       <div class="my-l">
                         {{  $t('home.privacy')  }}
@@ -96,12 +95,15 @@
                 </h6>
                 <ul>
                   <div class="flex-socials">
-                    <a href="#"
-                      ><img src="imgs/Icon feather-instagram.png" alt=""
-                    /></a>
-                    <a href="#"
-                      ><img src="imgs/Icon feather-instagram.png" alt=""
-                    /></a>
+                    <a 
+                      v-for="social in socials"
+                      :key="social"
+                      :href="social.link"
+                      traget="_blank"
+                      >
+                      <img :src="social.image" :alt="social.name"/>
+                    </a>
+                    
                   </div>
                 </ul>
               </div>
@@ -126,8 +128,18 @@
 </template>
 
 <script>
+import { mapGetters , mapActions } from 'vuex';
 export default {
-
+    computed:{
+        ...mapGetters('setting', ['settings', 'footer_description_ar', 'socials'])
+    },
+    methods:{
+        ...mapActions( 'setting' , ['getSettings', 'getSocials'] )
+    },
+    mounted(){
+        this.getSettings();
+        this.getSocials();
+    }
 }
 </script>
 

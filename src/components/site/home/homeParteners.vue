@@ -4,21 +4,19 @@
         <h5 class="site_title fw-bold text-center"> {{  $t('home.part')  }} </h5>
 
         <swiper
-          class="mt-5"
-          :slides-per-view="6"
+        :slides-per-view="6"
           :space-between="20"
-          @swiper="onSwiper"
-          @slideChange="onSlideChange"
+          :autoplay="{
+            delay: 2500,
+            disableOnInteraction: false,
+            }"
+            :modules="modules"
+            :loop="true"
         >
-          <swiper-slide>
-            <img :src="require('@/assets/imgs/total-logo.png')" alt="">
+          <swiper-slide v-for="slide in partners" :key="slide.image">
+            <img :src="slide.image" alt="partners image">
           </swiper-slide>
-          <swiper-slide>
-                        <img :src="require('@/assets/imgs/total-logo.png')" alt="">
-          </swiper-slide>
-          <swiper-slide>
-                        <img :src="require('@/assets/imgs/total-logo.png')" alt="">
-          </swiper-slide>
+          
         </swiper>
     </div>
   </section>
@@ -27,25 +25,31 @@
 <script>
   // Import Swiper Vue.js components
   import { Swiper, SwiperSlide } from 'swiper/vue';
+    import { Autoplay } from 'swiper';
+
 
   // Import Swiper styles
   import 'swiper/css';
 
+import { mapGetters , mapActions } from 'vuex';
 export default {
   components:{
       Swiper,
       SwiperSlide,
   },
-    setup() {
-    const onSwiper = (swiper) => {
-      console.log(swiper);
-    };
-    const onSlideChange = () => {
-      console.log('slide change');
-    };
+  computed:{
+    ...mapGetters('setting', ['partners'])
+  },
+  methods:{
+    ...mapActions('setting', ['getParteners'])
+  },
+  mounted(){
+    this.getParteners()
+  },
+  setup() {
+    
     return {
-      onSwiper,
-      onSlideChange,
+      modules: [Autoplay],
     };
   },
 

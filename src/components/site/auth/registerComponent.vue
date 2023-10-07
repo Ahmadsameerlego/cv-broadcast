@@ -47,7 +47,7 @@
                     </div>
 
                     <!-- select phone  -->
-                    <Dropdown v-model="selectedCity" @change="chooseCountry" :options="countries" optionLabel="name"  class="w-full md:w-14rem" />
+                    <Dropdown v-model="selectedCity" @change="chooseCountry" :options="common.countries" optionLabel="name"  class="w-full md:w-14rem" />
 
                 </div>
                 <div>
@@ -108,7 +108,12 @@
             </div>
 
             <div class="mt-3">
-                <button class="main_btn w-50 mx-auto flex_center pt-3 pb-3 fs-5" :disabled="disabled"> {{ $t('auth.keep')  }} </button>
+                <button class="main_btn w-50 mx-auto flex_center pt-3 pb-3 fs-5" :disabled="disabled"> 
+                  <span v-if="!spinner">{{ $t('auth.keep')  }}</span>
+                  <div class="spinner-border mx-2" role="status" v-if="spinner">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </button>
             </div>
 
 
@@ -119,6 +124,7 @@
 
           </form>
         </section>
+
 
       </div>
     </div>
@@ -134,11 +140,10 @@ import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 import Password from 'primevue/password';
 
-import axios from 'axios';
 import Toast from 'primevue/toast';
 
 import sendOtp from './sendOtp.vue';
-
+import {mapState, mapActions} from 'vuex';
 export default {
   data(){
     return{
@@ -155,10 +160,11 @@ export default {
       password : '',
       confirm_password : '',
       disabled : true,
-
+      spinner : false ,
       phoneValid : false,
       conditions : false,
-      openOtp : false
+      openOtp : false,
+      is_conditions : null
 
     }
   },
@@ -181,13 +187,7 @@ export default {
         }
         this.phone = this.phone.replace(/[^0-9]/g, '');
       },
-      // conditions(){
-      //   if(  ){
-      //     this.disabled = false ;
-      //   }else{
-      //     this.disabled = true ;
-      //   }
-      // }
+      
   },
   computed:{
       passwordMatch() {
@@ -199,32 +199,48 @@ export default {
       passwordLength(){
         return this.password.length < 6 ;
       },
-      
+      ...mapState(["common"])  
   },
   methods:{
+    // get countries 
+    ...mapActions('common',['getCountries']),
     // register function 
-    async register(){
+     async register(){
+      this.disabled = true ;
+      this.spinner = true ;
       const fd = new FormData(this.$refs.registerForm);
       fd.append('country_code', this.selectedCity.key);
       fd.append( 'password', this.password );
       fd.append( 'password_confirmation', this.confirm_password );
-      await axios.post('user/register', fd)
-      .then( (res)=>{
-        if(res.data.key === 'success'){
-          this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
-          // this.$router.push('/compeleteRegister')
-        }else if( res.data.key === 'fail' ){
-          this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });
-        }
-      } )
+      if( this.conditions ){
+        fd.append( 'is_conditions', 1 );
+      }
       
-    },
-    // get countries keies 
-    async getCountries(){
-      await axios.get('countries')
-      .then( (res)=>{
-        this.countries = res.data.data ;
-      } )
+      try{
+        const res = await this.$store.dispatch('auth/register', fd);
+        if( res.success == true ){
+          this.$toast.add({ severity: 'success', summary: res.message, life: 3000 });
+          this.disabled = false ;
+          this.spinner = false ;
+          // open otp modal 
+          setTimeout(() => {
+            if( this.openOtp == true || this.openOtp == false ){
+              this.openOtp = !this.openOtp
+            }
+          }, 3000);
+          localStorage.setItem('phone', this.phone)
+          localStorage.setItem('country_code', this.selectedCity.key);
+          localStorage.setItem('otpType', 'active')
+        }else{
+          this.$toast.add({ severity: 'error', summary: res.message, life: 3000 });
+          this.disabled = false ;
+          this.spinner = false ;
+        }
+      }catch(err){
+        console.error(err)
+      }
+      
+      
     },
     checkValid(){
       if( this.username === '' || this.phone === '' || this.password === '' || this.confirm_password === '' || this.passwordMatch === false || this.phoneMatch === true  ){
@@ -236,7 +252,8 @@ export default {
     chooseCountry(){
       console.log(this.selectedCity)
       document.querySelector('.p-dropdown-label').innerHTML = this.selectedCity.key ;
-    }
+    },
+    
   },
   components:{
     InputText,
@@ -247,8 +264,11 @@ export default {
     sendOtp
   },
   mounted(){
-    this.getCountries();
+    // this.getCountries();
     document.querySelector('.p-dropdown-label').innerHTML = this.selectedCity.key ;
+  },
+  created(){
+    this.getCountries();
   }
 }
 </script>

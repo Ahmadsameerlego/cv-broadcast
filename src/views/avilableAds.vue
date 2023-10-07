@@ -1,21 +1,23 @@
 <template>
     <!-- header  -->
     <siteHeaderVue />
-    <!-- rooms  -->
-    <rooms />
+    <!-- all ads  -->
+    <allAds />
     <!-- footer  -->
     <siteFooterVue />
+
 </template>
 
 <script>
 import siteHeaderVue from '@/components/site/layout/siteHeader.vue';
+import allAds from '@/components/site/jobs/allAvilableAds.vue'
 import siteFooterVue from '@/components/site/layout/siteFooter.vue';
-import rooms from '@/components/site/chat/singleChatRoom.vue';
+
 export default {
     components:{
         siteHeaderVue,
-        siteFooterVue,
-        rooms
+        allAds ,
+        siteFooterVue
     }
 }
 </script>

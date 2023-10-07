@@ -1,5 +1,5 @@
 <template>
-    <section id="orders">
+    <section id="orders" class="mt-4">
         <div class="container">
             <!-- breadcrumb  -->
             <div class="breadcrumb d-flex">
@@ -11,23 +11,24 @@
             <section>
                 <h5 class="fw-bold red mb-3"> {{ $t('common.order') }} </h5>
                 <div class="row">
-                    <div class="col-md-6">
+
+                    <div class="col-md-6" v-for="order in orders" :key="order.id">
                         <!-- single card  -->
                         <div class="single_card d-flex">
                             <!-- card image  -->
                             <div class="card_image">
-                                <img :src="require('@/assets/imgs/SSM 1.png')" alt="">
+                                <img :src="order.company.image" alt="">
                             </div>
 
                             <!-- card details  -->
                             <div class="card_details mx-3">
-                                <h6 class="mainColor fw-bold mb-3"> مهندس كمبيوتر </h6>
+                                <h6 class="mainColor fw-bold mb-3"> {{ order.advertisement.job_name  }} </h6>
 
-                                <p class="fw-bold"> شركة اوامر الشبكة </p>
+                                <p class="fw-bold"> {{ order.company.name }}  </p>
 
                                 <div class="d-flex align-items-baseline">
                                     <img :src="require('@/assets/imgs/bag.svg')" alt="">
-                                    <p class="fw-bold mx-2"> دوام كامل </p>
+                                    <p class="fw-bold mx-2"> {{ order.advertisement.type  }} </p>
                                 </div>
 
                                 <div class="d-flex mb-3">
@@ -42,7 +43,7 @@
                             <div class="abs_time">
 
                                 <!-- applied  -->
-                                <div class="orderStatus applied">
+                                <div class="orderStatus applied" v-if="order.status=='pending'">
                                     <img :src="require('@/assets/imgs/load.svg')" alt="">
                                     <span class="mx-1 mainColor fw-6"> {{  $t('common.applied')  }}  </span>
                                 </div>
@@ -72,7 +73,7 @@
                             <div class="abs_details">
                                 <img :src="require('@/assets/imgs/clock.svg')" alt="">
                                 <span class="grayColor mx-2"> {{ $t('common.date') }}: </span>
-                                <span > منذ ساعة </span>
+                                <span > {{ order.created_at  }} </span>
                             </div>
 
                         </div>
@@ -87,10 +88,32 @@
 </template>
 
 <script>
+import axios from 'axios';
 import paginationComponentVue from '../layout/paginationComponent.vue'
 export default {
+    data(){
+        return{
+            orders : []
+        }
+    },
     components:{
         paginationComponentVue
+    },
+    methods:{
+        // get orders 
+        async getOrders(){
+            const token = localStorage.getItem('token');
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            await axios.get('user/job-applications', {headers})
+            .then( (res)=>{
+                this.orders = res.data.data ;
+            } )
+        }
+    },
+    mounted(){
+        this.getOrders()
     }
 }
 </script>

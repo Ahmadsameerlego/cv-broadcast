@@ -8,14 +8,14 @@
           </div>
 
 
-          <form class="flex flex-wrap gap-3 p-fluid">
+          <form class="flex flex-wrap gap-3 p-fluid" @submit.prevent="resetPassword()">
             <div class="row">
               <div class="col-md-12 mb-2">
                 <!-- password  -->
                 <div class="position-relative flex-auto mt-3">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.pass')  }} </label>
-                    <Password v-model="oldPass"  toggleMask class="defaultInput" :placeholder="$t('auth.passPlc')" />
+                    <Password v-model="password"  toggleMask class="defaultInput" :placeholder="$t('auth.passPlc')" />
 
                     <!-- icon  -->
                     <div class="inputIcon">
@@ -29,7 +29,7 @@
                 <div class="position-relative flex-auto mt-3">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.confirmPass')  }} </label>
-                    <Password v-model="newPass" :feedback="false" toggleMask class="defaultInput" :placeholder="$t('auth.confirmPlc')" />
+                    <Password v-model="password_confirmation" :feedback="false" toggleMask class="defaultInput" :placeholder="$t('auth.confirmPlc')" />
 
                     <!-- icon  -->
                     <div class="inputIcon">
@@ -54,7 +54,13 @@
 
 
               <div class="mt-4">
-                <button class="main_btn w-100 pt-3 pb-3 fs-5"> {{  $t('auth.set')  }} </button>
+                <button class="main_btn w-100 pt-3 pb-3 fs-5" :disabled="disabled"> 
+                  
+                    <span v-if="!disabled">{{  $t('auth.set')  }} </span>
+                    <div class="spinner-border mx-2" role="status" v-if="disabled">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
               </div>
 
 
@@ -63,23 +69,59 @@
           </form>
 
       </Dialog>
-
+      <Toast />
 </template>
 
 <script>
 import Password from 'primevue/password';
 import Dialog from 'primevue/dialog';
+import Toast from 'primevue/toast';
 
 export default {
     data(){
         return{
             open : false,
-            newPass : null
+            password_confirmation : null,
+            password : null ,
+            disabled : false
         }
     },  
     components:{
         Password,
-        Dialog
+        Dialog,
+        Toast
+    },
+    methods:{
+      async resetPassword(){
+        this.disabled = true ;
+        const fd = new FormData();
+        fd.append('code', localStorage.getItem('code'));
+        fd.append('country_code', localStorage.getItem('country_code'));
+        fd.append('phone', localStorage.getItem('phone'));
+        fd.append('device_type', 'web');
+        fd.append('device_id', localStorage.getItem('device_id'));
+        fd.append('password', this.password);
+        fd.append('password_confirmation', this.password_confirmation);
+
+        try{
+            const res = await this.$store.dispatch('auth/resetPassword', fd)
+            if( res.success == true ){
+                this.$toast.add({ severity: 'success', summary: res.message, life: 3000 });
+                this.disabled = false ;
+                setTimeout(() => {
+                    this.open = false ;
+                }, 3000);
+
+              
+            }else{
+                this.$toast.add({ severity: 'error', summary: res.message, life: 3000 });
+                this.disabled = false ;
+            }
+        }catch(err){
+            console.error(`login error is ${err}`)
+        }
+      }
+
     },
     watch:{
         openReset(){
@@ -87,7 +129,7 @@ export default {
                 this.open = true ;
             }
         },
-        newPass(){
+        password_confirmation(){
            
             this.showValid = true ;
         }
@@ -97,7 +139,7 @@ export default {
     },
     computed:{
         passwordMatch() {
-            return this.oldPass === this.newPass;  
+            return this.password === this.password_confirmation;  
         }
     },
 }

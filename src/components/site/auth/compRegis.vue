@@ -15,7 +15,7 @@
             {{  $t('auth.regPlc')  }}
           </p>
 
-          <form class="flex flex-wrap gap-3 p-fluid mt-4">
+          <form class="flex flex-wrap gap-3 p-fluid mt-4" @submit.prevent="setProfile" ref="register">
             <div class="row">
               
               <!-- email  -->
@@ -23,7 +23,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.email')  }} </label>
-                    <InputText type="email" class="defaultInput2" v-model="name" :placeholder="$t('auth.emailPlc')" />
+                    <InputText type="email" class="defaultInput2" name="email" required v-model="name" :placeholder="$t('auth.emailPlc')" />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/sms.svg')" alt="">
@@ -64,14 +64,12 @@
               <!-- nationality  -->
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
-
                     <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.nat')  }} </label>
-                    <InputText type="email" class="defaultInput2" v-model="name" :placeholder="$t('auth.natPlc')" />
+                    <Dropdown v-model="nation" :options="nationalities" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.natPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/card-pos.svg')" alt="">
                     </div>
-
                 </div>
               </div>
 
@@ -149,9 +147,9 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.cv') }} </label>
-                            <Toast />
+                    <Toast />
 
-                    <FileUpload mode="basic" name="demo[]" url="./upload.php" accept=".pdf" class="defaultInput2" :maxFileSize="100000000000" @upload="onUpload" />
+                    <FileUpload mode="basic" name="cv"  accept=".pdf" class="defaultInput2" :maxFileSize="100000000000" @upload="onUpload" />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/pdf.svg')" alt="">
@@ -165,7 +163,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.qual')  }} </label>
-                    <Dropdown v-model="qualification" :options="qualifications" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.qualPlc')"  />
+                    <Dropdown v-model="qualification" :options="qualifications" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.qualPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/book.svg')" alt="">
@@ -179,7 +177,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.field')  }} </label>
-                    <Dropdown v-model="workField" :options="workFields" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.fieldPlc')"  />
+                    <Dropdown v-model="emp" :options="emps" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.fieldPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -188,13 +186,12 @@
                 </div>
               </div>
 
-
               <!-- specializes  -->
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.special')  }} </label>
-                    <Dropdown v-model="specialize" :options="specializes" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.specialPlc')"  />
+                    <Dropdown v-model="specialize" :options="specs" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.specialPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -208,7 +205,8 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.cer') }} </label>
-                    <Dropdown v-model="certification" :options="certifications" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.cerPlc')"  />
+                    <MultiSelect v-model="cer" :options="certifications" optionLabel="title" :placeholder="$t('auth.cerPlc')"
+                      :maxSelectedLabels="5" class="w-full md:w-20rem defaultInput2 position-relative" />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -223,7 +221,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.skills')  }} </label>
-                    <MultiSelect v-model="skill" :options="skills" optionLabel="name" :placeholder="$t('auth.skillsPlc')"
+                    <MultiSelect v-model="skill" :options="skills" optionLabel="title" :placeholder="$t('auth.skillsPlc')"
                       :maxSelectedLabels="5" class="w-full md:w-20rem defaultInput2 position-relative" />
 
                     <!-- icon  -->
@@ -245,7 +243,7 @@
                         <i class="fa-solid fa-star-of-life"></i>
                       </span>
                     </label>
-                    <InputText type="email" class="defaultInput2" v-model="jobName" :placeholder="$t('auth.namePlc')" />
+                    <InputText type="text" class="defaultInput2" v-model="job_title" name=job_title :placeholder="$t('auth.namePlc')" />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -259,7 +257,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.yearsExper')  }} </label>
-                    <Dropdown v-model="yearsExperience" :options="yearsExperiences" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.yearPlc')"  />
+                    <Dropdown v-model="experience" :options="experiences" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.yearPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -279,7 +277,7 @@
                         <i class="fa-solid fa-star-of-life"></i>
                       </span>
                     </label>
-                    <InputText type="email" class="defaultInput2" v-model="currentCompany" :placeholder="$t('auth.currentPlc')" />
+                    <InputText type="text" class="defaultInput2" v-model="company_name" name="company_name" :placeholder="$t('auth.currentPlc')" />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -288,19 +286,35 @@
                 </div>
               </div>
 
+              <!-- cv  -->
+              <div class="col-md-6 mb-3">
+                <div class="position-relative flex-auto">
 
+                    <label for="integeronly" class="label fw-bold block mb-2"> الصورة الشخصية </label>
 
+                    <FileUpload mode="basic" v-model="cv" name="image"  accept="image/*" class="defaultInput2" :maxFileSize="100000000000" @upload="onUpload" />
+                    
+                </div>
+              </div>
             </div>
 
             <div class="d-flex justify-content-center">
-              <button class="main_btn pt-3 pb-3 w-25"> {{ $t('auth.keep') }} </button>
-              <button class="sec_btn pt-3 pb-3 w-25 mx-3 fw-bold"> {{  $t('auth.skip')  }} </button>
-
+              <button class="main_btn pt-3 pb-3 w-25" :disabled="disabled">
+                 <span v-if="!disabled">{{ $t('auth.keep') }} </span>
+                 <div class="spinner-border mx-2" role="status" v-if="disabled">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+              </button>
+              <button class="sec_btn pt-3 pb-3 w-25 mx-3 fw-bold" type="button" @click="skip"> {{  $t('auth.skip')  }} </button>
             </div>
+
+            
           </form>
       </section>    
 
     </div>
+    <Toast />
+    <payment :openPayment="openPayment" />
   </section>
 </template>
 
@@ -311,79 +325,54 @@ import Calendar from 'primevue/calendar';
 import Dialog from 'primevue/dialog';
 import FileUpload from 'primevue/fileupload';
 import MultiSelect from 'primevue/multiselect';
+import Toast from 'primevue/toast';
 
-
+// payment modal 
+import payment from './paymentDialog.vue'
+import {mapGetters, mapActions} from 'vuex';
 export default {
   data(){
     return{
+
+      email : '',
       genders : [
+        {
+          id : 1,
+          name : 'male'
+        },
+        {
+          id : 2,
+          name : 'female'
+        }
       ],
       gender : null,
       date : null,
+      nation : null,
       selectedCity : null,
-                  locations:
-            {
-                lat: 0,
-                lng: 0
-            },
-            currentLocation: {},
-            address: '',
-
-      cities : [
-            { name: 'Australia', code: 'AU' },
-    { name: 'Brazil', code: 'BR' },
-    { name: 'China', code: 'CN' },
-    { name: 'Egypt', code: 'EG' },
-    { name: 'France', code: 'FR' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'India', code: 'IN' },
-    { name: 'Japan', code: 'JP' },
-    { name: 'Spain', code: 'ES' },
-    { name: 'United States', code: 'US' }
-
-      ],
+      locations:
+      {
+          lat: 0,
+          lng: 0
+      },
+      currentLocation: {},
+      address: '',
       googleMap : false,
-      qualifications : [
-          {
-            id : 1,
-            name : '1'
-          },
-          {
-            id : 2,
-            name : '2'
-          },
-          {
-            id : 3,
-            name : '3'
-          },
-      ],
       qualification : null,
-      workFields : [],
-      workField: null,
-      specializes : [],
+      emp : null,
       specialize : null,
-      certifications : [],
-      certification : null,
-      skills : [
-                    { name: 'Australia', code: 'AU' },
-    { name: 'Brazil', code: 'BR' },
-    { name: 'China', code: 'CN' },
-    { name: 'Egypt', code: 'EG' },
-    { name: 'France', code: 'FR' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'India', code: 'IN' },
-    { name: 'Japan', code: 'JP' },
-    { name: 'Spain', code: 'ES' },
-    { name: 'United States', code: 'US' }
+      cer : [],
+      skill : [],
+      job_title : null,
+      company_name : null,
+      experience : null,
+      disabled : false,
 
-      ],
-      skill : null,
-      jobName : null,
-      currentCompany : null,
-      yearsExperience : null,
-      yearsExperiences : []
-
+      openPayment : false,
+      cv : null
     }
+  },
+  computed:{
+    ...mapGetters('common',['nationalities', 'cities', 'qualifications', 'emps', 'specs', 'certifications', 'skills', 'experiences'])
   },
   components:{
     InputText,
@@ -391,62 +380,153 @@ export default {
     Calendar,
     Dialog,
     FileUpload,
-    MultiSelect
+    MultiSelect,
+    Toast,
+    payment
   },
   methods:{
-    // get current location  
-        geolocation() {
-            navigator.geolocation.getCurrentPosition((position) => {
-                this.locations = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-            });
-        },
-
-        // get new value after dragged 
-        onMarkerDragEnd(event) {
-            // get new lat lang value 
-            const newLat = event.latLng.lat()
-            const newLng = event.latLng.lng()
-            this.locations = {
-                lat: newLat,
-                lng: newLng
-            }
-
-            // get format_address 
-            const latLng = event.latLng
-            const geocoder = new window.google.maps.Geocoder()
-            geocoder.geocode({ location: latLng }, (results, status) => {
-                if (status === 'OK') {
-                    this.address = results[0].formatted_address
-                } else {
-                    console.error('Geocode was not successful for the following reason: ' + status)
-                }
-            })
-
-        },
-
-        onPlaceChanged(place) {
-          if (place.geometry) {
-            this.locations = {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng(),
-            };
-            this.address = place.formatted_address;
+      ...mapActions('common',['getNations', 'getCities','getQualifications', 'getEmployment', 'getSpecilizations', 'getCertifications', 'getSkills', 'getExperiences']),
+      // get current location  
+      geolocation() {
+          navigator.geolocation.getCurrentPosition((position) => {
+              this.locations = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+              };
+          });
+      },
+      // get new value after dragged 
+      onMarkerDragEnd(event) {
+          // get new lat lang value 
+          const newLat = event.latLng.lat()
+          const newLng = event.latLng.lng()
+          this.locations = {
+              lat: newLat,
+              lng: newLng
           }
-        },
 
-                onUpload() {
-            this.$toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+          // get format_address 
+          const latLng = event.latLng
+          const geocoder = new window.google.maps.Geocoder()
+          geocoder.geocode({ location: latLng }, (results, status) => {
+              if (status === 'OK') {
+                  this.address = results[0].formatted_address
+              } else {
+                  console.error('Geocode was not successful for the following reason: ' + status)
+              }
+          })
+
+      },
+
+      onPlaceChanged(place) {
+        if (place.geometry) {
+          this.locations = {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng(),
+          };
+          this.address = place.formatted_address;
+        }
+      },
+      onUpload(e) {
+          this.$toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+        console.log(e)
+      },
+
+
+      // main function
+      async setProfile(){
+        this.disabled = true ;
+        const fd = new FormData( this.$refs.register );
+        
+        // common share function 
+        function appendedIfSelected( formData, key , selectedValue ){
+          if( selectedValue ){
+            formData.append(key , selectedValue.id)
+          }
+        }
+        // append id 
+        appendedIfSelected(fd, 'employment_id', this.emp);
+        appendedIfSelected(fd, 'specialization_id', this.specialize);
+        appendedIfSelected(fd, 'qualification_id', this.qualification);
+        appendedIfSelected(fd, 'experience_id', this.experience);
+        appendedIfSelected(fd, 'city_id', this.selectedCity);
+
+        // append locations 
+        if( this.address ){
+          fd.append('map_desc', this.address)
+        }
+        if( this.locations ){
+          fd.append('lat', this.locations.lat)
+          fd.append('lng', this.locations.lng)
+        }
+        // append skills 
+        for (let i = 0; i < this.skill.length; i++) {
+          appendedIfSelected(fd, `skills[${i}]`, this.skill[i]);
+        }
+        // append certifications 
+        for (let i = 0; i < this.cer.length; i++) {
+          appendedIfSelected(fd, `certifications[${i}]`, this.cer[i]);
+        }
+        // append gender
+        if( this.gender ){
+          fd.append('gender', this.gender.name)
+        }
+        // append birth date 
+        if( this.date ){
+          const date = new Date(this.date);
+          // Extract day, month, and year from the Date object
+          const day = date.getDate();
+          const month = date.getMonth() + 1; // Months are zero-based, so add 1
+          const year = date.getFullYear();
+          // Format the date components as a string in the desired format
+          const formattedDate = `${day}-${month}-${year}`;
+
+          fd.append('birth_date', formattedDate)
+        }
+        // append nation 
+        if( this.nation ){
+          fd.append('nationality', this.nation.title)
         }
 
 
+
+
+        // try catch 
+        try{
+          const res = await this.$store.dispatch('auth/completeProfile', fd);
+          if( res.success == true ){
+              this.$toast.add({ severity: 'success', summary: res.message, life: 3000 });
+              this.disabled = false ;
+
+              setTimeout(() => {
+                // open payment dialog 
+                if( this.openPayment == true || this.openPayment == false ){
+                  this.openPayment = !this.openPayment
+                }
+              }, 3000);
+          }else{
+              this.$toast.add({ severity: 'error', summary: res.message, life: 3000 });
+              this.disabled = false ;
+              }
+        }catch(err){
+            console.error(err)
+        }
+
+
+      },
+
+      // skip 
+      skip(){
+        this.$router.push('/')
+      }
   },
   mounted(){
     this.geolocation();
     let filePlaceholder = document.querySelector('.p-button-label');
     filePlaceholder.innerHTML = 'الرجاء اختيار السيرة الذاتية'
+  },
+  created(){
+     
   }
 }
 </script>

@@ -2,27 +2,29 @@
     <!-- header -->
     <siteHeaderVue />
     <!-- content -->
-    <div class="mt-3 mb-3">
-        <div class="breadcrumb d-flex externalBreadcrumb mb-0">
+    <div class="mt-3 mb-3 mx-5">
+        <div class="breadcrumb d-flex mb-0">
             <router-link to="/" class="inActive"> الرئيسية </router-link>&nbsp; - &nbsp;
             <p class="active mainColor"> الملف الشخصي </p>
         </div>
-        <!-- <h5 class="fw-bold red mb-3">الشروط والاحكام</h5> -->
-        <section class="loginSection" style="width:93%;margin:auto">
-            <form action="" class="flex flex-wrap gap-3 p-fluid mt-4" @submit.prevent>
 
-                <div class="base-card" data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
+        <h6 class="fw-bold red mb-4 mt-3"> الملف الشخصي </h6>
+
+        <section class="loginSection" >
+            <form action="" class="flex flex-wrap gap-3 p-fluid mt-4" ref="profile" @submit.prevent="updateProfile">
+                <!-- البيانات الشخصية  -->
+                <div class="base-card" >
                     <header class="p-3">
-                        <h6 class="font-weight-bold"> {{ personalAccTitle }}</h6>
+                        <h6 class="fw-bold"> {{ personalAccTitle }}</h6>
                     </header>
                     <div class="p-3">
                         <div class="row">
+                            <!-- user name  -->
                             <div class="col-md-6 mb-2">
-                                <!-- user name  -->
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> اسم المستخدم </label>
-                                    <InputText type="text" class="defaultInput2" v-model="name"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> اسم المستخدم </label>
+                                    <InputText type="text" class="defaultInput2" v-model="name" name="name"
                                         placeholder="الرجاء ادخال اسم المستخدم" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -31,12 +33,13 @@
 
                                 </div>
                             </div>
+                            <!-- phone  -->
                             <div class="col-md-6 mb-2">
-                                <!-- phone  -->
-                                <div class="position-relative flex-auto">
-                                    <label for="integeronly" class="label fw-bold block mb-2"> رقم الجوال </label>
-                                    <InputNumber v-model="value1" class="defaultInput" inputId="integeronly"
-                                        placeholder="الرجاء ادخال رقم الجوال" @focus="changeNumber = true" />
+                                <div class="position-relative flex-auto defaultInput">
+                                    <label for="integeronly" class="label fw-6 block mb-2"> رقم الجوال </label>
+                                    <!-- <InputNumber v-model="phone" class="defaultInput" inputId="integeronly"
+                                        placeholder="الرجاء ادخال رقم الجوال" /> -->
+                                    <input type="number" v-model="phone" class="form-control"  placeholder="الرجاء ادخال رقم الجوال" @focus="changeNumber = true" >
 
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -49,8 +52,8 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> البريد الألكتروني </label>
-                                    <InputText type="email" class="defaultInput2" v-model="name"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> البريد الألكتروني </label>
+                                    <InputText type="email" class="defaultInput2" v-model="email" name="email"
                                         placeholder="الرجاء ادخال البريد الألكتروني" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -63,7 +66,7 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> الجنس </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> الجنس </label>
                                     <Dropdown v-model="gender" :options="genders" optionLabel="name"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         placeholder="الرجاء تحديد الجنس" />
@@ -78,8 +81,8 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> تاريخ الميلاد </label>
-                                    <Calendar v-model="date" class="defaultInput"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> تاريخ الميلاد </label>
+                                    <Calendar v-model="birth_date" class="defaultInput"
                                         placeholder="الرجاء ادخال تاريخ الميلاد" />
 
                                     <!-- icon  -->
@@ -94,7 +97,7 @@
                                 <!-- user name  -->
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> الجنسية </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> الجنسية </label>
                                     <InputText type="text" class="defaultInput2" v-model="nationality"
                                         placeholder="الرجاء ادخال الجنسية" />
                                     <!-- icon  -->
@@ -109,9 +112,10 @@
 
                     </div>
                 </div>
-                <div class="base-card" data-aos="fade-left" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
+                <!-- العنوان  -->
+                <div class="base-card" >
                     <header class="p-3">
-                        <h6 class="font-weight-bold"> {{ location }}</h6>
+                        <h6 class="fw-bold"> {{ location }}</h6>
                     </header>
                     <div class="p-3">
                         <div class="row">
@@ -120,7 +124,7 @@
 
                                 <div class="position-relative    flex justify-content-center">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> المدينة </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> المدينة </label>
 
                                     <Dropdown v-model="selectedCity" :options="cities" filter optionLabel="name"
                                         class="w-full md:w-14rem w-100 position-relative"
@@ -151,8 +155,8 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> مكان الإقامة </label>
-                                    <InputText type="text" class="defaultInput2" v-model="address" @focus="googleMap = true"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> مكان الإقامة </label>
+                                    <InputText type="text" class="defaultInput2" v-model="map_desc" @focus="googleMap = true"
                                         placeholder="الرجاء ادخال مكان الإقامة" />
                                     <!-- icon  -->
                                     <div class="inputIcon2">
@@ -178,9 +182,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="base-card" data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
+
+                <!-- المؤهلات  -->
+                <div class="base-card" >
                     <header class="p-3">
-                        <h6 class="font-weight-bold"> {{ qualification }}</h6>
+                        <h6 class="fw-bold">
+                                المؤهلات
+                        </h6>
                     </header>
                     <div class="p-3">
                         <div class="row">
@@ -188,11 +196,10 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> السيرة الذاتية </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> السيرة الذاتية </label>
                                     <Toast />
 
-                                    <FileUpload mode="basic" name="demo[]" url="./upload.php" accept=".pdf"
-                                        class="defaultInput2" :maxFileSize="100000000000" @upload="onUpload" />
+                                    <input type="file" class="form-control" name="cv"  style="background: #f8f8f8;">
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/pdf.svg')" alt="">
@@ -206,8 +213,8 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> المؤهل </label>
-                                    <Dropdown v-model="qualification" :options="qualifications" optionLabel="name"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> المؤهل </label>
+                                    <Dropdown v-model="qualification" :options="qualifications" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         placeholder="الرجاء تحديد المؤهل" />
                                     <!-- icon  -->
@@ -218,12 +225,12 @@
                                 </div>
                             </div>
 
-                            <!-- work fields  -->
+                            <!-- employments  -->
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> مجال العمل </label>
-                                    <Dropdown v-model="workField" :options="workFields" optionLabel="name"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> مجال العمل </label>
+                                    <Dropdown v-model="employment" :options="emps" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         placeholder="الرجاء تحديد مجال العمل" />
                                     <!-- icon  -->
@@ -238,8 +245,8 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> التخصص </label>
-                                    <Dropdown v-model="specialize" :options="specializes" optionLabel="name"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> التخصص </label>
+                                    <Dropdown v-model="specialization" :options="specs" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         placeholder="الرجاء تحديد التخصص" />
                                     <!-- icon  -->
@@ -253,9 +260,10 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> الشهادات المهنية </label>
-                                    <Dropdown v-model="certification" :options="certifications" optionLabel="name"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> الشهادات المهنية </label>
+                                    <MultiSelect v-model="selectedCer" :options="certifications" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
+                                        :maxSelectedLabels="5"
                                         placeholder="الرجاء تحديد الشهادات المهنية" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -269,8 +277,8 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> المهارات </label>
-                                    <MultiSelect v-model="skill" :options="skills" optionLabel="name"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> المهارات </label>
+                                    <MultiSelect v-model="selectedSkill" :options="skills" optionLabel="title"
                                         placeholder="الرجاء تحديد المهارات" :maxSelectedLabels="5"
                                         class="w-full md:w-20rem defaultInput2 position-relative" />
 
@@ -286,14 +294,14 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2">
+                                    <label for="integeronly" class="label fw-6 block mb-2">
                                         المسمى الوظيفي
                                         <span class="ifExist mx-2">
                                             ان وجد
                                             <i class="fa-solid fa-star-of-life"></i>
                                         </span>
                                     </label>
-                                    <InputText type="email" class="defaultInput2" v-model="jobName"
+                                    <InputText type="text" class="defaultInput2" v-model="job_title"
                                         placeholder="الرجاء ادخال المسمى الوظيفي" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -307,8 +315,8 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2"> سنوات الخبرة </label>
-                                    <Dropdown v-model="yearsExperience" :options="yearsExperiences" optionLabel="name"
+                                    <label for="integeronly" class="label fw-6 block mb-2"> سنوات الخبرة </label>
+                                    <Dropdown v-model="experience" :options="experiences" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         placeholder="الرجاء تحديد سنوات الخبرة" />
                                     <!-- icon  -->
@@ -323,14 +331,14 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-bold block mb-2">
+                                    <label for="integeronly" class="label fw-6 block mb-2">
                                         الشركة الحالية
                                         <span class="ifExist mx-2">
                                             ان وجد
                                             <i class="fa-solid fa-star-of-life"></i>
                                         </span>
                                     </label>
-                                    <InputText type="email" class="defaultInput2" v-model="currentCompany"
+                                    <InputText type="text" class="defaultInput2" v-model="company_name"
                                         placeholder="الرجاء ادخال الشركة الحالية" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -344,9 +352,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="base-card" data-aos="fade-left" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
+                <!-- الفيديو  -->
+                <div class="base-card" >
                     <header class="p-3">
-                        <h6 class="font-weight-bold"> {{ video }}</h6>
+                        <h6 class="fw-bold"> {{ video }}</h6>
                     </header>
                     <div class="p-3">
                         <div class="row justify-content-center">
@@ -391,33 +400,20 @@
                                             preview</button>
 
                                     </div>
-                                    <!-- <div class="card flex justify-content-center">
-                                        <Galleria v-model:visible="displayBasic" :value="images"
-                                            :responsiveOptions="responsiveOptions" :numVisible="9"
-                                            containerStyle="max-width: 50%" :circular="true" :fullScreen="true"
-                                            :showItemNavigators="true" :showThumbnails="false">
-                                            <template #item="slotProps">
-                                                <img :src="slotProps.item.itemImageSrc" :alt="slotProps.item.alt"
-                                                    style="width: 100%; display: block" />
-                                            </template>
-                                            <template #thumbnail="slotProps">
-                                                <img :src="slotProps.item.thumbnailImageSrc" :alt="slotProps.item.alt"
-                                                    style="display: block" />
-                                            </template>
-                                        </Galleria>
-
-                                        <Button label="Show" icon="pi pi-external-link" @click="displayBasic = true">du</Button>
-                                    </div> -->
 
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center" data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
+                <div class="d-flex justify-content-center" >
                     <router-link to="/" class="main_btn pt-3 pb-3 w-25 text-center"> اعادة تعيين كلمة المرور
                     </router-link>
-                    <button class="sec_btn pt-3 pb-3 w-25 mx-3 fw-bold" @click="done = true, routeHome()"> حفظ التغييرات
+                    <button class="sec_btn pt-3 pb-3 w-25 mx-3 fw-bold" :disabled="disabled"> 
+                        <span v-if="!disabled">حفظ التغييرات </span>
+                        <div class="spinner-border mx-2" role="status" v-if="disabled">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                     </button>
 
                 </div>
@@ -437,7 +433,7 @@
     </Dialog>
     <!-- forget pass modal  -->
     <Dialog v-model:visible="changeNumber" modal :style="{ width: '50vw' }">
-        <h5 class="fw-bold text-center"> تغيير رقم الجوال </h5>
+        <h6 class="fw-bold text-center"> تغيير رقم الجوال </h6>
         <p class=" text-center"> الرجاءادخال كلمة المرور الخاصه بك لتتمكن من تغيير رقم الجوال </p>
 
 
@@ -448,7 +444,7 @@
 
             <!-- password  -->
             <div class="position-relative flex-auto mt-3">
-                <label for="integeronly" class="label fw-bold block mb-2"> كلمة المرور </label>
+                <label for="integeronly" class="label fw-6 block mb-2"> كلمة المرور </label>
                 <Password v-model="value" :feedback="false" toggleMask class="defaultInput"
                     placeholder="الرجاء ادخال كلمة المرور" />
                 <!-- icon  -->
@@ -465,7 +461,7 @@
     </Dialog>
     <!-- otp modal  -->
     <Dialog v-model:visible="otp" modal :style="{ width: '50vw' }">
-        <h5 class="fw-bold text-center"> كود التحقق </h5>
+        <h6 class="fw-bold text-center"> كود التحقق </h6>
         <p class=" text-center"> الرجاء ادخال كود التحقق الذي تم ارساله الي رقم جوالك ليتم تفعيل الحساب الخاص بك </p>
         <div class="logo">
             <img :src="require('@/assets/imgs/forget2.svg')" alt="">
@@ -522,7 +518,7 @@
                     <!-- phone  -->
                     <div class="position-relative flex-auto">
 
-                        <label for="integeronly" class="label fw-bold block mb-2"> اسم المستخدم </label>
+                        <label for="integeronly" class="label fw-6 block mb-2"> اسم المستخدم </label>
                         <InputText type="text" class="defaultInput2" v-model="name"
                             placeholder="الرجاء ادخال اسم المستخدم" />
                         <!-- icon  -->
@@ -537,7 +533,7 @@
                     <!-- phone  -->
                     <div class="position-relative flex-auto">
 
-                        <label for="integeronly" class="label fw-bold block mb-2"> رقم الجوال </label>
+                        <label for="integeronly" class="label fw-6 block mb-2"> رقم الجوال </label>
                         <InputNumber v-model="value1" class="defaultInput" inputId="integeronly"
                             placeholder="الرجاء ادخال رقم الجوال" />
 
@@ -556,7 +552,7 @@
                     <!-- phone  -->
                     <div class="position-relative flex-auto">
 
-                        <label for="integeronly" class="label fw-bold block mb-2"> الرسالة </label>
+                        <label for="integeronly" class="label fw-6 block mb-2"> الرسالة </label>
                         <Textarea v-model="value" rows="5" cols="30" placeholder="الرجاء اكتب رسالتك هنا"
                             class="defaultInput2" />
 
@@ -576,7 +572,7 @@
     <!-- reset password  -->
     <Dialog class="contactModal" v-model:visible="resetPassword" modal :style="{ width: '50vw' }">
 
-        <h5 class="fw-bold text-center mb-3"> اعادة تعيين كلمة المرور </h5>
+        <h6 class="fw-bold text-center mb-3"> اعادة تعيين كلمة المرور </h6>
         <div class="logo">
             <img :src="require('@/assets/imgs/logo.png')" alt="">
         </div>
@@ -588,7 +584,7 @@
                     <!-- password  -->
                     <div class="position-relative flex-auto mt-3">
 
-                        <label for="integeronly" class="label fw-bold block mb-2"> كلمة المرور </label>
+                        <label for="integeronly" class="label fw-6 block mb-2"> كلمة المرور </label>
                         <Password v-model="oldPass" toggleMask class="defaultInput"
                             placeholder="الرجاء ادخال كلمة المرور" />
 
@@ -603,7 +599,7 @@
                     <!-- confirm password  -->
                     <div class="position-relative flex-auto mt-3">
 
-                        <label for="integeronly" class="label fw-bold block mb-2"> تأكيد كلمة المرور </label>
+                        <label for="integeronly" class="label fw-6 block mb-2"> تأكيد كلمة المرور </label>
                         <Password v-model="newPass" :feedback="false" toggleMask class="defaultInput"
                             placeholder="الرجاء تأكيد كلمة المرور" />
 
@@ -654,12 +650,16 @@ import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
-import FileUpload from 'primevue/fileupload';
+//import FileUpload from 'primevue/fileupload';
 import MultiSelect from 'primevue/multiselect';
 import Password from 'primevue/password';
 // import Galleria from 'primevue/Galleria'
 import AOS from "aos";
 
+import {mapGetters, mapActions} from 'vuex';
+
+import axios from 'axios';
+import Toast from 'primevue/toast';
 
 // import router from '@/router';
 export default {
@@ -671,17 +671,14 @@ export default {
         InputText,
         InputNumber,
         Calendar,
-        FileUpload,
+        //FileUpload,
         Dialog,
         MultiSelect,
         Password,
+        Toast
         // Galleria
     },
-    computed: {
-        passwordMatch() {
-            return this.oldPass === this.newPass;
-        }
-    },
+   
     data() {
         return {
             images: null,
@@ -706,10 +703,9 @@ export default {
             displayBasic: false,
             personalAccTitle: 'البيانات الشخصيه ',
             location: 'العنوان',
-            qualification: 'المؤهلات',
             video: 'الفيديو',
             showVideo: false,
-            videoSource: null,
+            videoSource: '',
             locations:
             {
                 lat: 0,
@@ -723,13 +719,48 @@ export default {
             visible2: false,
             otp: false,
             timer: 180,
-            done: false
+            done: false,
 
-
-
+            //new data 
+            name : '',
+            phone : '',
+            email : '',
+            genders : [
+                {
+                id : 1,
+                name : 'male'
+                },
+                {
+                id : 2,
+                name : 'female'
+                }
+            ],
+            gender : '',
+            birth_date : '',
+            nationality : '',
+            selectedCity : null,
+            map_desc : '',
+            cv : null,
+            qualification : null,
+            employment : null,
+            specialization : null,
+            selectedCer : null,
+            selectedSkill : null,
+            job_title : '',
+            experience : null,
+            company_name : '',
+            disabled: false
+        }
+    },
+    computed:{
+        ...mapGetters('common',['nationalities', 'cities', 'qualifications', 'emps', 'specs', 'certifications', 'skills', 'experiences']),
+        passwordMatch() {
+            return this.oldPass === this.newPass;
         }
     },
     methods: {
+        ...mapActions('common',['getNations', 'getCities','getQualifications', 'getEmployment', 'getSpecilizations', 'getCertifications', 'getSkills', 'getExperiences']),
+
         logDuration() {
                     console.log(this.$refs.video.duration)
                     if (this.$refs.video.duration <= 1040) {
@@ -758,7 +789,9 @@ export default {
             }
 
         },
-        onUpload() {
+        onUpload(e) {
+            console.log(this.cv)
+            console.log(e)
             this.$toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
         },
         sendMail() {
@@ -778,9 +811,7 @@ export default {
         beforeUnmount() {
             clearInterval(this.intervalId);
         },
-        mounted() {
-            this.startTimer();
-        },
+        
         // get current location  
         geolocation() {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -806,7 +837,7 @@ export default {
             const geocoder = new window.google.maps.Geocoder()
             geocoder.geocode({ location: latLng }, (results, status) => {
                 if (status === 'OK') {
-                    this.address = results[0].formatted_address
+                    this.map_desc = results[0].formatted_address
                 } else {
                     console.error('Geocode was not successful for the following reason: ' + status)
                 }
@@ -820,7 +851,7 @@ export default {
                     lat: place.geometry.location.lat(),
                     lng: place.geometry.location.lng(),
                 };
-                this.address = place.formatted_address;
+                this.map_desc = place.formatted_address;
             }
         },
         routeHome() {
@@ -829,13 +860,152 @@ export default {
                 // this.$router.push({ path: '/' })   
                 document.querySelector('.p-dialog-header-close').click()
             }, 2000)
+        },
+
+
+
+        // get profile 
+        async getProfile(){
+            const fd = new FormData();
+            const token = localStorage.getItem('token');
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            await axios.post('user/profile',fd , {headers})
+            .then((res)=>{
+                const data = res.data.data ;
+                if( res.data.key === 'success' ){
+                    this.name = data.name ;
+                    this.email = data.email ;
+                    this.phone = data.phone ;
+                    this.birth_date = data.birth_date ;
+                    this.company_name = data.company_name ;
+                    this.selectedCer = data.certifications ;
+                    this.map_desc = data.map_desc ;
+                    this.selectedSkill = data.skills ;
+                    this.qualification = data.qualification ;
+                    this.specialization = data.specialization ;
+                    this.selectedCity = data.city ;
+                    this.cv = data.cv ;
+                    // document.querySelector('#cv .p-button-label').innerHTML = data.cv ;
+                    this.job_title = data.job_title ;
+                    this.employment = data.employment ;
+                    this.experience = data.experience ;
+                    this.locations.lat = data.lat ;
+                    this.locations.lng = data.lat ;
+                    this.videoSource = data.video ;
+                    this.nationality = data.nationality ;
+                    if( data.video != '' ){
+                        this.showVideo = true;
+                    }     
+                    if( data.gender == 'ذكر' ){
+                        this.gender = this.genders[0];
+                    }else if( data.gender == 'انثي' ){
+                        this.gender = this.genders[1];
+                    }
+                }
+            })
+        },
+
+        // update profile 
+        async updateProfile(){
+            this.disabled = true ;
+            const fd = new FormData( this.$refs.profile );
+            
+            // common share function 
+            function appendedIfSelected( formData, key , selectedValue ){
+                if( selectedValue ){
+                    formData.append(key , selectedValue.id)
+                }
+            }
+            // append id 
+            appendedIfSelected(fd, 'employment_id', this.employment);
+            appendedIfSelected(fd, 'specialization_id', this.specialization);
+            appendedIfSelected(fd, 'qualification_id', this.qualification);
+            appendedIfSelected(fd, 'experience_id', this.experience);
+            appendedIfSelected(fd, 'city_id', this.selectedCity);
+
+            // append locations 
+            if( this.map_desc ){
+                fd.append('map_desc', this.map_desc)
+            }
+            if( this.locations ){
+                fd.append('lat', this.locations.lat)
+                fd.append('lng', this.locations.lng)
+            }
+            // append skills 
+            for (let i = 0; i < this.selectedSkill.length; i++) {
+            appendedIfSelected(fd, `skills[${i}]`, this.selectedSkill[i]);
+            }
+            // append certifications 
+            for (let i = 0; i < this.selectedCer.length; i++) {
+            appendedIfSelected(fd, `certifications[${i}]`, this.selectedCer[i]);
+            }
+
+            // append gender
+            if( this.gender ){
+                fd.append('gender', this.gender.name)
+            }
+            // append cv 
+            // if( this.cv ){
+            //     fd.append('cv', this.cv)
+            // }
+            // append birth date 
+            if( this.birth_date ){
+                const date = new Date(this.birth_date);
+                // Extract day, month, and year from the Date object
+                const day = date.getDate();
+                const month = date.getMonth() + 1; // Months are zero-based, so add 1
+                const year = date.getFullYear();
+                // Format the date components as a string in the desired format
+                const formattedDate = `${day}-${month}-${year}`;
+
+                fd.append('birth_date', formattedDate)
+            }
+            // append nation 
+            if( this.nationality ){
+            fd.append('nationality', this.nationality)
+            }
+            const token = localStorage.getItem('token');
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+
+            await axios.post('user/profile/update', fd , {headers})
+            .then( (res)=>{
+                if( res.data.key === 'success' ){
+                    this.disabled = false ;
+                    this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
+                    setTimeout(() => {
+                        this.getProfile()
+                    }, 3000);
+                }else{
+                    this.disabled = false ;
+                    this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });
+                }
+            } )
+
         }
     },
     mounted() {
         this.geolocation();
+        this.startTimer();
+
+        this.getNations();
+        this.getCities();
+        this.getQualifications();
+        this.getEmployment();
+        this.getSpecilizations();
+        this.getCertifications();
+        this.getSkills();
+        this.getExperiences();
+
+        this.getProfile();
+
+
         AOS.init();
-        let filePlaceholder = document.querySelector('.p-button-label');
-        filePlaceholder.innerHTML = 'الرجاء اختيار السيرة الذاتية'
+        // let filePlaceholder = document.querySelector('.p-button-label');
+        // filePlaceholder.innerHTML = 'الرجاء اختيار السيرة الذاتية'
     }
 }
 </script>

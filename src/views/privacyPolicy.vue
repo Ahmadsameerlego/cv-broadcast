@@ -1,24 +1,24 @@
 <template>
-    <!-- header  -->
+    <!-- header  --> 
     <siteHeaderVue />
     <!-- bread-crumb -->
     <div class="breadcrumb d-flex externalBreadcrumb mb-0">
         <router-link to="/" class="inActive"> {{  $t('nav.main')  }} </router-link>&nbsp; - &nbsp;
-        <p class="active mainColor">  {{  $t('nav.terms')  }} </p>
+        <p class="active mainColor">  {{  $t('home.privacy')  }} </p>
     </div>
     <!-- terms and condition  -->
-    <section class="mt-3 mb-3" data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic">
+    <section class="mt-3 mb-3" data-aos="fade-left" data-aos-duration="1000" data-aos-easing="ease-out-cubic" >
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-12">
                     <h5 class="fw-bold red mb-3">
-                        {{  $t('nav.terms')  }}
+                        {{  $t('home.privacy')  }}
                     </h5>
                     <p>
                         <span class="m-end-5">-</span>
-                        <span v-html="terms"></span>
+                        <span v-html="privacy">  </span>
                     </p>
-                   
+                    
                 </div>
             </div>
         </div>
@@ -36,6 +36,7 @@ import siteHeaderVue from '@/components/site/layout/siteHeader.vue';
 import siteFooterVue from '@/components/site/layout/siteFooter.vue';
 import AOS from "aos";
 import {mapGetters , mapActions} from 'vuex';
+
 export default {
     components: {
         siteHeaderVue,
@@ -47,14 +48,14 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('setting',['terms'])
+        ...mapGetters('setting',['privacy'])
     },
     methods:{
-        ...mapActions('setting',['getTerms']),
+        ...mapActions('setting',['getPrivacy']),
     },
     mounted(){
         AOS.init();
-        this.getTerms();
+        this.getPrivacy();
     }
 }
 </script>

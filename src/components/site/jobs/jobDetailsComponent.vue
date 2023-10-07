@@ -17,23 +17,25 @@
                     <div class="single_card d-flex">
                         <!-- card image  -->
                         <div class="card_image">
-                            <img :src="require('@/assets/imgs/SSM 1.png')" alt="">
+                            <img :src="company.image" alt="">
                         </div>
 
                         <!-- card details  -->
                         <div class="card_details mx-3">
-                            <h6 class="mainColor fw-bold mb-3"> مهندس كمبيوتر </h6>
+                            <h6 class="mainColor fw-bold mb-3"> {{ job.job_name  }} </h6>
 
                             <div class="d-flex mb-3">
                                 <img :src="require('@/assets/imgs/dot.svg')"  alt="">
-                                <span class="mainColor2 fw-6 mx-2">الرياض</span>
+                                <span class="mainColor2 fw-6 mx-2">
+                                    {{  job.map_desc  }}
+                                </span>
                             </div>
 
 
 
                             <router-link to="/company" style="color:inherit" class="d-flex align-items-baseline">
                                 <img class="br-50 company_image" :src="require('@/assets/imgs/bag.svg')" alt="">
-                                <p class="fw-bold mx-2"> شركة أوامر الشبكة </p>
+                                <p class="fw-bold mx-2"> {{  company.name  }} </p>
                             </router-link>
                         </div>
 
@@ -43,7 +45,7 @@
                         <div class="abs_time d-flex align-items-baseline">
                             <img :src="require('@/assets/imgs/clock.svg')" alt="">
                             <span class="grayColor mx-2"> {{  $t('common.date')  }}: </span>
-                            <span > منذ ساعة </span>
+                            <span > {{ job.published_at  }} </span>
                         </div>
 
                     </div>
@@ -61,14 +63,14 @@
                                         <img :src="require('@/assets/imgs/bluebook.svg')" alt="">
                                         <span class="grayColor mx-2"> {{ $t('job.qual') }} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15 mb-4"> بكالربوس حاسات ومعلومات </p>
+                                    <p class="fw-bold fs-15 mb-4"> {{ job.qualification }} </p>
 
 
                                     <div class="d-flex">
                                         <img :src="require('@/assets/imgs/bluetimer.svg')" alt="">
                                         <span class="grayColor mx-2"> {{ $t('common.jobType')  }} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15"> بكالربوس حاسات ومعلومات </p>
+                                    <p class="fw-bold fs-15"> {{ job.type  }} </p>
 
                                 </div>
 
@@ -77,14 +79,16 @@
                                         <img :src="require('@/assets/imgs/bluebag.svg')" alt="">
                                         <span class="grayColor mx-2"> {{  $t('common.exper')  }} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15 mb-4"> 2-5 سنة </p>
+                                    <p class="fw-bold fs-15 mb-4"> {{ job.experience }} </p>
 
 
                                     <div class="d-flex">
                                         <img :src="require('@/assets/imgs/bluetimer.svg')" alt="">
                                         <span class="grayColor mx-2"> {{ $t('common.salary') }} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15"> يحدد في المقابلة </p>
+                                    <p class="fw-bold fs-15"> 
+                                        {{ job.salary }}
+                                    </p>
 
                                 </div>
 
@@ -93,7 +97,7 @@
                                         <img :src="require('@/assets/imgs/bluegender.svg')" alt="">
                                         <span class="grayColor mx-2"> {{  $t('auth.gender')  }} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15 mb-4"> ذكور فقط </p>
+                                    <p class="fw-bold fs-15 mb-4"> {{  job.gender  }} </p>
 
                                 </div>
 
@@ -101,7 +105,7 @@
                                     <div class="d-flex">
                                         <span class="grayColor mx-2"> {{ $t('common.type')}} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15 mb-4"> سعودي </p>
+                                    <p class="fw-bold fs-15 mb-4"> {{ job.category  }} </p>
 
                                 </div>
 
@@ -109,6 +113,53 @@
                             </div>
                         </div>
                     </section>
+
+                    <!-- res  -->
+                    <section class="job_conditions gray mt-5">
+                        <div class="condition_header mainColor pt-3 pb-3 px-3 fs-16 fw-bold">
+                           المهام والمسئوليات
+                        </div>
+                        <div class="condition_body pt-3 pb-3 px-3">
+                            <p>
+                                - {{  job.tasks  }}
+                            </p>
+                        </div>
+                    </section>
+
+                     <!-- conditions  -->
+                     <section class="job_conditions gray mt-5">
+                        <div class="condition_header mainColor pt-3 pb-3 px-3 fs-16 fw-bold">
+                           شروط الوظيفة
+                        </div>
+                        <div class="condition_body pt-3 pb-3 px-3">
+                            <p>
+                                - {{  job.conditions  }}
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- skills  -->
+                    <section class="job_conditions gray mt-5">
+                        <div class="condition_header mainColor pt-3 pb-3 px-3 fs-16 fw-bold">
+                           المهارات
+                        </div>
+                        <div class="condition_body pt-3 pb-3 px-3">
+                            <p v-for="skill in job.skills" :key="skill.id">
+                                - {{  skill.title  }}
+                            </p>
+                        </div>
+                    </section>
+
+
+                    <!-- apply job  -->
+                    <div class="apply_Job flex_center">
+                        <button class="main_btn w-50 mx-auto  pt-3 pb-3 mt-3" :disabled="disabled" @click.prevent="applyJob()">
+                             <span v-if="!disabled">التقدم للوظيفة </span>
+                            <div class="spinner-border mx-2" role="status" v-if="disabled">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </button>
+                    </div>
 
 
                 </div>
@@ -167,11 +218,62 @@
         </section>
     </div>
   </section>
+  <Toast />
 </template>
 
 <script>
-export default {
+import axios from 'axios';
+import Toast from 'primevue/toast';
 
+export default {
+    data(){
+        return{
+            job : {},
+            company : {},
+            disabled : false
+        }
+    },
+    methods:{
+        async getJobDetails(){
+            const fd = new FormData();
+            fd.append('advertisement_id', this.$route.params.id);
+            await axios.post( 'user/advertisements/show', fd )
+            .then( (res) =>{
+                this.job = res.data.data;
+                this.company = res.data.data.company;
+            } )
+        },
+        // apply job 
+        async applyJob(){
+            const fd = new FormData();
+            this.disabled = true ;
+            const token = localStorage.getItem('token');
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            fd.append('advertisement_id', this.$route.params.id);
+            await axios.post( 'user/advertisements/apply', fd , {headers})
+            .then( (res) =>{
+                if( res.data.key === 'success' ){
+                    this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
+                    this.disabled = false ;
+                    setTimeout(() => {
+                        this.$router.push('/exploreJobs');
+                    }, 3000);
+                }else{
+                    this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });
+                    this.disabled = false ;
+                }
+            } )
+            .catch( (err)=> console.error(err) )
+        }
+    },
+    components:{
+        Toast
+    },
+    mounted(){
+        this.getJobDetails();
+    }
 }
 </script>
 
@@ -203,6 +305,9 @@ export default {
             padding-top: 20px;
             padding-bottom:20px;
             border-bottom: 1px solid #F0F0F0;
+        }
+        &.gray{
+            background-color: #fdfdfd;
         }
     }
 </style>

@@ -15,7 +15,9 @@ import contact from '@/views/contactUs.vue';
 import rooms from '@/views/chatRooms.vue';
 import singleChat from '@/views/singleChatRoom.vue';
 import profile from '@/views/personalAccount.vue';
-import error404 from '@/views/notFound.vue'
+import privacy from '@/views/privacyPolicy.vue';
+import allAds from '@/views/avilableAds.vue'
+import error404 from '@/views/notFound.vue';
 
 const routes = [
   {
@@ -99,10 +101,20 @@ const routes = [
     component : profile
   },
   {
+    path : '/privacy',
+    name : 'privacy',
+    component : privacy
+  },
+  {
+    path : '/allAds',
+    name : 'allAds',
+    component : allAds
+  },
+  {
     path: '/:catchAll(.*)*',
     name: "error404",
     component: error404,
-  },
+  }
 
   // whoAreWe.vue
 

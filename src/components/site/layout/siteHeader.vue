@@ -4,7 +4,6 @@
         <!-- full header  -->
         <div class="d-flex justify-content-between align-items-center">
 
-                
             <!-- logo  -->
             <div class="logo">
                 <img :src="require('@/assets/imgs/logo.png')" alt="site logo">
@@ -40,7 +39,7 @@
             <!-- user interaction  -->
             <div class="user_interaction d-flex justify-content-between align-items-center">
                 <!-- alert  -->
-                <router-link to="/notificationPage" class="alert flex_center mb-0 mx-2">
+                <router-link to="/notificationPage" class="alert flex_center mb-0 mx-2" v-if="isLoggedIn">
                     <i class="fa-regular fa-bell"></i>
                 </router-link>
 
@@ -50,7 +49,7 @@
                 </router-link>
 
                 <!-- messages  -->
-                <router-link to="/" class="message flex_center mb-0 mx-2">
+                <router-link to="/" class="message flex_center mb-0 mx-2" v-if="isLoggedIn">
                     <img :src="require('@/assets/imgs/messages.png')" alt="">
                 </router-link>
 
@@ -62,15 +61,15 @@
                 </button>
 
                 <!-- login  -->
-                <!-- <router-link class="bordered_btn mx-2" to="/login"> {{ $t('nav.login') }} </router-link> -->
+                <router-link class="bordered_btn mx-2" to="/login" v-if="!isLoggedIn">  {{ $t('nav.login') }} </router-link>
                 <!-- register  -->
-                <!-- <router-link class="main_btn mx-2" to="/register"> {{ $t('nav.register') }} </router-link> -->
+                <router-link class="main_btn mx-2" to="/register" v-if="!isLoggedIn"> {{ $t('nav.register') }} </router-link>
 
                 <!-- profile dropdown  -->
-                <div class="dropdown profile br-5">
+                <div class="dropdown profile br-5" v-if="isLoggedIn">
                     <button class="btn dropdown-toggle px-4 br-5 pt-2 pb-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://lottiefiles.com/113472-happy-eye-emoji-animation" class="mx-2 imoji" width="20" height="20" alt="">
-                        <span class="name">اهلا احمد</span>
+                        <span class="name">اهلا {{ username }}</span>
 
                         <i class="fa-regular fa-user user_profile"></i>
                     </button>
@@ -98,7 +97,7 @@
                         </li>
 
                         <li class="mb-3">
-                            <button class="dropdown-item d-flex justify-content-start align-items-center" >
+                            <button class="dropdown-item d-flex justify-content-start align-items-center" @click.prevent="signOut">
                                 <span class="profile_icon logout flex_center">
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                 </span>
@@ -117,15 +116,28 @@
         </div>
     </div>
   </header>
+  <Toast />
 </template>
 
 
 <script>
+import { mapState } from "vuex" ;
+import axios from 'axios';
+import Toast from 'primevue/toast';
+
 export default {
     data(){
         return{
-            open : true
+            open : true,
+            isLoggedIn : false,
+            username : ''
         }
+    },
+    computed:{
+        ...mapState(["auth"])
+    },
+    components:{
+        Toast
     },
     methods:{
         // switch lang     
@@ -168,11 +180,38 @@ export default {
         //         this.$refs.toggleICon.children[0].classList.add('fa-bars');
         //     }
         // },
+        // sign out 
+        async signOut(){
+            const token = localStorage.getItem('token');
+            // const token = JSON.parse(localStorage.getItem('user'))[0].token;
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            await axios.delete('user/logout', {headers})
+            .then( (res)=>{
+                if( res.data.key == 'success' ){
+                    this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
+                    setTimeout(() => {
+                        this.$router.push('/login')
+                    }, 3000);
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('isAuth');
+                    localStorage.removeItem('user');
+                }else{
+                    this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });             
+                }
+            } )
+        }
     },
 
     mounted(){
         // window.addEventListener('click', this.closeNavbarOnClickOutside);
-
+        if( localStorage.getItem('token') ){
+            this.isLoggedIn = true ;
+        }
+        if( localStorage.getItem('user') ){
+            this.username = JSON.parse(localStorage.getItem('user')).name ;
+        }
     },
     beforeUnmount(){
         // window.addEventListener('click', this.closeNavbarOnClickOutside);
@@ -223,7 +262,14 @@ export default {
             }
         }
     }
-    header{
+    #header{
+        position: sticky;
+        box-shadow: 0px 0px 10px #3333336b;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9;
+        background-color: #fff;
         .logo{
             width: 135px;
             height: 120px;

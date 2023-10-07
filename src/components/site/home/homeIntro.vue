@@ -5,12 +5,14 @@
             <div class="col-md-7 mb-3">
                 <div class="row">
 
-                    <div class="col-md-6">
-                        <h6 class="fw-bold mb-3">ابحث عن وظيفتك فى سيڤي برودكاست</h6>
-                        <p class="fw-6">سي ڤي برودكاست عبارة عن منصة تتيح لك عرض مؤهلاتك وخبراتك ومهاراتك للجهات الباحثة عن مرشحين للعمل لديها.</p>
+                    <div class="col-md-6" v-for="item in top" :key="item">
+                        <h6 class="fw-bold mb-3"> {{  item.title  }} </h6>
+                        <p class="fw-6">
+                            {{ item.content }}
+                        </p>
                     </div>
 
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <h6 class="fw-bold mb-3">لماذا سي في برودكاست</h6>
                         <p class="fw-6"> يتيح سيڤي برودكاست الفرصة للباحثين عن وظائف، ميزة خاصة من خلال تسجيل مقطع فيديو يُبرز اهم النقاط في سيرتك الذاتية. </p>
                     </div>
@@ -18,10 +20,10 @@
                     <div class="col-md-12">
                         <h6 class="fw-bold mb-3">نفتح لك ابواب عالم الوظائف</h6>
                         <p class="fw-6"> يتيح لك سي ڤي برودكاست الوظائف المعلنة عبر التطبيق والتي تناسب مؤهلاتك وخبراتك ومهاراتك، وكذلك آلية للتواصل معك من قبل الجهات الباحثة عن موظفين.  </p>
-                    </div>
+                    </div> -->
 
                     <div class="intro_btns mt-4 d-flex align-items-center">
-                        <router-link to="/" class="main_btn d-flex"> 
+                        <router-link to="/exploreJobs" class="main_btn d-flex"> 
                             <img :src="require('@/assets/imgs/search.png')" alt="">
                             <span> {{ $t('home.search')  }} </span>
                         </router-link>
@@ -33,7 +35,7 @@
             </div>
             <div class="col-md-5 mb-3">
                 <div class="job_image">
-                    <img class="w-100 h-100 lazy" :src="require('@/assets/imgs/job.png')" alt="job canvas">
+                    <img class="w-100 h-100 lazy" :src="site_intro_img" alt="job canvas">
                 </div>
             </div>
         </div>
@@ -42,8 +44,18 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
-
+    computed:{
+        ...mapGetters( 'setting', ['top','settings', 'site_intro_img'] )
+    },
+    methods:{
+        ...mapActions('setting', ['getTopSection', 'getSettings'])
+    },
+    mounted(){
+        this.getTopSection();
+        this.getSettings();
+    }
 }
 </script>
 
@@ -78,48 +90,48 @@ export default {
     .bordered_btn{
         position: relative;
         transition: .3s all;
-        &::before{
-            content: '';
-            position: absolute;
-            width: 0%;
-            height: 100%;
-            top: 0;
-            right: 0;
-            background-color: #6D98DB;
-            transition: .3s all;
-            z-index: -1;
-            border-radius: 20px;
-        }  
-        &:hover{
-            color:#fff;
-            z-index:1 ;
-            &::before{
-                width: 100%;
-            }
-        }
+        // &::before{
+        //     content: '';
+        //     position: absolute;
+        //     width: 0%;
+        //     height: 100%;
+        //     top: 0;
+        //     right: 0;
+        //     background-color: #6D98DB;
+        //     transition: .3s all;
+        //     z-index: -1;
+        //     border-radius: 20px;
+        // }  
+        // &:hover{
+        //     color:#fff;
+        //     z-index:1 ;
+        //     &::before{
+        //         width: 100%;
+        //     }
+        // }
     }
     .main_btn{
         position: relative;
         transition: .3s all;
-        &::before{
-            content: '';
-            border-radius: 20px !important;
-            position: absolute;
-            width: 100%;
-            height: 0%;
-            bottom: 0;
-            right: 0;
-            background-color: #fff;
-            transition: .3s all;
-            z-index: -1;
-        }  
-        &:hover{
-            color:#293255;
-            z-index:1 ;
-            &::before{
-                height: 100%;
-                border: 1px solid #293255;
-            }
-        }
+        // &::before{
+        //     content: '';
+        //     border-radius: 20px !important;
+        //     position: absolute;
+        //     width: 100%;
+        //     height: 0%;
+        //     bottom: 0;
+        //     right: 0;
+        //     background-color: #fff;
+        //     transition: .3s all;
+        //     z-index: -1;
+        // }  
+        // &:hover{
+        //     color:#293255;
+        //     z-index:1 ;
+        //     &::before{
+        //         height: 100%;
+        //         border: 1px solid #293255;
+        //     }
+        // }
     }
 </style>
