@@ -16,8 +16,11 @@ import rooms from '@/views/chatRooms.vue';
 import singleChat from '@/views/singleChatRoom.vue';
 import profile from '@/views/personalAccount.vue';
 import privacy from '@/views/privacyPolicy.vue';
-import allAds from '@/views/avilableAds.vue'
+import allAds from '@/views/avilableAds.vue';
+import updatePassword from '@/views/updatePassword.vue';
+import jobApplication from '@/views/jobApplication.vue'
 import error404 from '@/views/notFound.vue';
+
 
 const routes = [
   {
@@ -76,7 +79,7 @@ const routes = [
     component : orders
   },
   {
-    path : '/company',
+    path : '/company/:id',
     name : 'company',
     component : company
   },
@@ -109,6 +112,16 @@ const routes = [
     path : '/allAds',
     name : 'allAds',
     component : allAds
+  },
+  {
+    path : '/updatePassword',
+    name : 'updatePassword',
+    component : updatePassword
+  },
+  {
+    path : '/jobApplication/:id',
+    name : 'jobApplication',
+    component  : jobApplication 
   },
   {
     path: '/:catchAll(.*)*',

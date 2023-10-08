@@ -19,41 +19,41 @@
                     <div class="company_cover position-relative">
                         <!-- cover  -->
                         <div class="cover">
-                            <img :src="require('@/assets/imgs/cover.png')" alt="company cover">
+                            <img :src="company.banner" alt="company cover">
                         </div>
                         <!-- profile pic  -->
                         <div class="pic">
-                            <img :src="require('@/assets/imgs/logo.png')" alt="company profile">
+                            <img :src="company.image" alt="company profile">
                         </div>
                     </div>
 
                     <!-- company details  -->
                     <section class="company_details">
-                        <h4 class="fw-bold"> شركة أوامر الشبكة </h4>
+                        <h4 class="fw-bold"> {{ company.name }} </h4>
 
                         <div class="d-flex align-items-center mt-3">
                             <img :src="require('@/assets/imgs/dot.svg')" class="dotImage" alt="">
 
-                            <span class="d-block fs-18 fw-6 mainColor2 mx-2"> الرياض </span>
+                            <span class="d-block fs-18 fw-6 mainColor2 mx-2"> {{ city.name }} </span>
                         </div>
 
                         <div class="d-flex align-items-center mt-3">
                             <img :src="require('@/assets/imgs/phone1.svg')" alt="">
 
-                            <span class="d-block fs-18 fw-6  mx-2"> 01013746111 </span>
+                            <a :href="'tel:'+company.phone" class="d-block fs-18 fw-6  mx-2" style="color:inherit"> {{ company.phone }} </a>
                         </div>
 
                         <div class="d-flex align-items-center mt-3">
                             <img :src="require('@/assets/imgs/globe.svg')" alt="">
 
-                            <span class="d-block fs-18 fw-6  mx-2"> ahmadsamerlego@gmail.com </span>
+                            <a :href="'mailto:'+company.email" class="d-block fs-18 fw-6  mx-2"  style="color:inherit"> {{ company.email }} </a>
                         </div>
 
                         <!-- bio  -->
                         <div class="mt-4">
                             <h5 class="mainColor fw-bold"> نبذه عن الشركة </h5>
                             <p class="bio fw-6 fs-15 mt-3">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore explicabo laboriosam ex iusto consequuntur provident nulla est velit veritatis modi?
+                                {{ company.description }}
                             </p>
                         </div>
                     </section>
@@ -68,19 +68,19 @@
                     </div>
 
                     <!-- single card  -->
-                    <div class="single_card other_single_card d-flex">
+                    <div class="single_card other_single_card d-flex mb-2" v-for="ad in ads" :key="ad.id">
                         <!-- card image  -->
                         <div class="card_image">
-                            <img :src="require('@/assets/imgs/SSM 1.png')" alt="">
+                            <img :src="ad.company.image" alt="">
                         </div>
 
                         <!-- card details  -->
                         <div class="card_details mx-3">
-                            <p class="mainColor fw-bold mb-3"> مهندس كمبيوتر </p>
+                            <p class="mainColor fw-bold mb-3"> {{ ad.job_name }} </p>
 
                             <div class="d-flex mb-3">
                                 <img :src="require('@/assets/imgs/dot.svg')"  alt="">
-                                <span class="mainColor2 fw-6 mx-2">الرياض</span>
+                                <span class="mainColor2 fw-6 mx-2"> {{ ad.city }} </span>
                             </div>
 
 
@@ -88,7 +88,7 @@
                             <div class="d-flex align-items-baseline">
                                 <img :src="require('@/assets/imgs/bag.svg')" alt="">
                                 <span class="grayColor mx-2 fs-9"> {{ $t('common.jobType') }}: </span>
-                                <h6 class="fw-bold fs-12"> دوام كامل </h6>
+                                <h6 class="fw-bold fs-12"> {{ ad.type }} </h6>
                             </div>
                         </div>
 
@@ -97,15 +97,30 @@
                         <!-- time  -->
                         <div class="abs_time d-flex align-items-center">
                             <img :src="require('@/assets/imgs/clock.svg')" alt="">
-                            <span class="fs-10 mx-1"> منذ ساعة </span>
+                            <span class="fs-10 mx-1"> {{ ad.published_at }} </span>
                         </div>
 
                         <!-- details  -->
-                        <router-link to="/jobDetails/1" class="abs_details fs-10 grayColor"> 
+                        <router-link :to="'/jobDetails/'+ad.id" class="abs_details fs-10 grayColor"> 
                             {{  $t('common.showDetails')  }}
                             <i class="fa-solid fa-chevron-left"></i> 
                         </router-link>
 
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <paginate
+                            v-model="currentPage"
+                            :page-count="totalPages"
+                            :click-handler="page => pageClickHandler(page)"
+                            :prev-text="'Prev'"
+                            :next-text="'Next'"
+                            :container-class="'pagination'"
+                            :page-class="'page-item'"    
+                            :no-li-surround="true"   
+                            v-if="ads.length>0"        
+                    >
+                    </paginate>
                     </div>
                 </div>
 
@@ -117,8 +132,58 @@
 </template>
 
 <script>
-export default {
+import axios from 'axios';
+import Paginate from 'vuejs-paginate-next';
 
+export default {
+    data(){
+        return{
+            company : {},
+            city : {},
+            ads : [],
+            currentPage: 1,
+            perPage: 10,
+            totalPages: 0,
+
+            
+        }
+    },
+    created() {
+        this.totalPages = Math.ceil(this.ads.length / this.perPage)
+    },
+    components:{
+        Paginate
+    },
+    methods:{
+        // get company profile 
+        async getCompanyProfile(){
+            const fd = new FormData();
+            fd.append('company_id', this.$route.params.id);
+            await axios.post('user/company/profile', fd)
+            .then( (res)=>{
+                this.company = res.data.data;
+                this.city = res.data.data.city;
+            } )
+        },
+        // get company advertisment 
+        async getAdvertisement(){
+            const fd = new FormData();
+            fd.append('company_id', this.$route.params.id);
+            await axios.post(`user/company/advertisements?page=${this.currentPage}`, fd)
+            .then( (res)=>{
+                this.ads = res.data.data;
+            } )
+        },
+        pageClickHandler(page) {
+            this.currentPage = page
+            this.getAdvertisement()
+        },
+
+    },
+    mounted(){
+        this.getCompanyProfile();
+        this.getAdvertisement();
+    }
 }
 </script>
 

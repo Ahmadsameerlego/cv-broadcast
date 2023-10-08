@@ -4,18 +4,18 @@
     <!-- content -->
     <div class="mt-3 mb-3 mx-5">
         <div class="breadcrumb d-flex mb-0">
-            <router-link to="/" class="inActive"> الرئيسية </router-link>&nbsp; - &nbsp;
-            <p class="active mainColor"> الملف الشخصي </p>
+            <router-link to="/" class="inActive"> {{ $t('nav.main') }} </router-link>&nbsp; - &nbsp;
+            <p class="active mainColor"> {{ $t('auth.profile') }} </p>
         </div>
 
-        <h6 class="fw-bold red mb-4 mt-3"> الملف الشخصي </h6>
+        <h6 class="fw-bold red mb-4 mt-3"> {{ $t('auth.profile') }} </h6>
 
         <section class="loginSection" >
             <form action="" class="flex flex-wrap gap-3 p-fluid mt-4" ref="profile" @submit.prevent="updateProfile">
                 <!-- البيانات الشخصية  -->
                 <div class="base-card" >
                     <header class="p-3">
-                        <h6 class="fw-bold"> {{ personalAccTitle }}</h6>
+                        <h6 class="fw-bold"> {{ $t('auth.info') }}</h6>
                     </header>
                     <div class="p-3">
                         <div class="row">
@@ -23,9 +23,9 @@
                             <div class="col-md-6 mb-2">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> اسم المستخدم </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.user') }} </label>
                                     <InputText type="text" class="defaultInput2" v-model="name" name="name"
-                                        placeholder="الرجاء ادخال اسم المستخدم" />
+                                        :placeholder="$t('auth.userPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/user.svg')" alt="">
@@ -36,25 +36,28 @@
                             <!-- phone  -->
                             <div class="col-md-6 mb-2">
                                 <div class="position-relative flex-auto defaultInput">
-                                    <label for="integeronly" class="label fw-6 block mb-2"> رقم الجوال </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.phone') }} </label>
                                     <!-- <InputNumber v-model="phone" class="defaultInput" inputId="integeronly"
                                         placeholder="الرجاء ادخال رقم الجوال" /> -->
-                                    <input type="number" v-model="phone" class="form-control"  placeholder="الرجاء ادخال رقم الجوال" @focus="changeNumber = true" >
+                                    <input type="number" v-model="phone" class="form-control"  :placeholder="$t('auth.phonePlc')" @focus="changeNumber = true" >
 
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/phone.svg')" alt="">
                                     </div>
 
+                                    <span class="editPhone">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </span>
                                 </div>
                             </div>
                             <!-- email  -->
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> البريد الألكتروني </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.email') }} </label>
                                     <InputText type="email" class="defaultInput2" v-model="email" name="email"
-                                        placeholder="الرجاء ادخال البريد الألكتروني" />
+                                        :placeholder="$t('auth.emailPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/sms.svg')" alt="">
@@ -66,10 +69,10 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> الجنس </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.gender') }} </label>
                                     <Dropdown v-model="gender" :options="genders" optionLabel="name"
                                         class="w-full md:w-14rem w-100 position-relative"
-                                        placeholder="الرجاء تحديد الجنس" />
+                                        :placeholder="$t('auth.genderPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/sms.svg')" alt="">
@@ -81,9 +84,9 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> تاريخ الميلاد </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.birth') }} </label>
                                     <Calendar v-model="birth_date" class="defaultInput"
-                                        placeholder="الرجاء ادخال تاريخ الميلاد" />
+                                        :placeholder="$t('auth.birthPlc')" />
 
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -97,9 +100,9 @@
                                 <!-- user name  -->
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> الجنسية </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.nat') }} </label>
                                     <InputText type="text" class="defaultInput2" v-model="nationality"
-                                        placeholder="الرجاء ادخال الجنسية" />
+                                        :placeholder="$t('auth.natPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/card-pos.svg')" alt="">
@@ -115,7 +118,7 @@
                 <!-- العنوان  -->
                 <div class="base-card" >
                     <header class="p-3">
-                        <h6 class="fw-bold"> {{ location }}</h6>
+                        <h6 class="fw-bold"> {{ $t('auth.location') }}</h6>
                     </header>
                     <div class="p-3">
                         <div class="row">
@@ -124,17 +127,17 @@
 
                                 <div class="position-relative    flex justify-content-center">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> المدينة </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.city') }} </label>
 
                                     <Dropdown v-model="selectedCity" :options="cities" filter optionLabel="name"
                                         class="w-full md:w-14rem w-100 position-relative"
-                                        placeholder="الرجاء تحديد المدينة">
+                                        :placeholder="$t('auth.cityPlc')">
                                         <template #value="slotProps">
                                             <div v-if="slotProps.value" class="d-flex align-items-center">
                                                 <div>{{ slotProps.value.name }}</div>
                                             </div>
                                             <span v-else>
-                                                لا توجد مدينة
+                                                {{ $t('auth.noCity') }}
                                             </span>
                                         </template>
                                         <template #option="slotProps">
@@ -155,9 +158,9 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> مكان الإقامة </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.place') }} </label>
                                     <InputText type="text" class="defaultInput2" v-model="map_desc" @focus="googleMap = true"
-                                        placeholder="الرجاء ادخال مكان الإقامة" />
+                                        :placeholder="$t('auth.palcePlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon2">
                                         <img :src="require('@/assets/imgs/location.svg')" alt="">
@@ -187,7 +190,7 @@
                 <div class="base-card" >
                     <header class="p-3">
                         <h6 class="fw-bold">
-                                المؤهلات
+                                {{ $t('auth.qualTitle') }}
                         </h6>
                     </header>
                     <div class="p-3">
@@ -196,10 +199,10 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> السيرة الذاتية </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.cv') }} </label>
                                     <Toast />
-
-                                    <input type="file" class="form-control" name="cv"  style="background: #f8f8f8;">
+                                    <input type="text" :placeholder="cv_link" class="form-control cv_placeholder px-4" style="background: #f8f8f8;" readonly>
+                                    <input type="file" class="form-control" id="cv" name="cv"  style="background: #f8f8f8;" accept="application/pdf,application/vnd.ms-excel"  @change="uploadCv">
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/pdf.svg')" alt="">
@@ -213,10 +216,10 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> المؤهل </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.qual') }} </label>
                                     <Dropdown v-model="qualification" :options="qualifications" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
-                                        placeholder="الرجاء تحديد المؤهل" />
+                                        :placeholder="$t('auth.qualPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/book.svg')" alt="">
@@ -229,10 +232,10 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> مجال العمل </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.field') }} </label>
                                     <Dropdown v-model="employment" :options="emps" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
-                                        placeholder="الرجاء تحديد مجال العمل" />
+                                        :placeholder="$t('auth.fieldPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -245,10 +248,10 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> التخصص </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.special') }} </label>
                                     <Dropdown v-model="specialization" :options="specs" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
-                                        placeholder="الرجاء تحديد التخصص" />
+                                        :placeholder="$t('auth.specialPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -260,11 +263,11 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> الشهادات المهنية </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.cer') }} </label>
                                     <MultiSelect v-model="selectedCer" :options="certifications" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         :maxSelectedLabels="5"
-                                        placeholder="الرجاء تحديد الشهادات المهنية" />
+                                        :placeholder="$t('auth.cerPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -277,9 +280,9 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> المهارات </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.skills') }} </label>
                                     <MultiSelect v-model="selectedSkill" :options="skills" optionLabel="title"
-                                        placeholder="الرجاء تحديد المهارات" :maxSelectedLabels="5"
+                                        :placeholder="$t('auth.skillsPlc')" :maxSelectedLabels="5"
                                         class="w-full md:w-20rem defaultInput2 position-relative" />
 
                                     <!-- icon  -->
@@ -295,14 +298,14 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2">
-                                        المسمى الوظيفي
+                                        {{ $t('auth.jobName') }}
                                         <span class="ifExist mx-2">
-                                            ان وجد
+                                            {{ $t('auth.ifExist') }}
                                             <i class="fa-solid fa-star-of-life"></i>
                                         </span>
                                     </label>
                                     <InputText type="text" class="defaultInput2" v-model="job_title"
-                                        placeholder="الرجاء ادخال المسمى الوظيفي" />
+                                        :placeholder="$t('auth.namePlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -315,10 +318,10 @@
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
 
-                                    <label for="integeronly" class="label fw-6 block mb-2"> سنوات الخبرة </label>
+                                    <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.yearsExper') }} </label>
                                     <Dropdown v-model="experience" :options="experiences" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
-                                        placeholder="الرجاء تحديد سنوات الخبرة" />
+                                        :placeholder="$t('auth.yearPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -332,14 +335,14 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2">
-                                        الشركة الحالية
+                                        {{ $t('auth.current') }}
                                         <span class="ifExist mx-2">
-                                            ان وجد
+                                            {{ $t('auth.ifExist') }} 
                                             <i class="fa-solid fa-star-of-life"></i>
                                         </span>
                                     </label>
                                     <InputText type="text" class="defaultInput2" v-model="company_name"
-                                        placeholder="الرجاء ادخال الشركة الحالية" />
+                                        :placeholder="$t('auth.currentPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -355,7 +358,7 @@
                 <!-- الفيديو  -->
                 <div class="base-card" >
                     <header class="p-3">
-                        <h6 class="fw-bold"> {{ video }}</h6>
+                        <h6 class="fw-bold"> {{ $t('auth.video') }} </h6>
                     </header>
                     <div class="p-3">
                         <div class="row justify-content-center">
@@ -364,21 +367,22 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="video" class="label fw-bold block mb-2">
-                                        الفيديو
+                                        {{ $t('auth.video') }}
                                         <span class="ifExist mx-2">
-                                            ان وجد
+                                            {{ $t('auth.ifExist') }}
                                             <i class="fa-solid fa-star-of-life"></i>
                                         </span>
                                     </label>
 
-                                    <input ref="video" type="file" accept="video/*" class="defaultInput2 " id="video"
+                                    <!-- <input ref="video" type="file" accept="video/*" class="defaultInput2 " id="video"
                                         hidden />
 
-                                    <div v-if="showVideo">
+                                    <div v-if="!showVideo">
                                         <video ref="video" controls @loadedmetadata="logDuration">
                                             <source ref="videoSource" :src="videoSource" />
                                         </video>
                                     </div>
+                                    
                                     <label v-else class="uplaodVideo" for="video" @click="handleUpload">
                                         <div class="position-relative">
                                             <i class="fa-brands fa-youtube youtubeIcon"></i>
@@ -394,12 +398,39 @@
                                         <div>
 
                                         </div>
-                                    </label>
-                                    <div class="d-flex justify-content-center align-items-center my-3">
-                                        <button type="button" class="main_btn m-auto upBtn" @click="handleUpload">Upalod
-                                            preview</button>
+                                    </label> -->
 
+
+                                    <!-- upload video  -->
+                                    <section id="video" class="position-relative flex_column mb-3" v-if="lockInput">
+
+                                        <div class="video_img mb-2">
+                                            <img :src="require('@/assets/imgs/video.png')" alt="">
+                                        </div>
+                                        <span class="mb-2">{{ $t('auth.videoE') }}</span>
+                                        <span class="fs-13 gray"> اقصى مدة للفيديو15 دقيقة </span>
+
+                                        <!-- file video  -->
+                                        <input type="file" class="uploadVideo" ref="videoInput" @change="handleVideoChange" accept="video/*">
+
+
+                                    </section>
+
+
+                                    <!-- video preview  -->
+                                    <div v-if="videoFile" class="video-preview mb-3">
+                                        <video :src="videoSource" controls></video>
                                     </div>
+
+                                    <!-- reload button  -->
+                                    <div class="d-flex justify-content-center align-items-center" v-if="reOpen">
+                                        <button class="main_btn pt-2 pb-2 w-50" @click="reUpload">
+                                            اعادة رفع
+                                        </button>
+                                    </div>
+
+                                    
+                                    
 
                                 </div>
                             </div>
@@ -407,10 +438,10 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center" >
-                    <router-link to="/" class="main_btn pt-3 pb-3 w-25 text-center"> اعادة تعيين كلمة المرور
+                    <router-link to="/updatePassword" class="main_btn pt-3 pb-3 w-25 text-center"> {{ $t('auth.resetPass') }}
                     </router-link>
                     <button class="sec_btn pt-3 pb-3 w-25 mx-3 fw-bold" :disabled="disabled"> 
-                        <span v-if="!disabled">حفظ التغييرات </span>
+                        <span v-if="!disabled"> {{ $t('common.save') }}  </span>
                         <div class="spinner-border mx-2" role="status" v-if="disabled">
                             <span class="visually-hidden">Loading...</span>
                         </div>
@@ -431,22 +462,24 @@
 
 
     </Dialog>
-    <!-- forget pass modal  -->
+
+
+    <!-- change phone step 1 => password  -->
     <Dialog v-model:visible="changeNumber" modal :style="{ width: '50vw' }">
-        <h6 class="fw-bold text-center"> تغيير رقم الجوال </h6>
-        <p class=" text-center"> الرجاءادخال كلمة المرور الخاصه بك لتتمكن من تغيير رقم الجوال </p>
+        <h6 class="fw-bold text-center"> {{ $t('auth.changePhone') }} </h6>
+        <p class=" text-center"> {{ $t('auth.changePlc') }} </p>
 
 
 
-        <form ref="loginForm" @submit.prevent="sendMail" class="flex flex-wrap gap-3 p-fluid">
+        <form ref="loginForm" @submit.prevent="checkPassword" class="flex flex-wrap gap-3 p-fluid">
 
             <!-- email  -->
 
             <!-- password  -->
             <div class="position-relative flex-auto mt-3">
-                <label for="integeronly" class="label fw-6 block mb-2"> كلمة المرور </label>
-                <Password v-model="value" :feedback="false" toggleMask class="defaultInput"
-                    placeholder="الرجاء ادخال كلمة المرور" />
+                <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.pass') }} </label>
+                <Password v-model="password" :feedback="false" toggleMask class="defaultInput"
+                    :placeholder="$t('passPlc')" />
                 <!-- icon  -->
                 <div class="inputIcon">
                     <img :src="require('@/assets/imgs/lock.svg')" alt="">
@@ -454,15 +487,61 @@
             </div>
             <!-- submit  -->
             <div class="mt-4">
-                <button class="main_btn  pt-3 pb-3 fs-5 w-75 mx-auto flex_center"> تحقق </button>
+                <button class="main_btn  pt-3 pb-3 fs-5 w-75 mx-auto flex_center" :disabled="passDisabled"> 
+                     
+                    <span v-if="!passDisabled"> {{ $t('auth.confirm') }} </span>
+                    <div class="spinner-border mx-2" role="status" v-if="passDisabled">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
             </div>
 
         </form>
     </Dialog>
+
+    <!-- change phone step 2 => phone  -->
+    <Dialog v-model:visible="changePhone" modal :style="{ width: '50vw' }">
+        <h6 class="fw-bold text-center"> {{ $t('auth.phone') }} </h6>
+        <p class=" text-center"> {{ $t('auth.newPhone') }} </p>
+
+
+
+        <form ref="loginForm" @submit.prevent="changePhoneFunc" class="flex flex-wrap gap-3 p-fluid">
+
+            <!-- phone  -->
+            <div class="position-relative flex-auto defaultInput">
+                  <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.phone')  }} </label>
+
+                  <input type="number" class="form-control defaultInput" :placeholder="$t('auth.phonePlc')" v-model="newPhone" @input="showValid">
+
+                  <!-- icon  -->
+                  <div class="inputIcon">
+                    <img :src="require('@/assets/imgs/phone.svg')" alt="">
+                  </div>
+
+                  <!-- select phone  -->
+                  <Dropdown v-model="selectedCityPhone" :options="common.countries" optionLabel="key" @change="chooseCountry"  class="w-full md:w-14rem" style="top: 32px !important;" />
+            </div>
+
+
+            <!-- submit  -->
+            <div class="mt-4">
+                <button class="main_btn  pt-3 pb-3 fs-5 w-75 mx-auto flex_center" :disabled="phoneDisabled">
+                    <span v-if="!phoneDisabled"> {{ $t('auth.confirm') }} </span>
+                    <div class="spinner-border mx-2" role="status" v-if="phoneDisabled">
+                        <span class="visually-hidden">Loading...</span>
+                    </div> 
+
+                </button>
+            </div>
+
+        </form>
+    </Dialog>
+
     <!-- otp modal  -->
     <Dialog v-model:visible="otp" modal :style="{ width: '50vw' }">
-        <h6 class="fw-bold text-center"> كود التحقق </h6>
-        <p class=" text-center"> الرجاء ادخال كود التحقق الذي تم ارساله الي رقم جوالك ليتم تفعيل الحساب الخاص بك </p>
+        <h6 class="fw-bold text-center"> {{ $t('auth.otp') }} </h6>
+        <p class=" text-center"> {{ $t('auth.otpPlc') }} </p>
         <div class="logo">
             <img :src="require('@/assets/imgs/forget2.svg')" alt="">
         </div>
@@ -476,8 +555,18 @@
                         flex-direction: row;
                         justify-content: space-evenly;
                       ">
-                    <v-otp-input ref="otpInput" v-model:value="code" name="code" input-classes="otp-input" separator=""
-                        :num-inputs="6" :should-auto-focus="true" input-type="letter-numeric" />
+                    <v-otp-input
+                        ref="otpInput" 
+                        v-model:value="code" 
+                        name="code" 
+                        input-classes="otp-input" 
+                        separator=""
+                        :num-inputs="4" 
+                        autofocus
+                        :should-auto-focus="true"
+                        input-type="letter-numeric" 
+                        style="flex-direction: row-reverse;"
+                    />
                 </div>
 
 
@@ -487,155 +576,33 @@
 
             <!-- submit  -->
             <div class="mt-4">
-                <button class="main_btn  pt-3 pb-3 fs-5 w-75 mx-auto flex_center"> تحقق </button>
+                <button class="main_btn  pt-3 pb-3 fs-5 w-75 mx-auto flex_center" :disabled="otpDisabled">
+                    <span v-if="!otpDisabled"> {{ $t('auth.confirm') }} </span>
+                    <div class="spinner-border mx-2" role="status" v-if="otpDisabled">
+                        <span class="visually-hidden">Loading...</span>
+                    </div> 
+
+                </button>
             </div>
 
 
             <div class="flex_between w-75 mx-auto d-flex">
                 <div class="flex_center newAcc">
-                    <p class="fs-6 mt-4 fw-6"> لم تستلم الكود ؟ <button type="button" class="mainColor fw-bold btn p-0"> اعد
-                            الارسال </button> </p>
+                    <p class="fs-6 mt-4 fw-6"> {{ $t('auth.haveNot') }}
+                        <button type="button" class="mainColor fw-bold btn p-0" @click.prevent="resendCode" :disabled="isCodeSent"> {{ $t('auth.resend') }} </button> 
+                    </p>  
                 </div>
-
-                <p v-if="timer > 0" class="text-center mt-3">الوقت المتبقي <span class="mainColor">{{ timer }} ثانية</span>
-                </p>
+                
+                <div v-if="resendTime">
+                    <p v-if="timer > 0" class="text-center mt-3">{{ $t('auth.remain')  }}  <span class="mainColor">{{ timer }} {{ $t('auth.second') }}</span> </p>
+                </div>
 
             </div>
 
         </form>
     </Dialog>
-    <!-- contact problem  -->
-    <Dialog class="contactModal" v-model:visible="visible2" modal :style="{ width: '50vw' }">
-        <div class="logo">
-            <img :src="require('@/assets/imgs/logo.png')" alt="">
-        </div>
-
-        <p class="fw-6 text-center mt-2 mb-2"> هذا النص هو مثال على نص يمكن ان يستبدل </p>
-
-        <form class="flex flex-wrap gap-3 p-fluid">
-            <div class="row">
-                <div class="col-md-6 mb-2">
-                    <!-- phone  -->
-                    <div class="position-relative flex-auto">
-
-                        <label for="integeronly" class="label fw-6 block mb-2"> اسم المستخدم </label>
-                        <InputText type="text" class="defaultInput2" v-model="name"
-                            placeholder="الرجاء ادخال اسم المستخدم" />
-                        <!-- icon  -->
-                        <div class="inputIcon">
-                            <img :src="require('@/assets/imgs/user.svg')" alt="">
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-md-6 mb-2">
-                    <!-- phone  -->
-                    <div class="position-relative flex-auto">
-
-                        <label for="integeronly" class="label fw-6 block mb-2"> رقم الجوال </label>
-                        <InputNumber v-model="value1" class="defaultInput" inputId="integeronly"
-                            placeholder="الرجاء ادخال رقم الجوال" />
-
-                        <!-- icon  -->
-                        <div class="inputIcon">
-                            <img :src="require('@/assets/imgs/phone.svg')" alt="">
-                        </div>
-
-                        <!-- select phone  -->
-                        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" class="w-full md:w-14rem" />
-
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <!-- phone  -->
-                    <div class="position-relative flex-auto">
-
-                        <label for="integeronly" class="label fw-6 block mb-2"> الرسالة </label>
-                        <Textarea v-model="value" rows="5" cols="30" placeholder="الرجاء اكتب رسالتك هنا"
-                            class="defaultInput2" />
-
-                    </div>
-                </div>
-
-                <div class="mt-4">
-                    <button class="main_btn w-100 pt-3 pb-3 fs-5"> ارسال </button>
-                </div>
 
 
-
-            </div>
-        </form>
-
-    </Dialog>
-    <!-- reset password  -->
-    <Dialog class="contactModal" v-model:visible="resetPassword" modal :style="{ width: '50vw' }">
-
-        <h6 class="fw-bold text-center mb-3"> اعادة تعيين كلمة المرور </h6>
-        <div class="logo">
-            <img :src="require('@/assets/imgs/logo.png')" alt="">
-        </div>
-
-
-        <form class="flex flex-wrap gap-3 p-fluid">
-            <div class="row">
-                <div class="col-md-12 mb-2">
-                    <!-- password  -->
-                    <div class="position-relative flex-auto mt-3">
-
-                        <label for="integeronly" class="label fw-6 block mb-2"> كلمة المرور </label>
-                        <Password v-model="oldPass" toggleMask class="defaultInput"
-                            placeholder="الرجاء ادخال كلمة المرور" />
-
-                        <!-- icon  -->
-                        <div class="inputIcon">
-                            <img :src="require('@/assets/imgs/lock.svg')" alt="">
-                        </div>
-
-
-                    </div>
-
-                    <!-- confirm password  -->
-                    <div class="position-relative flex-auto mt-3">
-
-                        <label for="integeronly" class="label fw-6 block mb-2"> تأكيد كلمة المرور </label>
-                        <Password v-model="newPass" :feedback="false" toggleMask class="defaultInput"
-                            placeholder="الرجاء تأكيد كلمة المرور" />
-
-                        <!-- icon  -->
-                        <div class="inputIcon">
-                            <img :src="require('@/assets/imgs/lock.svg')" alt="">
-                        </div>
-
-
-                    </div>
-
-                    <div v-if="showValid">
-                        <p v-if="passwordMatch" class="passwordConfirmed d-flex align-items-center text-success">
-                            <i class="fa-regular fa-circle-check"></i>
-                            <span>كلمة السر متطابقة</span>
-                        </p>
-                        <p v-else class="passwordWrong d-flex align-items-center text-danger">
-                            <i class="fa-regular fa-circle-xmark"></i>
-                            <span>كلمة السر غير متطابقة</span>
-                        </p>
-                    </div>
-                </div>
-
-
-
-                <div class="mt-4">
-                    <button class="main_btn w-100 pt-3 pb-3 fs-5"> تعيين </button>
-                </div>
-
-
-
-            </div>
-
-        </form>
-
-    </Dialog>
 
     <!-- footer -->
     <siteFooterVue />
@@ -656,10 +623,11 @@ import Password from 'primevue/password';
 // import Galleria from 'primevue/Galleria'
 import AOS from "aos";
 
-import {mapGetters, mapActions} from 'vuex';
+import {mapGetters, mapActions, mapState} from 'vuex';
 
 import axios from 'axios';
 import Toast from 'primevue/toast';
+// import { mapActions,  } from 'vuex';
 
 // import router from '@/router';
 export default {
@@ -701,9 +669,6 @@ export default {
                 }
             ],
             displayBasic: false,
-            personalAccTitle: 'البيانات الشخصيه ',
-            location: 'العنوان',
-            video: 'الفيديو',
             showVideo: false,
             videoSource: '',
             locations:
@@ -718,7 +683,7 @@ export default {
             visible: false,
             visible2: false,
             otp: false,
-            timer: 180,
+            timer: 5,
             done: false,
 
             //new data 
@@ -749,17 +714,44 @@ export default {
             job_title : '',
             experience : null,
             company_name : '',
-            disabled: false
+            disabled: false,
+            cv_link : '',
+
+            videoFile: null,
+            lockInput : true,
+            reOpen : false,
+
+            password : null,
+            changePhone : false,
+            selectedCityPhone : {
+                "id": 1,
+                "name": "السعودية",
+                "key": "+966"
+            },
+            passDisabled : false,
+            phoneDisabled : false,
+            newPhone : '',
+            newCountryCode : "" ,
+            actualCountryCode : '',
+            code : '',
+            isCodeSent : false,
+            resendTime : false,
+            otpDisabled : false
+            
         }
     },
     computed:{
+        ...mapState(["common"])  ,
         ...mapGetters('common',['nationalities', 'cities', 'qualifications', 'emps', 'specs', 'certifications', 'skills', 'experiences']),
         passwordMatch() {
             return this.oldPass === this.newPass;
         }
     },
     methods: {
-        ...mapActions('common',['getNations', 'getCities','getQualifications', 'getEmployment', 'getSpecilizations', 'getCertifications', 'getSkills', 'getExperiences']),
+        ...mapActions('common',['getNations', 'getCities','getQualifications', 'getEmployment', 'getSpecilizations', 'getCertifications', 'getSkills', 'getExperiences', 'getCountries']),
+        chooseCountry(){
+            document.querySelector('.p-dropdown-label').innerHTML = this.selectedCityPhone.key ;
+        },
 
         logDuration() {
                     console.log(this.$refs.video.duration)
@@ -804,13 +796,11 @@ export default {
                     this.timer--;
                 } else {
                     clearInterval(this.intervalId);
-                    this.disabled = false
+                    this.isCodeSent = false
                 }
             }, 1000);
         },
-        beforeUnmount() {
-            clearInterval(this.intervalId);
-        },
+        
         
         // get current location  
         geolocation() {
@@ -862,6 +852,29 @@ export default {
             }, 2000)
         },
 
+        uploadCv(e){
+            // console.log(e)
+            this.cv_link = e.target.files[0].name ;
+        },
+
+        handleVideoChange(event){
+            this.videoFile = event.target.files[0];
+            // // check video size 
+            // if( this.videoFile && this.videoFile.size > 15 * 60  ){
+            //     this.videoFile = null;
+            //     this.videoFileUrl = null ;
+            // }else{
+                this.videoSource = URL.createObjectURL(this.videoFile);
+                this.lockInput = false ;
+                this.reOpen = true ;
+            // }
+        },
+        reUpload(){
+            this.lockInput = true ;
+            this.videoFile = null ;
+            this.reOpen = false ;
+        },
+
 
 
         // get profile 
@@ -896,13 +909,20 @@ export default {
                     this.videoSource = data.video ;
                     this.nationality = data.nationality ;
                     if( data.video != '' ){
-                        this.showVideo = true;
+                        this.lockInput = false;
+                        this.videoFile = true;
+                        this.reOpen = true ;
                     }     
                     if( data.gender == 'ذكر' ){
                         this.gender = this.genders[0];
                     }else if( data.gender == 'انثي' ){
                         this.gender = this.genders[1];
                     }
+                    
+
+                    this.cv_link = data.cv ;
+
+                    this.actualCountryCode = data.country_code ;
                 }
             })
         },
@@ -946,6 +966,12 @@ export default {
             if( this.gender ){
                 fd.append('gender', this.gender.name)
             }
+            if( this.company_name ){
+                fd.append('company_name', this.company_name);
+            }
+            if( this.job_title ){
+                fd.append('job_title', this.job_title);
+            }
             // append cv 
             // if( this.cv ){
             //     fd.append('cv', this.cv)
@@ -966,6 +992,10 @@ export default {
             if( this.nationality ){
             fd.append('nationality', this.nationality)
             }
+            if( this.videoFile ){
+                fd.append('video', this.videoFile)
+            }
+
             const token = localStorage.getItem('token');
             const headers = {
                 Authorization: `Bearer ${token}`,
@@ -985,9 +1015,121 @@ export default {
                 }
             } )
 
+        },
+
+        // check password 
+        async checkPassword(){
+            this.passDisabled = true ;
+            const token = localStorage.getItem('token');
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            const fd = new FormData ;
+            fd.append('password', this.password);
+            fd.append('country_code', this.actualCountryCode);
+            fd.append('phone', this.phone);
+            await axios.post('user/password/check', fd , {headers})
+            .then( (res)=>{
+                if( res.data.key === 'success' ){
+                    this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
+                    this.passDisabled = false ;
+                    setTimeout(() => {
+                        this.changeNumber = false ;
+                        this.changePhone = true ;
+
+                    }, 3000);
+
+                }else{
+                    this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });
+                    this.passDisabled = false ;
+                }
+            } )
+        },
+
+        // change phone 
+        async changePhoneFunc(){
+            this.phoneDisabled = true ;
+            const token = localStorage.getItem('token');
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            const fd = new FormData ;
+            fd.append('password', this.password);
+            fd.append('country_code', this.selectedCityPhone.key);
+            fd.append('phone', this.newPhone);
+            await axios.post('user/phone/change', fd , {headers})
+            .then( (res)=>{
+                if( res.data.key === 'success' ){
+                    this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
+                    this.phoneDisabled = false ;
+                    setTimeout(() => {
+                        this.changePhone = false ;
+                        this.otp = true ;
+                    }, 3000);
+
+                }else{
+                    this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });
+                    this.phoneDisabled = false ;
+                }
+            } )
+        },
+
+        // send otp 
+        async sendOtp(){
+            this.otpDisabled = true ;
+            const token = localStorage.getItem('token');
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            const fd = new FormData ;
+            fd.append('code', this.code);
+            // fd.append('country_code', this.selectedCityPhone.key);
+            // fd.append('phone', this.newPhone);
+            await axios.post('user/phone/change/check-code', fd , {headers})
+            .then( (res)=>{
+                if( res.data.key === 'success' ){
+                    this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
+                    this.otpDisabled = false ;
+                    setTimeout(() => {
+                        this.otp = false ;
+                        this.getProfile();
+                    }, 3000);
+
+                }else{
+                    this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });
+                    this.otpDisabled = false ;
+                }
+            } )
+
+        },
+
+        // resend code 
+        async resendCode(){
+            const fd = new FormData ;
+            fd.append('phone', this.newPhone);
+            fd.append('country_code', this.selectedCityPhone.key);
+
+            try{
+                const res = await this.$store.dispatch('auth/resend', fd)
+                if( res.success == true ){
+                    this.$toast.add({ severity: 'success', summary: res.message, life: 3000 });
+                    this.startTimer()
+                    this.timer = 5 ;
+                    this.isCodeSent = true ;
+                    this.resendTime = true ;
+                }else{
+                    this.$toast.add({ severity: 'error', summary: res.message, life: 3000 });
+                    
+                    }
+            }catch(err){
+                console.error(err)
+            }
         }
     },
     mounted() {
+        // this.getCountries();
+        // document.querySelector('.p-dropdown-label').innerHTML = this.selectedCityPhone.key ;
+        this.getCountries();
         this.geolocation();
         this.startTimer();
 
@@ -1006,10 +1148,40 @@ export default {
         AOS.init();
         // let filePlaceholder = document.querySelector('.p-button-label');
         // filePlaceholder.innerHTML = 'الرجاء اختيار السيرة الذاتية'
-    }
+    },
+    beforeUnmount() {
+        clearInterval(this.intervalId);
+    },
 }
 </script>
+
+<style scoped>
+.p-multiselect{
+    background: #f8f8f8;
+    padding: 0px 20px;
+}
+.editPhone{
+    position: absolute;
+    left: 5%;
+    font-size: 19px;
+    color: #ccc;
+    top: 49%;
+    z-index: 999;
+    width: 30px;
+    height: 30px;
+    background: #f8f8f8;
+}
+</style>
 <style>
+
+#cv{
+    opacity:0;
+    position:absolute;
+    top:0;
+    right:0;
+    width:100%;
+    height:100%;
+}
 .base-card {
     background: #FBFBFB;
     border-radius: 10px;

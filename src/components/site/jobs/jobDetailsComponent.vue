@@ -1,5 +1,5 @@
 <template>
-  <section id="jobDetails">
+  <section id="jobDetails" class="mt-4">
     <div class="container">
         <!-- bread crumb  -->
         <div class="breadcrumb d-flex mb-0">
@@ -33,7 +33,7 @@
 
 
 
-                            <router-link to="/company" style="color:inherit" class="d-flex align-items-baseline">
+                            <router-link :to="'/company/'+company.id" style="color:inherit" class="d-flex align-items-baseline">
                                 <img class="br-50 company_image" :src="require('@/assets/imgs/bag.svg')" alt="">
                                 <p class="fw-bold mx-2"> {{  company.name  }} </p>
                             </router-link>
@@ -63,14 +63,14 @@
                                         <img :src="require('@/assets/imgs/bluebook.svg')" alt="">
                                         <span class="grayColor mx-2"> {{ $t('job.qual') }} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15 mb-4"> {{ job.qualification }} </p>
+                                    <p class="fw-bold fs-15 mb-4"> {{ qualification.title }} </p>
 
 
                                     <div class="d-flex">
                                         <img :src="require('@/assets/imgs/bluetimer.svg')" alt="">
                                         <span class="grayColor mx-2"> {{ $t('common.jobType')  }} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15"> {{ job.type  }} </p>
+                                    <p class="fw-bold fs-15"> {{ type.title  }} </p>
 
                                 </div>
 
@@ -79,7 +79,7 @@
                                         <img :src="require('@/assets/imgs/bluebag.svg')" alt="">
                                         <span class="grayColor mx-2"> {{  $t('common.exper')  }} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15 mb-4"> {{ job.experience }} </p>
+                                    <p class="fw-bold fs-15 mb-4"> {{ experience.title }} </p>
 
 
                                     <div class="d-flex">
@@ -105,7 +105,7 @@
                                     <div class="d-flex">
                                         <span class="grayColor mx-2"> {{ $t('common.type')}} :  </span>
                                     </div>
-                                    <p class="fw-bold fs-15 mb-4"> {{ job.category  }} </p>
+                                    <p class="fw-bold fs-15 mb-4"> {{ category.title  }} </p>
 
                                 </div>
 
@@ -230,6 +230,10 @@ export default {
         return{
             job : {},
             company : {},
+            qualification : {},
+            experience : {},
+            category: {},
+            type : {},
             disabled : false
         }
     },
@@ -240,6 +244,10 @@ export default {
             await axios.post( 'user/advertisements/show', fd )
             .then( (res) =>{
                 this.job = res.data.data;
+                this.qualification = res.data.data.qualification ;
+                this.experience = res.data.data.experience ;
+                this.category = res.data.data.category ;
+                this.type = res.data.data.type ;
                 this.company = res.data.data.company;
             } )
         },
