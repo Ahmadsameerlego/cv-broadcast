@@ -23,7 +23,7 @@
     <!-- not found -->
     <section v-if="adsLength" class="w-50 mx-auto">
         <Message severity="error">
-                لا توجد وظائف الى الان
+            {{ $t('common.noJobs') }}
         </Message>
     </section>
 </template>

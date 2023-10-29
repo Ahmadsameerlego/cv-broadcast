@@ -37,7 +37,7 @@ import VueGoogleMaps from '@fawmi/vue-google-maps'
 
 // import axios
 import axios from 'axios';
-axios.defaults.baseURL = 'https://cvbroadcast.com/api/v1/';
+axios.defaults.baseURL = 'https://backend.cvbroadcast.com/api/v1/';
 // axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');   
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.headers.lang = localStorage.getItem('locale');
@@ -56,6 +56,7 @@ import 'aos/dist/aos.css'
 
 // import scss 
 import './assets/css/style_responsive.scss';
+import './assets/css/style_ltr.scss';
 
 createApp(App)
 .use(i18n)

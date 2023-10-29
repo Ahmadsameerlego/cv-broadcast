@@ -6,7 +6,9 @@
 
             <!-- logo  -->
             <div class="logo">
-                <img :src="require('@/assets/imgs/logo.png')" alt="site logo">
+                <router-link to="/">
+                    <img :src="require('@/assets/imgs/logo.png')" alt="site logo">
+                </router-link>
             </div>
 
             <!-- nav bar  -->
@@ -39,17 +41,18 @@
             <!-- user interaction  -->
             <div class="user_interaction d-flex justify-content-between align-items-center">
                 <!-- alert  -->
-                <router-link to="/notificationPage" class="alert flex_center mb-0 mx-2" v-if="isLoggedIn">
+                <router-link to="/notificationPage" class="alert flex_center mb-0 mx-2 position-relative" v-if="isLoggedIn">
                     <i class="fa-regular fa-bell"></i>
+                    <span class="not_count"> {{ count }} </span>
                 </router-link>
 
                 <!-- search  -->
-                <router-link to="/" class="search flex_center mb-0 mx-2">
+                <router-link to="/exploreJobs" class="search flex_center mb-0 mx-2">
                     <img :src="require('@/assets/imgs/Vector.png')" alt="">
                 </router-link>
 
                 <!-- messages  -->
-                <router-link to="/" class="message flex_center mb-0 mx-2" v-if="isLoggedIn">
+                <router-link to="/rooms" class="message flex_center mb-0 mx-2" v-if="isLoggedIn">
                     <img :src="require('@/assets/imgs/messages.png')" alt="">
                 </router-link>
 
@@ -68,7 +71,7 @@
                 <!-- profile dropdown  -->
                 <div class="dropdown profile br-5" v-if="isLoggedIn">
                     <button class="btn dropdown-toggle px-4 br-5 pt-2 pb-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://lottiefiles.com/113472-happy-eye-emoji-animation" class="mx-2 imoji" width="20" height="20" alt="">
+                        <img :src="require('@/assets/imgs/113472-happy-eye-emoji-animation.png')" class="mx-2 imoji" width="30" height="30" alt="">
                         <span class="name">اهلا {{ username }}</span>
 
                         <i class="fa-regular fa-user user_profile"></i>
@@ -80,7 +83,7 @@
                                     <i class="fa-solid fa-user-pen"></i>
                                 </span>
                                 <span class="mx-2 fw-6">
-                                    الملف الشخصي
+                                    {{ $t('auth.profile') }}
                                 </span>
                             </router-link>
                         </li>
@@ -91,7 +94,7 @@
                                     <i class="fa-solid fa-bag-shopping"></i>
                                 </span>
                                 <span class="mx-2 fw-6">
-                                    الطلبات
+                                    {{ $t('common.order') }}
                                 </span>
                             </router-link>
                         </li>
@@ -102,7 +105,7 @@
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                 </span>
                                 <span class="mx-2 fw-6">
-                                    تسجيل الخروج
+                                    {{ $t('common.signOut') }}
                                 </span>
                             </button>
                         </li>
@@ -130,7 +133,8 @@ export default {
         return{
             open : true,
             isLoggedIn : false,
-            username : ''
+            username : '',
+            count : 0
         }
     },
     computed:{
@@ -170,6 +174,20 @@ export default {
             }
         },
 
+        // get notfication counter 
+        async getNotCounter(){
+            const token = localStorage.getItem('token');
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            await axios.get('user/notifications/count', {headers})
+            .then( (res)=>{
+                if( res.data.key === 'success' ){
+                    this.count = res.data.data.count ;
+                }
+            })
+        },
+
         // close nav bar outside
         // closeNavbarOnClickOutside(event) {
         //     const navBar = this.$refs.toggle_nv;
@@ -197,6 +215,8 @@ export default {
                     localStorage.removeItem('token');
                     localStorage.removeItem('isAuth');
                     localStorage.removeItem('user');
+                    localStorage.removeItem('isCompleted');
+                    localStorage.removeItem('isActived');
                 }else{
                     this.$toast.add({ severity: 'error', summary: res.data.msg, life: 3000 });             
                 }
@@ -212,6 +232,7 @@ export default {
         if( localStorage.getItem('user') ){
             this.username = JSON.parse(localStorage.getItem('user')).name ;
         }
+        this.getNotCounter();
     },
     beforeUnmount(){
         // window.addEventListener('click', this.closeNavbarOnClickOutside);
@@ -221,6 +242,20 @@ export default {
 
 
 <style lang="scss">
+    .not_count{
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: rgb(193, 70, 70);
+        color: #fff;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: -8px;
+        left: -8px;
+    }
     .user_profile, .toggle_bar{
         display: none;
     }

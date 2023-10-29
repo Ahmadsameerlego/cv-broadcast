@@ -70,7 +70,7 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.gender') }} </label>
-                                    <Dropdown v-model="gender" :options="genders" optionLabel="name"
+                                    <Dropdown v-model="gender" :options="genders" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         :placeholder="$t('auth.genderPlc')" />
                                     <!-- icon  -->
@@ -203,12 +203,16 @@
                                     <Toast />
                                     <input type="text" :placeholder="cv_link" class="form-control cv_placeholder px-4" style="background: #f8f8f8;" readonly>
                                     <input type="file" class="form-control" id="cv" name="cv"  style="background: #f8f8f8;" accept="application/pdf,application/vnd.ms-excel"  @change="uploadCv">
+                                    
                                     <!-- icon  -->
                                     <div class="inputIcon">
                                         <img :src="require('@/assets/imgs/pdf.svg')" alt="">
                                     </div>
-
                                 </div>
+
+                                <a :href="cv_link" target="_blank" v-if="cv_link!=''"> 
+                                    اطلع على الملف
+                                </a>
                             </div>
 
 
@@ -259,6 +263,7 @@
 
                                 </div>
                             </div>
+
                             <!-- certifications  -->
                             <div class="col-md-6 mb-3">
                                 <div class="position-relative flex-auto">
@@ -351,6 +356,32 @@
                                 </div>
                             </div>
 
+                             <!-- personal image  -->
+                             <div class="col-md-6 mb-3">
+                                <div class="position-relative flex-auto">
+
+                                    <label for="integeronly" class="label fw-6 block mb-2">
+                                        الصورة الشخصية
+                                        
+                                    </label>
+
+                                    <input type="file" class="form-control"  name="image" style="background: #f8f8f8;">
+                                    
+                                    <!-- icon  -->
+                                    <div class="inputIcon" style="left:15px;right:auto;color:#ccc">
+                                        <i class="fa-solid fa-upload"></i>
+                                    </div>
+
+                                </div>
+
+                                <div v-if="image!=''" class="profile_image mt-2" style="width: 100%;height: 100px;">
+                                    <img :src="image" alt="" style="width:100%;height:100%;object-fit:contain">
+                                </div>
+                            </div>
+
+
+
+
 
                         </div>
                     </div>
@@ -419,7 +450,7 @@
 
                                     <!-- video preview  -->
                                     <div v-if="videoFile" class="video-preview mb-3">
-                                        <video :src="videoSource" controls></video>
+                                        <video :src="videoSource" name="video" controls></video>
                                     </div>
 
                                     <!-- reload button  -->
@@ -437,7 +468,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center" >
+                <div class="profile_handle d-flex justify-content-center" >
                     <router-link to="/updatePassword" class="main_btn pt-3 pb-3 w-25 text-center"> {{ $t('auth.resetPass') }}
                     </router-link>
                     <button class="sec_btn pt-3 pb-3 w-25 mx-3 fw-bold" :disabled="disabled"> 
@@ -615,7 +646,7 @@ import Calendar from 'primevue/calendar';
 import siteFooterVue from '@/components/site/layout/siteFooter.vue';
 import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
-import InputNumber from 'primevue/inputnumber';
+//import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
 //import FileUpload from 'primevue/fileupload';
 import MultiSelect from 'primevue/multiselect';
@@ -637,7 +668,7 @@ export default {
         siteFooterVue,
         Dropdown,
         InputText,
-        InputNumber,
+       // InputNumber,
         Calendar,
         //FileUpload,
         Dialog,
@@ -693,11 +724,13 @@ export default {
             genders : [
                 {
                 id : 1,
-                name : 'male'
+                name : 'male',
+                title : 'ذكر'
                 },
                 {
                 id : 2,
-                name : 'female'
+                name : 'female',
+                title : 'انثى'
                 }
             ],
             gender : '',
@@ -736,7 +769,8 @@ export default {
             code : '',
             isCodeSent : false,
             resendTime : false,
-            otpDisabled : false
+            otpDisabled : false,
+            image : ''
             
         }
     },
@@ -923,6 +957,7 @@ export default {
                     this.cv_link = data.cv ;
 
                     this.actualCountryCode = data.country_code ;
+                    this.image = data.image ;
                 }
             })
         },
@@ -993,7 +1028,7 @@ export default {
             fd.append('nationality', this.nationality)
             }
             if( this.videoFile ){
-                fd.append('video', this.videoFile)
+                fd.append('video', this.videoSource)
             }
 
             const token = localStorage.getItem('token');
@@ -1166,7 +1201,7 @@ export default {
     font-size: 19px;
     color: #ccc;
     top: 49%;
-    z-index: 999;
+    z-index: 1;
     width: 30px;
     height: 30px;
     background: #f8f8f8;

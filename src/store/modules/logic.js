@@ -1,8 +1,9 @@
-import axios from "axios";
+import axios from 'axios';
 export default{
     namespaced : true,
     state : {
-        ads : []
+        ads : [],
+        
     },
     getters : {
         ads : state => state.ads ,
@@ -11,7 +12,8 @@ export default{
         // set ads 
         SET_ADS( state, ads ){
             state.ads = ads ;
-        }
+        },
+        
     },
     actions : {
         // search advertisements 
@@ -36,6 +38,7 @@ export default{
                     return { success : false , message : res.data.msg }
                 }
             } )
-        }
+        },
+        
     }
 }

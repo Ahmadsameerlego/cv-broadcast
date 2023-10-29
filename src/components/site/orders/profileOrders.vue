@@ -10,8 +10,14 @@
             <!-- content  -->
             <section>
                 <h5 class="fw-bold red mb-3"> {{ $t('common.order') }} </h5>
-                <div class="row">
+                
+                <div v-if="load" class="row">
+                    <div class="col-md-6 mb-3" v-for="skeleton in 2" :key="skeleton">
+                        <Skeleton style="width:100%" height="4rem"></Skeleton>
+                    </div>
+                </div>
 
+                <div class="row" v-else>
                     <div class="col-md-6" v-for="order in orders" :key="order.id">
                         <router-link :to="'jobApplication/'+order.id">
                             <!-- single card  -->
@@ -50,7 +56,7 @@
                                     </div>
 
                                     <!-- accepted  -->
-                                    <div class="orderStatus accepted" v-if="order.status=='accept'">
+                                    <div class="orderStatus accepted" v-if="order.status=='accepted'">
                                         <img :src="require('@/assets/imgs/true.svg')" alt="">
                                         <span class="mx-1  fw-6"> {{  $t('common.accepted')  }} </span>
                                     </div>
@@ -82,6 +88,14 @@
                         
                     </div>
                 </div>
+
+                
+
+
+
+                <div v-if="LenghtZero" class="text-center text-danger">
+                    لا توجد طلبات الى الان
+                </div>
             </section>
 
 
@@ -92,15 +106,20 @@
 
 <script>
 import axios from 'axios';
+import Skeleton from 'primevue/skeleton';
+
 import paginationComponentVue from '../layout/paginationComponent.vue'
 export default {
     data(){
         return{
-            orders : []
+            orders : [],
+            load : true,
+            LenghtZero : false
         }
     },
     components:{
-        paginationComponentVue
+        paginationComponentVue ,
+        Skeleton
     },
     methods:{
         // get orders 
@@ -111,7 +130,13 @@ export default {
             };
             await axios.get('user/job-applications', {headers})
             .then( (res)=>{
-                this.orders = res.data.data ;
+                if( res.data.data.length > 0 ){
+                    this.orders = res.data.data ;
+                    this.load = false ;
+                }else{
+                    this.LenghtZero = true ;
+                    this.load = false ;
+                }
             } )
         }
     },

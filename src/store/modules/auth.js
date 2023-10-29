@@ -22,8 +22,8 @@ export default{
             .then( (res)=>{
                 if( res.data.key === "success" ){
                     localStorage.setItem('user', JSON.stringify(res.data.data));
-                    localStorage.setItem('token', res.data.data.token);
-                    return { success : true , message : res.data.msg }
+                    // localStorage.setItem('token', res.data.data.token);
+                    return { success : true , message : res.data.msg , data : res.data.data}
                 }else{
                     return { success : false , message : res.data.msg }
                 }

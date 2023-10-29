@@ -51,4 +51,55 @@
             height: 100px;
         }
     }
+    h4{
+        font-size: 1.1rem;
+    }
+    .h5, h5 {
+        font-size: 1rem;
+    }
+    .h6, h6 {
+        font-size: .75rem;
+    }
+    .single_card .card_image {
+        height: 80px;
+    }
+    .lazy{
+        margin-top: 40px;
+    }
+    .profile_handle{
+        flex-direction: column;
+        justify-content: center !important;
+        align-items: center;
+        a{
+            width: 100% !important;
+            margin-bottom: 10px !important;
+        }
+        button{
+            width:100% !important;
+        }
+    }
+    .video-preview{
+        width: 100% !important;
+    }
+}
+@media(max-width:540px){
+    body, #homeIntro .intro_btns a{
+        font-size: 10px !important;
+    }
+    .single_card{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 35px 0;    
+        .card_details{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 11px;
+        }
+    }
+    .single_card .abs_time{
+        top: 9px;
+    }
 }

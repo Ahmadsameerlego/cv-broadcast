@@ -27,7 +27,7 @@
                             <div class="d-flex mb-3">
                                 <img :src="require('@/assets/imgs/dot.svg')"  alt="">
                                 <span class="mainColor2 fw-6 mx-2">
-                                    {{  job.map_desc  }}
+                                    {{  city.name  }}
                                 </span>
                             </div>
 
@@ -117,7 +117,7 @@
                     <!-- res  -->
                     <section class="job_conditions gray mt-5">
                         <div class="condition_header mainColor pt-3 pb-3 px-3 fs-16 fw-bold">
-                           المهام والمسئوليات
+                           {{ $t('common.res') }}
                         </div>
                         <div class="condition_body pt-3 pb-3 px-3">
                             <p>
@@ -129,7 +129,7 @@
                      <!-- conditions  -->
                      <section class="job_conditions gray mt-5">
                         <div class="condition_header mainColor pt-3 pb-3 px-3 fs-16 fw-bold">
-                           شروط الوظيفة
+                           {{ $t('common.conditions') }}
                         </div>
                         <div class="condition_body pt-3 pb-3 px-3">
                             <p>
@@ -152,15 +152,20 @@
 
 
                     <!-- apply job  -->
-                    <div class="apply_Job flex_center">
+                    <section v-if="loggedIn==true" class="text-danger text-center mt-4">
+                        <span class="text-danger text-center fs-16"> يرجى تسجيل الدخول لتستطيع التقدم على الوظيفة </span>
+                    </section>
+
+                    <div class="apply_Job flex_center" v-else>
                         <button class="main_btn w-50 mx-auto  pt-3 pb-3 mt-3" :disabled="disabled" @click.prevent="applyJob()">
-                             <span v-if="!disabled">التقدم للوظيفة </span>
+                             <span v-if="!disabled">{{ $t('common.applay') }} </span>
                             <div class="spinner-border mx-2" role="status" v-if="disabled">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </button>
                     </div>
 
+                    
 
                 </div>
 
@@ -170,52 +175,73 @@
                         {{  $t('job.similar')  }}
                     </div>
 
-                    <!-- single card  -->
-                    <div class="single_card other_single_card d-flex">
-                        <!-- card image  -->
-                        <div class="card_image">
-                            <img :src="require('@/assets/imgs/SSM 1.png')" alt="">
-                        </div>
-
-                        <!-- card details  -->
-                        <div class="card_details mx-3">
-                            <p class="mainColor fw-bold mb-3"> مهندس كمبيوتر </p>
-
-                            <div class="d-flex mb-3">
-                                <img :src="require('@/assets/imgs/dot.svg')"  alt="">
-                                <span class="mainColor2 fw-6 mx-2">الرياض</span>
-                            </div>
-
-
-
-                            <div class="d-flex align-items-baseline">
-                                <img :src="require('@/assets/imgs/bag.svg')" alt="">
-                                <span class="grayColor mx-2 fs-9"> {{ $t('common.jobType') }}: </span>
-                                <h6 class="fw-bold fs-12"> دوام كامل </h6>
-                            </div>
-                        </div>
-
-                        <!-- absolute places  -->
-
-                        <!-- time  -->
-                        <div class="abs_time d-flex align-items-center">
-                            <img :src="require('@/assets/imgs/clock.svg')" alt="">
-                            <span class="fs-10 mx-1"> منذ ساعة </span>
-                        </div>
-
-                        <!-- details  -->
-                        <router-link to="/jobDetails/1" class="abs_details fs-10 grayColor"> 
-                            {{  $t('common.showDetails')  }}
-                            <i class="fa-solid fa-chevron-left"></i> 
-                        </router-link>
-
+                    <div v-if="laod">
+                        <Skeleton style="width:100%" height="4rem" class="mb-2"></Skeleton>
+                        <Skeleton style="width:100%" height="4rem"></Skeleton>
                     </div>
+                    <section v-else>
+                        <!-- single card  -->
+                        <div class="single_card other_single_card d-flex mb-2" v-for="similar in similars" :key="similar.id">
+                            <!-- card image  -->
+                            <div class="card_image">
+                                <img :src="similar.company.image" alt="">
+                            </div>
+
+                            <!-- card details  -->
+                            <div class="card_details mx-3">
+                                <p class="mainColor fw-bold mb-3"> {{ similar.job_name }} </p>
+
+                                <div class="d-flex mb-3">
+                                    <img :src="require('@/assets/imgs/dot.svg')"  alt="">
+                                    <span class="mainColor2 fw-6 mx-2">
+                                        {{ similar.city }}
+                                    </span>
+                                </div>
+
+
+
+                                <div class="d-flex align-items-baseline">
+                                    <img :src="require('@/assets/imgs/bag.svg')" alt="">
+                                    <span class="grayColor mx-2 fs-9"> {{ $t('common.jobType') }}: </span>
+                                    <h6 class="fw-bold fs-12"> {{ similar.type }} </h6>
+                                </div>
+                            </div>
+
+                            <!-- absolute places  -->
+
+                            <!-- time  -->
+                            <div class="abs_time d-flex align-items-center">
+                                <img :src="require('@/assets/imgs/clock.svg')" alt="">
+                                <span class="fs-10 mx-1"> {{ similar.published_at }} </span>
+                            </div>
+
+                            <!-- details  -->
+                            <router-link :to="'/jobDetails/'+similar.id" @click="showAgain" class="abs_details fs-10 grayColor"> 
+                                {{  $t('common.showDetails')  }}
+                                <i class="fa-solid fa-chevron-left"></i> 
+                            </router-link>
+
+                        </div>
+                    </section>
+
+
+                    <section v-if="similars.length==0&&loggedIn==false" class="text-danger text-center">
+                        {{ $t('common.noSimilar') }}
+                    </section>
+
+                    <section v-if="loggedIn==true" class="text-danger text-center">
+                        <span class="text-danger text-center"> يرجى تسجيل الدخول للاطلاع على الوظائف المشابهة </span>
+                    </section>
+                    
+
                 </div>
 
             </div>
 
 
         </section>
+
+
     </div>
   </section>
   <Toast />
@@ -224,6 +250,7 @@
 <script>
 import axios from 'axios';
 import Toast from 'primevue/toast';
+import Skeleton from 'primevue/skeleton';
 
 export default {
     data(){
@@ -234,7 +261,11 @@ export default {
             experience : {},
             category: {},
             type : {},
-            disabled : false
+            city : {},
+            similars : [],
+            disabled : false,
+            laod : true,
+            loggedIn : false
         }
     },
     methods:{
@@ -249,7 +280,14 @@ export default {
                 this.category = res.data.data.category ;
                 this.type = res.data.data.type ;
                 this.company = res.data.data.company;
+                this.city = res.data.data.city;
             } )
+        },
+        showAgain(){
+            setTimeout(() => {
+                this.getJobDetails();
+                this.getSimilar();
+            }, 500);
         },
         // apply job 
         async applyJob(){
@@ -274,13 +312,35 @@ export default {
                 }
             } )
             .catch( (err)=> console.error(err) )
+        },
+        // get similar jobs 
+        async getSimilar(){
+            const fd = new FormData();
+            const token = localStorage.getItem('token');
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            fd.append('advertisement_id', this.$route.params.id);
+            await axios.post( 'user/advertisements/like', fd , {headers})
+            .then( (res)=>{
+                
+                if( res.data.key === 'success' ){
+                    this.similars = res.data.data ;
+                    this.laod = false
+                }else if( res.data.key === 'unauthenticated'  ){
+                    this.laod = false ;
+                    this.loggedIn = true ;
+                }
+            } )
         }
     },
     components:{
-        Toast
+        Toast,
+        Skeleton
     },
     mounted(){
         this.getJobDetails();
+        this.getSimilar();
     }
 }
 </script>

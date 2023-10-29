@@ -6,7 +6,9 @@
             <div class="col-lg-4 col-md-6 col-12 mb-4">
               <div class="footer-colomn-me">
                 <div class="flex-group-me foot-lo mb-4">
-                  <img :src="require('@/assets/imgs/logo.png')" alt="" />
+                  <router-link to="/">
+                    <img :src="require('@/assets/imgs/logo.png')" alt="" />
+                  </router-link>
                 </div>
 
                 <p class="font15 main-p">
@@ -62,7 +64,7 @@
                 </h6>
                 <ul>
                   <li>
-                    <router-link to="/"
+                    <router-link to="/exploreJobs"
                       >
                       <div class="my-l">
                         {{  $t('nav.exploreJobs')  }}
@@ -70,7 +72,7 @@
                     </router-link>
                   </li>
                    <li>
-                    <router-link to="/"
+                    <router-link to="/login"
                       >
                       <div class="my-l">
                         {{  $t('home.join')  }}
@@ -78,7 +80,7 @@
                     </router-link>
                   </li>
                    <li>
-                    <router-link to="/"
+                    <router-link to="/profile"
                       >
                       <div class="my-l">
                         {{  $t('home.orders')  }}
@@ -117,9 +119,9 @@
             {{  $t('home.rights')  }}
           </div>
           <div class="down-footer-l font14">
-            <span>
+            <a href="https://aait.sa/" target="_blank" style="color:inherit">
               {{  $t('home.awamer')  }}
-            </span>
+            </a>
             <img class="awamerLogo" :src="require('@/assets/imgs/awamrtLogo.png')" alt="">
           </div>
         </div>
@@ -225,6 +227,7 @@ a{
   }
   .down-footer {
     padding: 8px 0;
+    margin-bottom: 65px;
   }
 }
 .foot-lo img {

@@ -16,14 +16,14 @@
         <!-- show all  -->
         <div class="flex_center">
             <router-link to="/allAds" class="main_btn px-5 pt-3 pb-3 br-50px">
-                عرض الكل
+                {{ $t('common.showAll') }}
             </router-link>
         </div>
     </section>
     <!-- not found -->
     <section v-else-if="ads.length==0" class="w-50 mx-auto">
         <Message severity="error">
-                لا توجد وظائف الى الان
+                {{ $t('common.noJobs') }}
         </Message>
     </section>
 </template>

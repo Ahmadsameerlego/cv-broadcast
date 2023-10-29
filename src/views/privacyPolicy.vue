@@ -2,7 +2,7 @@
     <!-- header  --> 
     <siteHeaderVue />
     <!-- bread-crumb -->
-    <div class="breadcrumb d-flex externalBreadcrumb mb-0">
+    <div class="breadcrumb d-flex externalBreadcrumb mb-0 mt-5">
         <router-link to="/" class="inActive"> {{  $t('nav.main')  }} </router-link>&nbsp; - &nbsp;
         <p class="active mainColor">  {{  $t('home.privacy')  }} </p>
     </div>

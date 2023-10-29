@@ -37,7 +37,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.gender')  }} </label>
-                    <Dropdown v-model="gender" :options="genders" optionLabel="name"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.genderPlc')"  />
+                    <Dropdown v-model="gender" :options="genders" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.genderPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/sms.svg')" alt="">
@@ -338,11 +338,13 @@ export default {
       genders : [
         {
           id : 1,
-          name : 'male'
+          name : 'male',
+          title : 'ذكر'
         },
         {
           id : 2,
-          name : 'female'
+          name : 'female' ,
+          title : 'انثى'
         }
       ],
       gender : null,
@@ -523,6 +525,14 @@ export default {
   mounted(){
     this.geolocation();
     let filePlaceholder = document.querySelector('.p-button-label');
+    this.getNations();
+    this.getCities();
+    this.getQualifications();
+    this.getEmployment();
+    this.getSpecilizations();
+    this.getCertifications();
+    this.getSkills();
+    this.getExperiences();
     filePlaceholder.innerHTML = 'الرجاء اختيار السيرة الذاتية'
   },
   created(){

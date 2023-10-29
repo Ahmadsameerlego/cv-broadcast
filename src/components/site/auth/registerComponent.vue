@@ -230,7 +230,14 @@ export default {
           }, 3000);
           localStorage.setItem('phone', this.phone)
           localStorage.setItem('country_code', this.selectedCity.key);
-          localStorage.setItem('otpType', 'active')
+          localStorage.setItem('otpType', 'active');
+
+          // check if user active the phone 
+          localStorage.setItem('isActived', res.data[0].active)
+          // check if the user completed his info ( completeRegister )
+          localStorage.setItem('isCompleted', res.data[0].is_completed)
+          console.log(res.data[0])
+          console.log(res.data[0].active)
         }else{
           this.$toast.add({ severity: 'error', summary: res.message, life: 3000 });
           this.disabled = false ;
@@ -266,6 +273,10 @@ export default {
   mounted(){
     // this.getCountries();
     document.querySelector('.p-dropdown-label').innerHTML = this.selectedCity.key ;
+
+    if( localStorage.getItem('isActived') == 'false' ){
+      this.openOtp = true ;
+    }
   },
   created(){
     this.getCountries();
@@ -275,6 +286,7 @@ export default {
 
 <style scoped>
 .p-dropdown{
+  position: absolute !important;
   width:25%;
   top: 32px !important;
 }

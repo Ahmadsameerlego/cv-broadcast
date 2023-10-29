@@ -21,7 +21,7 @@
 
             <div class="d-flex align-items-baseline">
                 <img :src="require('@/assets/imgs/bag.svg')" alt="">
-                <span class="grayColor mx-2"> نوع الوظيفة: </span>
+                <span class="grayColor mx-2"> {{ $t('common.jobType') }}: </span>
                 <h6 class="fw-bold"> {{ ad.type }} </h6>
             </div>
         </div>

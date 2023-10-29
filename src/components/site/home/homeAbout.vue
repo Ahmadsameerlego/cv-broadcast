@@ -13,21 +13,7 @@
                 </div>
             </div>
 
-            <!-- <div class="col-md-4">
-                <div class="single_about flex_column">
-                    <img :src="require('@/assets/imgs/tree_blue.png')" class="about_img" alt="svg">
-                    <p>مجالات العمل</p>
-                    <span>هناك أكثر من 60 فئة في مجال العمل.</span>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="single_about flex_column">
-                    <img :src="require('@/assets/imgs/tree_blue.png')" class="about_img" alt="svg">
-                    <p>مجالات العمل</p>
-                    <span>هناك أكثر من 60 فئة في مجال العمل.</span>
-                </div>
-            </div> -->
+           
         </div>
     </div>
   </section>

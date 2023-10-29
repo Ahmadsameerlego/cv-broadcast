@@ -35,9 +35,9 @@
 
               <!-- start phone validations  -->
               <!-- phone required  -->
-              <div class="text-danger" v-if="required"> حقل الهاتف مطلوب </div>
+              <div class="text-danger" v-if="required"> {{ $t('auth.phoneRequired') }} </div>
               <!-- phone length  -->
-              <div class="text-danger" v-if="lengthValid"> يجب ان يكون رقم الهاتف اكثر من ٩ ارقام </div>
+              <div class="text-danger" v-if="lengthValid"> {{ $t('auth.phoneValid') }} </div>
               <!-- end phone validations  -->
       
               <!-- password  -->
@@ -359,7 +359,7 @@ export default {
     right: 10px;
   }
   .p-dropdown {
-    position: absolute;
+    position: absolute !important;
     left: 0px;
     top: 32px !important;
     width: 17%;

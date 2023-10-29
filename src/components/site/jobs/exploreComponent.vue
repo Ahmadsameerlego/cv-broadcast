@@ -1,9 +1,12 @@
 <template>
-    <section id="explore">
-        <div class="breadcrumb d-flex externalBreadcrumb mb-0">
-            <router-link to="/" class="inActive"> {{ $t('nav.main')  }} </router-link>&nbsp; - &nbsp;
-            <p class="active mainColor"> {{ $t('nav.exploreJobs') }} </p>
+    <section id="explore" class="mt-4">
+        <div class="container">
+            <div class="breadcrumb d-flex externalBreadcrumb mb-0 mx-0">
+                <router-link to="/" class="inActive"> {{ $t('nav.main')  }} </router-link>&nbsp; - &nbsp;
+                <p class="active mainColor"> {{ $t('nav.exploreJobs') }} </p>
+            </div>
         </div>
+        
 
         <section id="searchJob" class="pt-5 pb-5">
             <div class="container">
@@ -34,9 +37,9 @@
                         <!-- specilizations  -->
                          <div class="col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="" class="fw-bold mb-2"> التخصص الوظيفي </label>
+                                <label for="" class="fw-bold mb-2"> {{ $t('auth.specialSpec') }} </label>
                                 <Dropdown v-model="selectedSpec" :options="specs" optionLabel="title"
-                                    placeholder="الرجاء اختيار التخصص الوظيفي"
+                                    :placeholder="$t('auth.specialPlcSpec')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
                         </div>
@@ -110,7 +113,7 @@
             <!-- not found -->
             <section v-else-if="ads.length==0" class="w-50 mx-auto">
                 <Message severity="error">
-                        لا توجد وظائف مشابهة
+                    {{ $t('common.noSimilar') }}
                 </Message>
             </section>
         </section>
@@ -166,12 +169,15 @@ export default {
             appendedIfSelected(fd, 'filters[experience_id]', this.selectedExp);
             appendedIfSelected(fd, 'filters[type_id]', this.type);
 
-            fd.append('job_name', this.job_name);
+            if( this.job_name ){
+                fd.append('job_name', this.job_name);
+            }
 
             // try catch 
             try{
             const res = await this.$store.dispatch('logic/search', fd);
             if( res.success == true ){
+
                 this.$toast.add({ severity: 'success', summary: res.message, life: 3000 });
                 this.disabled = false ;
                 

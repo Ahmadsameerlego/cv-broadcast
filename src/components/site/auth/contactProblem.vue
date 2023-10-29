@@ -4,7 +4,9 @@
             <img :src="require('@/assets/imgs/logo.png')" alt="">
           </div>
 
-          <p class="fw-6 text-center mt-2 mb-2"> هذا النص هو مثال على نص يمكن ان يستبدل </p>
+          <p class="fw-6 text-center mt-2 mb-2"> 
+            {{ $t('common.sendMessage') }}
+          </p>
 
           <form class="flex flex-wrap gap-3 p-fluid" @submit.prevent="sendMessage">
             <div class="row">

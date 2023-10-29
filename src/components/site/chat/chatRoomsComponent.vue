@@ -13,20 +13,20 @@
               
               <!-- all rooms  -->
               <section class="allRooms mt-3">
-                  <div class="row">
-                      <div class="col-md-9 mb-3">
+                  <div class="row" v-if="rooms.length>0" >
+                      <div class="col-md-9 mb-3"  v-for="room in rooms" :key="room.id">
   
-                          <router-link to="/singleChat/1" class="colorInherit">
+                          <router-link :to="'/singleChat/'+room.id" class="colorInherit">
                               <!-- single room  -->
                               <section class="room pt-3 pb-3 px-3 position-relative d-flex align-items-center">
                                   <!-- chat image  -->
                                   <div class="chat_image">
-                                      <img :src="require('@/assets/imgs/logo.png')" alt="chat room image">
+                                      <img :src="room.members[0].image" alt="chat room image">
                                   </div>
                                   <!-- chat image  -->
                                   <div class="chat_details mx-3">
-                                      <h5 class="fw-bold mb-3"> شركة أوامر الشبكة </h5>
-                                      <p class="grayColor fs-16 fw-6"> هذا النص هو مثال على نص يمكن ان يستدل </p>
+                                      <h5 class="fw-bold mb-3">  {{ room.members[0].name }} </h5>
+                                      <p class="grayColor fs-16 fw-6"> {{room.last_message_body}} </p>
                                   </div>
   
                                   <!-- absolute  -->
@@ -39,7 +39,7 @@
                                   <!-- time  -->
                                   <div class="time d-flex">
                                       <img :src="require('@/assets/imgs/clock.svg')" alt="">
-                                      <span class="grayColor mx-2">منذ ساعة</span>
+                                      <span class="grayColor mx-2">{{ room.last_message_created_dt  }} </span>
                                   </div>
                               </section>
                           </router-link>
@@ -47,6 +47,9 @@
   
                       </div>
                   </div>
+                  <div v-else class="text-center text-danger fw-6 fs-15">
+                        لا توجد محادثات بعد
+                    </div>
               </section>
               
           </section>
@@ -55,11 +58,33 @@
     </section>
   </template>
   
-  <script>
-  export default {
-  
-  }
-  </script>
+<script>
+// import {mapState, mapActions} from 'vuex';
+export default {
+    data(){
+    return{
+
+        }
+    },
+    computed:{
+        // rooms(){
+        //     // return this.$store.state.rooms
+        // },
+        // ...mapState( 'logic', ['rooms'] )
+        rooms(){
+            return this.$store.state.rooms 
+        }
+
+    },
+    methods:{
+        // ...mapActions('logic', ['getchatRooms'])
+    },
+    created(){
+        this.$store.dispatch('getchatRooms');
+        // this.getchatRooms();
+    }
+}
+</script>
   
   <style lang="scss">
       .allRooms{

@@ -12,15 +12,7 @@
                         </p>
                     </div>
 
-                    <!-- <div class="col-md-6">
-                        <h6 class="fw-bold mb-3">لماذا سي في برودكاست</h6>
-                        <p class="fw-6"> يتيح سيڤي برودكاست الفرصة للباحثين عن وظائف، ميزة خاصة من خلال تسجيل مقطع فيديو يُبرز اهم النقاط في سيرتك الذاتية. </p>
-                    </div>
-
-                    <div class="col-md-12">
-                        <h6 class="fw-bold mb-3">نفتح لك ابواب عالم الوظائف</h6>
-                        <p class="fw-6"> يتيح لك سي ڤي برودكاست الوظائف المعلنة عبر التطبيق والتي تناسب مؤهلاتك وخبراتك ومهاراتك، وكذلك آلية للتواصل معك من قبل الجهات الباحثة عن موظفين.  </p>
-                    </div> -->
+                 
 
                     <div class="intro_btns mt-4 d-flex align-items-center">
                         <router-link to="/exploreJobs" class="main_btn d-flex"> 
@@ -28,7 +20,7 @@
                             <span> {{ $t('home.search')  }} </span>
                         </router-link>
 
-                        <router-link to="/" class="bordered_btn"> {{ $t('home.explore')  }} </router-link>
+                        <router-link to="/exploreJobs" class="bordered_btn"> {{ $t('home.explore')  }} </router-link>
 
                     </div>
                 </div>
