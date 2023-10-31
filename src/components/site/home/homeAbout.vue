@@ -6,7 +6,7 @@
             <div class="col-md-4 mb-2" v-for="service in services" :key="service">
                 <div class="single_about flex_column">
                     <img :src="service.image" class="about_img" alt="svg">
-                    <p>مجالات العمل</p>
+                    <p> {{ service.title  }} </p>
                     <span>
                         {{  service.description  }}
                     </span>

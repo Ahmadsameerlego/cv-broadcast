@@ -41,9 +41,7 @@
                             </button>
                         </div>
                     </div>
-
-
-                    <div class="mt-3 mb-3" v-if="not.type=='job_application_status'">
+                    <div class="mt-3 mb-3" v-else-if="not.type=='job_application_status'">
                         <router-link :to="'/jobApplication/'+not.data.job_application_id" style="color:inherit">
                             <div class="notificationBox position-relative">
                                 <div class="d-flex align-items-center gap-10">
@@ -74,6 +72,69 @@
                         </router-link>
                         
                     </div>
+                    <div class="mt-3 mb-3" v-else-if="not.type=='advertisement_created'">
+                        <router-link :to="'/jobDetails/'+not.data.advertisement_id" style="color:inherit">
+                            <div class="notificationBox position-relative">
+                                <div class="d-flex align-items-center gap-10">
+                                    <img :src="require('@/assets/imgs/SSM 1.png')" alt="" class="notificationLogo">
+                                    <!-- body  -->
+                                    <div>
+                                        <h6 class="fw-6"> {{ not.title }} </h6>
+                                        <div class="grow-1"> 
+                                            {{ not.body }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-start">
+                                    <span class="date"> 
+                                        <i class="fa-solid fa-clock m-end-5 "></i>
+                                    </span>
+                                    <span class="date">
+                                        {{  not.created_at  }}
+                                    </span>
+                                </div>
+
+                                <!-- delete not  -->
+                                <button class="btn btn-danger text-white delete_not" @click="deleteNotification(not.id)" >
+                                        <i class="fa-solid fa-trash-can" ></i>     
+                                    
+                                </button>
+                            </div>
+                        </router-link>
+                        
+                    </div>
+                    <div class="mt-3 mb-3" v-else>
+                        <!-- <router-link :to="'/jobDetails/'+not.data.advertisement_id" style="color:inherit"> -->
+                            <div class="notificationBox position-relative">
+                                <div class="d-flex align-items-center gap-10">
+                                    <img :src="require('@/assets/imgs/SSM 1.png')" alt="" class="notificationLogo">
+                                    <!-- body  -->
+                                    <div>
+                                        <h6 class="fw-6"> {{ not.title }} </h6>
+                                        <div class="grow-1"> 
+                                            {{ not.body }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-start">
+                                    <span class="date"> 
+                                        <i class="fa-solid fa-clock m-end-5 "></i>
+                                    </span>
+                                    <span class="date">
+                                        {{  not.created_at  }}
+                                    </span>
+                                </div>
+
+                                <!-- delete not  -->
+                                <button class="btn btn-danger text-white delete_not" @click="deleteNotification(not.id)" >
+                                        <i class="fa-solid fa-trash-can" ></i>     
+                                    
+                                </button>
+                            </div>
+                        <!-- </router-link> -->
+                        
+                    </div>
+
                 </div>
             </section>
 
@@ -198,7 +259,6 @@ export default {
     }
 </style>
 <style  scoped lang="scss">
-
 .notificationBox {
     gap: 10px;
     padding: 10px;

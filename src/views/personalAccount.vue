@@ -56,7 +56,7 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.email') }} </label>
-                                    <InputText type="email" class="defaultInput2" v-model="email" name="email"
+                                    <InputText type="email" class="defaultInput2" v-model="email"
                                         :placeholder="$t('auth.emailPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -160,7 +160,7 @@
 
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.place') }} </label>
                                     <InputText type="text" class="defaultInput2" v-model="map_desc" @focus="googleMap = true"
-                                        :placeholder="$t('auth.palcePlc')" />
+                                        :placeholder="$t('auth.placePlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon2">
                                         <img :src="require('@/assets/imgs/location.svg')" alt="">
@@ -500,8 +500,7 @@
         <h6 class="fw-bold text-center"> {{ $t('auth.changePhone') }} </h6>
         <p class=" text-center"> {{ $t('auth.changePlc') }} </p>
 
-
-
+        
         <form ref="loginForm" @submit.prevent="checkPassword" class="flex flex-wrap gap-3 p-fluid">
 
             <!-- email  -->
@@ -510,7 +509,7 @@
             <div class="position-relative flex-auto mt-3">
                 <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.pass') }} </label>
                 <Password v-model="password" :feedback="false" toggleMask class="defaultInput"
-                    :placeholder="$t('passPlc')" />
+                    :placeholder="$t('auth.passPlc')" />
                 <!-- icon  -->
                 <div class="inputIcon">
                     <img :src="require('@/assets/imgs/lock.svg')" alt="">
@@ -718,9 +717,9 @@ export default {
             done: false,
 
             //new data 
-            name : '',
-            phone : '',
-            email : '',
+            name : null,
+            phone : null,
+            email : null,
             genders : [
                 {
                 id : 1,
@@ -1028,7 +1027,13 @@ export default {
             fd.append('nationality', this.nationality)
             }
             if( this.videoFile ){
-                fd.append('video', this.videoSource)
+                fd.append('video', this.videoFile)
+            }
+            if( this.name ){
+                fd.append('name', this.name)
+            }
+            if( this.email ){
+                fd.append('email', this.email)
             }
 
             const token = localStorage.getItem('token');

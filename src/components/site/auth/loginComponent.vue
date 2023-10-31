@@ -261,8 +261,26 @@ export default {
   width:25%;
   top: 32px !important;
 }
+.p-dropdown {
+    position: absolute !important;
+    top: 32px !important;
+    /* width: 17%; */
+  }
+  .p-dropdown .p-dropdown-trigger{
+    width: 25px !important;
+  }
+ 
 </style>
 <style lang="scss">
+ .p-input-icon-right > svg:last-of-type {
+    left: 0.75rem !important;
+    right: auto !important;
+}
+  .p-dropdown{
+    background-color: #f8f8f8 !important;
+    left: 0px;
+
+  }
   .main_btn{
     &:disabled{
       opacity: .6;
@@ -358,20 +376,7 @@ export default {
     top: 57%;
     right: 10px;
   }
-  .p-dropdown {
-    position: absolute !important;
-    left: 0px;
-    top: 32px !important;
-    width: 17%;
-    background-color: #f8f8f8 !important;
-  }
-  .p-dropdown .p-dropdown-trigger{
-    width: 25px !important;
-  }
-  .p-input-icon-right > svg:last-of-type {
-    left: 0.75rem !important;
-    right: auto !important;
-}
+
 
 
 </style>
