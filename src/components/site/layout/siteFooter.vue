@@ -101,9 +101,9 @@
                       v-for="social in socials"
                       :key="social"
                       :href="social.link"
-                      traget="_blank"
+                      target="_blank"
                       >
-                      <img :src="social.image" :alt="social.name"/>
+                      <img :src="social.icon" :alt="social.name"/>
                     </a>
                     
                   </div>

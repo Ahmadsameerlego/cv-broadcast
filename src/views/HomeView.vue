@@ -1,12 +1,12 @@
 <template>
   <!-- header  -->
   <siteHeaderVue />
-  <homeIntroVue data-aos="fade-left" data-aos-duration="1000"  data-aos-easing="ease-out-cubic" />
-  <allAds v-if="isLoggedIn" data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic" />
+  <homeIntroVue  />
+  <allAds v-if="isLoggedIn"  />
   <!-- about  -->
-  <homeAboutVue data-aos="fade-right" data-aos-duration="1000"  data-aos-easing="ease-out-cubic"  />
+  <homeAboutVue   />
   <!-- vision -->
-  <homeVisionVue data-aos="fade-left" data-aos-duration="1000" data-aos-easing="ease-out-cubic" />
+  <homeVisionVue  />
 
   <!-- download app   -->
   <downloadAppVue />

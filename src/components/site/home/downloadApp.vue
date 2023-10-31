@@ -22,7 +22,7 @@
 
                 <div class="col-md-6">
                     <div class="downloadImage">
-                        <img class="w-100 h-100" :src="download_app_image" alt="">
+                        <img class="w-100 h-100" :src="require('@/assets/imgs/half_back.png')" alt="">
                     </div>
                 </div>
 

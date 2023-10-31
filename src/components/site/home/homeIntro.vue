@@ -7,7 +7,7 @@
 
                     <div class="col-md-6" v-for="item in top" :key="item">
                         <h6 class="fw-bold mb-3"> {{  item.title  }} </h6>
-                        <p class="fw-6">
+                        <p class="fw-6" >
                             {{ item.content }}
                         </p>
                     </div>
@@ -20,14 +20,14 @@
                             <span> {{ $t('home.search')  }} </span>
                         </router-link>
 
-                        <router-link to="/exploreJobs" class="bordered_btn"> {{ $t('home.explore')  }} </router-link>
+                        <router-link v-if="!isAuth" to="/exploreJobs" class="bordered_btn"> {{ $t('home.explore')  }} </router-link>
 
                     </div>
                 </div>
             </div>
             <div class="col-md-5 mb-3">
                 <div class="job_image">
-                    <img class="w-100 h-100 lazy" :src="site_intro_img" alt="job canvas">
+                    <img class="w-100 h-100 lazy" :src="require('@/assets/imgs/job.png')" alt="job canvas">
                 </div>
             </div>
         </div>
@@ -38,6 +38,11 @@
 <script>
 import {mapGetters, mapActions} from 'vuex'
 export default {
+    data(){
+        return{
+            isAuth : false
+        }  
+    },
     computed:{
         ...mapGetters( 'setting', ['top','settings', 'site_intro_img'] )
     },
@@ -47,6 +52,10 @@ export default {
     mounted(){
         this.getTopSection();
         this.getSettings();
+        // window.addEventListener('click', this.closeNavbarOnClickOutside);
+        if( localStorage.getItem('token') ){
+            this.isAuth = true ;
+        }
     }
 }
 </script>

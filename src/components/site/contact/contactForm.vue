@@ -48,7 +48,7 @@
                                     </div>
 
                                     <!-- select phone  -->
-                                    <Dropdown v-model="selectedCity" :options="common.countries" optionLabel="key"  class="w-full md:w-14rem" />
+                                    <Dropdown v-model="selectedCity" :options="common.countries" optionLabel="key"  class="w-full md:w-14rem"  @change="chooseCountry" />
 
                                 </div>
                             </div>
@@ -129,6 +129,7 @@ export default {
         fd.append('phone', this.phone);
         fd.append('user_name', this.user_name);
         fd.append('complaint', this.complaint);
+        fd.append('country_code', this.selectedCity.key.replace(/\+/g, ''));
 
         const res = await this.$store.dispatch('logic/sendCompaint', fd)
         if( res.success == true ){
@@ -160,10 +161,7 @@ export default {
 </script>
 
 <style scoped>
-    .p-dropdown {
-        top: 27px;
-        width: 20%;
-    }
+    
     input, textarea, .p-dropdown{
         border: none !important;
     }
@@ -180,6 +178,7 @@ export default {
 
 <style scoped>
     .p-dropdown{
+        position: absolute !important;
         top:32px !important;
         width:35% !important;
     }

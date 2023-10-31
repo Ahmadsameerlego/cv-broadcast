@@ -227,7 +227,8 @@ export default {
     padding: 20px;
     border-radius: 10px;
     border-top: 3px solid #BACCED;
-
+    height:200px;
+    // overflow-y: auto;
     .abs_time {
         position: absolute;
         top: 29px;

@@ -266,12 +266,13 @@ export default {
     top: 32px !important;
     /* width: 17%; */
   }
-  .p-dropdown .p-dropdown-trigger{
-    width: 25px !important;
-  }
+  
  
 </style>
 <style lang="scss">
+.p-dropdown .p-dropdown-trigger{
+    width: 7px !important;
+  }
  .p-input-icon-right > svg:last-of-type {
     left: 0.75rem !important;
     right: auto !important;

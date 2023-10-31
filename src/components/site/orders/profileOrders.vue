@@ -94,12 +94,12 @@
 
 
                 <div v-if="LenghtZero" class="text-center text-danger">
-                    لا توجد طلبات الى الان
+                    {{ $t('common.noOrders') }}
                 </div>
             </section>
 
 
-            <paginationComponentVue />
+            <!-- <paginationComponentVue /> -->
         </div>
     </section>
 </template>
@@ -108,7 +108,7 @@
 import axios from 'axios';
 import Skeleton from 'primevue/skeleton';
 
-import paginationComponentVue from '../layout/paginationComponent.vue'
+// import paginationComponentVue from '../layout/paginationComponent.vue'
 export default {
     data(){
         return{
@@ -118,7 +118,7 @@ export default {
         }
     },
     components:{
-        paginationComponentVue ,
+        // paginationComponentVue ,
         Skeleton
     },
     methods:{

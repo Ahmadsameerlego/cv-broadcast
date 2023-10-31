@@ -159,7 +159,8 @@
         "signOut": "Sign Out",
         "appliedDone": "Your job application has been submitted, please wait",
         "rejected": "Your job application has been rejected",
-        "acceptedDone": "Your job application has been accepted"
+        "acceptedDone": "Your job application has been accepted",
+        "noOrders" : "No Orders Yet"
     },
     "setting": {
 

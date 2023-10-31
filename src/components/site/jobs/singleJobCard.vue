@@ -15,8 +15,8 @@
                 <span class="mainColor2 fw-6 mx-2"> {{  ad.city  }} </span>
             </div>
 
-            <p class="card_para fs-16 fw-5 mb-3">
-                {{ ad.description }}
+            <p class="card_para fs-16 fw-5 mb-3" style="line-break: anywhere;max-height:50px;overflow-y:auto">
+                {{ ad.company.description }}
             </p>
 
             <div class="d-flex align-items-baseline">

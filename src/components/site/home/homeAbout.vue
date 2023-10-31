@@ -49,7 +49,8 @@ export default {
             height: 0;
             top: 50%;
             right: 50%;
-            background-color: #293255;
+            background: linear-gradient(252.28deg, #293255 3.57%, #475487 23.7%, #546099 68.8%, #293255 95.33%);
+
             transition: .3s;
             border-radius: 10px;
             z-index: -1;

@@ -40,15 +40,14 @@
 
             <!-- user interaction  -->
             <div class="user_interaction d-flex justify-content-between align-items-center">
+                <!-- search  -->
+                <router-link to="/exploreJobs" class="search flex_center mb-0 mx-2">
+                    <img :src="require('@/assets/imgs/Vector.png')" alt="">
+                </router-link>
                 <!-- alert  -->
                 <router-link to="/notificationPage" class="alert flex_center mb-0 mx-2 position-relative" v-if="isLoggedIn">
                     <i class="fa-regular fa-bell"></i>
                     <span class="not_count"> {{ count }} </span>
-                </router-link>
-
-                <!-- search  -->
-                <router-link to="/exploreJobs" class="search flex_center mb-0 mx-2">
-                    <img :src="require('@/assets/imgs/Vector.png')" alt="">
                 </router-link>
 
                 <!-- messages  -->
@@ -210,8 +209,9 @@ export default {
                 if( res.data.key == 'success' ){
                     this.$toast.add({ severity: 'success', summary: res.data.msg, life: 3000 });
                     setTimeout(() => {
-                        this.$router.push('/login')
-                    }, 3000);
+                        this.$router.push('/')
+                    }, 1000);
+                    location.reload();
                     localStorage.removeItem('token');
                     localStorage.removeItem('isAuth');
                     localStorage.removeItem('user');

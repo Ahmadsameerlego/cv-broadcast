@@ -81,7 +81,7 @@ export default {
     data(){
         return{
             otp : false,
-            timer: 5,
+            timer: 60,
             intervalId: null,
             openReset : false,
             disabled : true,
@@ -190,7 +190,7 @@ export default {
                 if( res.success == true ){
                     this.$toast.add({ severity: 'success', summary: res.message, life: 3000 });
                     this.startTimer()
-                    this.timer = 5 ;
+                    this.timer = 60 ;
                     this.isCodeSent = true ;
                     this.resendTime = true ;
                 }else{
