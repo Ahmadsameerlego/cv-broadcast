@@ -1,9 +1,9 @@
 <template>
   <section id="homeIntro" class="mt-5">
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-md-7 mb-3">
-                <div class="row">
+                <div class="row ">
 
                     <div class="col-md-6" v-for="item in top" :key="item">
                         <h6 class="fw-bold mb-3"> {{  item.title  }} </h6>
@@ -81,7 +81,7 @@ export default {
             }
         }
         .job_image{
-            height: 320px;
+            height: 360px;
             img{
                 object-fit: contain;
             }

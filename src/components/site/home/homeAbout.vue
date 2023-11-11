@@ -42,6 +42,8 @@ export default {
         border-radius: 10px;
         padding-top: 20px;
         padding-bottom: 20px;
+        padding-left: 12px;
+        padding-right: 12px;
         &::before{
             content: '';
             position: absolute;

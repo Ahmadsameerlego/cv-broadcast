@@ -87,7 +87,13 @@
                                                 {{  message.body  }}
                                             </p>
                                             <div v-else-if="message.type=='file'" style="height:200px;width:200px;">
-                                                <img :src="message.body" alt="" style="width:100%;height:100%;">
+                                                <template v-if="message.body.toLowerCase().endsWith('.pdf')">
+                                                    <embed :src="message.body" type="application/pdf" style="width:100%;height:100%;" />
+                                                </template>
+                                                <template v-else>
+                                                    <img :src="message.body" alt="" style="width:100%;height:100%;" />
+                                                </template>
+                                                <!-- <img :src="message.body" alt="" style="width:100%;height:100%;"> -->
                                             </div>                                        
                                         </div>
                                         <!-- time  -->
@@ -115,10 +121,8 @@
                                             <textarea name="" id="" class="form-control" v-model="text" :placeholder="$t('auth.messagePlc')"></textarea>
                                             <button class="main_btn submit"  @click.prevent="addMessage" :disabled="disabled"> 
                                                
-                                                <span v-if="!disabled"> {{  $t('auth.send')  }} </span> 
-                                                <div class="spinner-border" role="status" v-if="disabled">
-                                                    <span class="visually-hidden">Loading...</span>
-                                                </div>
+                                                <span > {{  $t('auth.send')  }} </span> 
+                                                
                                             </button>
                                         </div>
 
@@ -190,7 +194,7 @@ export default {
             const headers = {
               Authorization: `Bearer ${token}`,
             };
-            await axios.post(`upload-room-file/${this.room_id}`, formData , {headers})
+            await axios.post(`upload-room-file/${this.$route.params.id}`, formData , {headers})
             .then( (res)=>{
                 if( res.data.key === 'success' ){
                     this.fileChosen = "";
@@ -213,11 +217,11 @@ export default {
             this.disabled = true ;
             socket.emit("sendMessage", {
                 sender_id: JSON.parse(localStorage.getItem('user')).id,
-                sender_type: `Company`,
-                sender_name: 'Ezekiel Moses',
+                sender_type: `User`,
+                sender_name: JSON.parse(localStorage.getItem('user')).name,
                 avater: this.avatar,
                 receiver_id: this.singleRoom.id,
-                receiver_type: `User`,
+                receiver_type: `Company`,
                 room_id: this.$route.params.id,
                 type: type,
                 body: body,
@@ -329,6 +333,29 @@ export default {
     },
     mounted(){
         this.getUnReadMessages();
+
+        socket.on('sendMessageRes', (data) => {
+            console.log(data);
+            console.log('neeeeeeew messssssageeeeeee');
+
+            //var date = new Date(data.created_at);
+            //date.toLocaleString("en-US", { timeZone: "Asia/Riyadh" });
+            
+            // this.$store.dispatch('getSingleRoomMessages', this.room_id )
+            // this.messages.push({
+            //     is_sender : 0,
+            //     // sent_by_me: false,
+            //     // sent_by_me: false,
+            //     type: data.type,
+            //     body: data.body,
+            //     // date: date.toDateString("en-US", { timeZone: "Asia/Riyadh" }),
+            //     created_at: data.created_at,
+            //     // id:382
+            // });
+            setTimeout(() => {
+                this.reRenderMessages(this.$route.params.id)
+            }, 500);
+        })
     },
     created(){
         // socket = io('https://cvbroadcast.com:4730');
@@ -346,7 +373,7 @@ export default {
 
         socket.emit("enterChat", {
             user_id: JSON.parse(localStorage.getItem('user')).id,
-            user_type: `Company`,
+            user_type: `User`,
             room_id: this.$route.params.id,
         });
         this.sender_image = JSON.parse(localStorage.getItem('user')).image ;
@@ -357,23 +384,8 @@ export default {
 
         this.getMessages();
 
-        socket.on('sendMessageRes', (data) => {
-            console.log(data);
-            console.log('neeeeeeew messssssageeeeeee');
-
-            //var date = new Date(data.created_at);
-            //date.toLocaleString("en-US", { timeZone: "Asia/Riyadh" });
-
-            
-            this.messages.push({
-                // sent_by_me: false,
-                type: data.type,
-                body: data.body,
-                // date: date.toDateString("en-US", { timeZone: "Asia/Riyadh" }),
-                // time: data.created_at,
-            });
-        })
-    }
+        
+    }   
 }
 </script>
 

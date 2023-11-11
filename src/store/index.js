@@ -47,7 +47,7 @@ export default createStore({
         };
         return axios.get(`room-members/${room_id}`, {headers})
         .then( (res)=>{
-          const responseUSer= Object.values(res.data.data)[1];
+          const responseUSer= Object.values(res.data.data)[0];
           commit('setSingleRoom', responseUSer);
         } )
       },

@@ -183,7 +183,7 @@ export default {
       fd.append('country_code', this.selectedCity.key);
       fd.append( 'password', this.password );
       fd.append( 'phone', this.phone );
-      fd.append('device_id', localStorage.getItem('device_id'));
+      fd.append('device_id', localStorage.getItem('FCMToken'));
       fd.append( 'device_type', 'web');
 
       try{

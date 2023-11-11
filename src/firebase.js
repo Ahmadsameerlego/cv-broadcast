@@ -6,13 +6,13 @@ import { getMessaging } from "firebase/messaging";
 // import '../public/firebase-messaging-sw'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCRQNh-EJAmBAZirm3GSuT2j-EAFXtc_54",
-    authDomain: "broadcast-77911.firebaseapp.com",
-    projectId: "broadcast-77911",
-    storageBucket: "broadcast-77911.appspot.com",
-    messagingSenderId: "1020105949068",
-    appId: "1:1020105949068:web:a6e49a4397d9fb729420a9",
-    measurementId: "G-DGFDE3MLPG"
+    apiKey: "AIzaSyA4jTrF6xymzZAm9ofzX_NPu4mHnrITv9k",
+authDomain: "sotam-76bd8.firebaseapp.com",
+projectId: "sotam-76bd8",
+storageBucket: "sotam-76bd8.appspot.com",
+messagingSenderId: "1067680195061",
+appId: "1:1067680195061:web:b4b1fdc65f2615997400bc",
+measurementId: "G-Z9WCTY7629"
 };
 
 // Initialize Firebase

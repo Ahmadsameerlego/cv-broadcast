@@ -55,6 +55,12 @@ export default {
 }
 </script>
 
+<style >
+  .swiper-wrapper{
+    display: flex;
+    justify-content: center;
+  }
+</style>
 <style>
   .swiper-slide img{
     max-width: 200px;

@@ -513,10 +513,7 @@ export default {
         }catch(err){
             console.error(err)
         }
-
-
       },
-
       // skip 
       skip(){
         this.$router.push('/')
