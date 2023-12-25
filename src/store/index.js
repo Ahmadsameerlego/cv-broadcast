@@ -23,6 +23,7 @@ export default createStore({
     },
     // room messages 
     setRoomMessages( state, messages  ){
+      
         state.messages = messages ;
     },
   },
@@ -52,13 +53,14 @@ export default createStore({
         } )
       },
       // get single chat messages 
-      getSingleRoomMessages({commit}, room_id){
+      getSingleRoomMessages({commit}, {roomId, page}){
         const token = localStorage.getItem('token');  
         const headers = {
           Authorization: `Bearer ${token}`,
         };
-        return axios.get(`get-room-messages/${room_id}`, {headers})
+        return axios.get(`get-room-messages/${roomId}?page=${page}`, {headers})
         .then( (res)=>{
+
           const response= res.data.data.messages;
           commit('setRoomMessages', response);
         } )

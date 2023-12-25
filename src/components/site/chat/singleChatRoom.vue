@@ -67,7 +67,7 @@
                                 </div>
 
                                 <!-- chat content  -->
-                                <div class="chat_messages pt-4 pb-4 px-3" ref="chatSection">
+                                <div class="chat_messages pt-4 pb-4 px-3" ref="chatSection" @scroll="handleScroll">
 
                                     <!-- single message => sent by me  -->
                                     <div class="single_message position-relative mb-3 d-flex align-items-center" :class="{sent_by_me: message.is_sender == 1, received : message.is_sender == 0}" v-for="message in messages" :key="message.id">
@@ -158,7 +158,8 @@ export default {
             room_id : null,
             showLoader : false,
             sender_image : '',
-            unSeenCount : ''
+            unSeenCount : '',
+            currentPage : 1
         }
     },
     methods:{
@@ -199,16 +200,16 @@ export default {
                 if( res.data.key === 'success' ){
                     this.fileChosen = "";
                     this.send(
-                        res.data.data.file_name,
+                        res.data.data.file_url,
                         "file",
-                        res.data.data.file_url
+                        res.data.data.file_name
                     );
 
                 }
             } )
         },
         // argument send method 
-        send(msg, type ,url){
+        send(msg, type,url){
             let body = msg;
             if (url != null) {
                 body = url;
@@ -236,7 +237,7 @@ export default {
                 // avatar : this.avatar,
                 sent_by_me: true,
                 type: type,
-                body: body,
+                body: msg,
                 created_dt :new Date().toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' }),
                 fileChosen : this.fileChosen
 
@@ -259,7 +260,9 @@ export default {
         },
         // get messages 
         getMessages(){
-            this.$store.dispatch('getSingleRoomMessages', this.$route.params.id)
+            const roomId = this.$route.params.id ;
+            const page = this.currentPage
+            this.$store.dispatch('getSingleRoomMessages', {roomId, page})
             .then( ()=>{
                 this.scrollToBottom();
             } )
@@ -290,6 +293,8 @@ export default {
                 // You've reached the end of the chat content, so you can call your function here
                 // this.showLoader = true ;
                 console.log('fff')
+                this.currentPage+=1 ;
+                this.getMessages();
             }
         },
         // get unread sent messages count 
@@ -319,7 +324,7 @@ export default {
             if (messages) {
             // Use the reverse() method to reverse the array
             const reversed = messages.slice().reverse();
-
+                
             // Return the reversed array
             return reversed;
             } else {
@@ -332,6 +337,7 @@ export default {
         
     },
     mounted(){
+
         this.getUnReadMessages();
 
         socket.on('sendMessageRes', (data) => {
@@ -357,7 +363,12 @@ export default {
             }, 500);
         })
     },
+    unmounted(){
+        // window.removeEventListener('scroll', this.handleScroll)
+    },
     created(){
+        // handle scroll 
+        // window.addEventListener('scroll', this.handleScroll)
         // socket = io('https://cvbroadcast.com:4730');
         console.log(socket.io)
         socket.on('connect', () => {

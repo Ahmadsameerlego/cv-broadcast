@@ -45,7 +45,7 @@
               <button class="main_btn pt-3 pb-3 w-50" :disabled="disabled">
                     حفظ
               </button>
-              <button class="sec_btn pt-3 pb-3 w-50 mx-3 fw-bold" type="button"> {{  $t('auth.skip')  }} </button>
+              <button class="sec_btn pt-3 pb-3 w-50 mx-3 fw-bold" type="button" @click="skip"> {{  $t('auth.skip')  }} </button>
             </div>
 
         </form>
@@ -121,6 +121,10 @@ export default {
                     this.disabled = false ;
                 }
             } )
+        },
+
+        skip(){
+            this.$router.push('/')
         }
     },
     props:{

@@ -172,7 +172,7 @@
                                 <Dialog v-model:visible="googleMap" modal :style="{ width: '50vw' }">
                                     <GMapMap :center="locations" :zoom="11" map-type-id="terrain"
                                         style="width: 100vw; height: 900px">
-                                        <GMapAutocomplete placeholder="This is a placeholder"
+                                        <GMapAutocomplete placeholder="ابحث عن موقعك"
                                             @place_changed="onPlaceChanged">
                                         </GMapAutocomplete>
                                         <GMapMarker :position="locations" :clickable="true" :draggable="true"
@@ -221,7 +221,7 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.qual') }} </label>
-                                    <Dropdown v-model="qualification" :options="qualifications" optionLabel="title"
+                                    <Dropdown v-model="qualification" :options="qualifications" filter optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         :placeholder="$t('auth.qualPlc')" />
                                     <!-- icon  -->
@@ -237,7 +237,7 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.field') }} </label>
-                                    <Dropdown v-model="employment" :options="emps" optionLabel="title"
+                                    <Dropdown v-model="employment" :options="emps" filter optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         :placeholder="$t('auth.fieldPlc')" />
                                     <!-- icon  -->
@@ -253,7 +253,7 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.special') }} </label>
-                                    <Dropdown v-model="specialization" :options="specs" optionLabel="title"
+                                    <Dropdown v-model="specialization" :options="specs" filter optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         :placeholder="$t('auth.specialPlc')" />
                                     <!-- icon  -->
@@ -269,7 +269,7 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.cer') }} </label>
-                                    <MultiSelect v-model="selectedCer" :options="certifications" optionLabel="title"
+                                    <MultiSelect v-model="selectedCer" filter :options="certifications" optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         :maxSelectedLabels="5"
                                         :placeholder="$t('auth.cerPlc')" />
@@ -286,7 +286,7 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.skills') }} </label>
-                                    <MultiSelect v-model="selectedSkill" :options="skills" optionLabel="title"
+                                    <MultiSelect v-model="selectedSkill" filter :options="skills" optionLabel="title"
                                         :placeholder="$t('auth.skillsPlc')" :maxSelectedLabels="5"
                                         class="w-full md:w-20rem defaultInput2 position-relative" />
 
@@ -324,7 +324,7 @@
                                 <div class="position-relative flex-auto">
 
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.yearsExper') }} </label>
-                                    <Dropdown v-model="experience" :options="experiences" optionLabel="title"
+                                    <Dropdown v-model="experience" :options="experiences" filter optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
                                         :placeholder="$t('auth.yearPlc')" />
                                     <!-- icon  -->

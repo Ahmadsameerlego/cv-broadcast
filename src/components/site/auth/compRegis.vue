@@ -65,7 +65,7 @@
               <div class="col-md-6 mb-3">
                 <div class="position-relative flex-auto">
                     <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.nat')  }} </label>
-                    <Dropdown v-model="nation" :options="nationalities" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.natPlc')"  />
+                    <Dropdown v-model="nation" :options="nationalities" filter optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.natPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/card-pos.svg')" alt="">
@@ -125,7 +125,7 @@
                             style="width: 100vw; height: 900px"
                         >
                          <GMapAutocomplete
-                              placeholder="This is a placeholder"
+                              placeholder="ابحث عن موقعك"
                               @place_changed="onPlaceChanged"
                             >
                           </GMapAutocomplete>
@@ -163,7 +163,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.qual')  }} </label>
-                    <Dropdown v-model="qualification" :options="qualifications" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.qualPlc')"  />
+                    <Dropdown v-model="qualification" filter :options="qualifications" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.qualPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/book.svg')" alt="">
@@ -177,7 +177,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.field')  }} </label>
-                    <Dropdown v-model="emp" :options="emps" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.fieldPlc')"  />
+                    <Dropdown v-model="emp" filter :options="emps" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.fieldPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -191,7 +191,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.special')  }} </label>
-                    <Dropdown v-model="specialize" :options="specs" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.specialPlc')"  />
+                    <Dropdown v-model="specialize" filter :options="specs" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.specialPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">
@@ -205,7 +205,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{ $t('auth.cer') }} </label>
-                    <MultiSelect v-model="cer" :options="certifications" optionLabel="title" :placeholder="$t('auth.cerPlc')"
+                    <MultiSelect v-model="cer" filter :options="certifications" optionLabel="title" :placeholder="$t('auth.cerPlc')"
                       :maxSelectedLabels="5" class="w-full md:w-20rem defaultInput2 position-relative" />
                     <!-- icon  -->
                     <div class="inputIcon">
@@ -221,7 +221,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.skills')  }} </label>
-                    <MultiSelect v-model="skill" :options="skills" optionLabel="title" :placeholder="$t('auth.skillsPlc')"
+                    <MultiSelect v-model="skill" filter :options="skills" optionLabel="title" :placeholder="$t('auth.skillsPlc')"
                       :maxSelectedLabels="5" class="w-full md:w-20rem defaultInput2 position-relative" />
 
                     <!-- icon  -->
@@ -257,7 +257,7 @@
                 <div class="position-relative flex-auto">
 
                     <label for="integeronly" class="label fw-bold block mb-2"> {{  $t('auth.yearsExper')  }} </label>
-                    <Dropdown v-model="experience" :options="experiences" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.yearPlc')"  />
+                    <Dropdown v-model="experience" filter :options="experiences" optionLabel="title"  class="w-full md:w-14rem w-100 position-relative" :placeholder="$t('auth.yearPlc')"  />
                     <!-- icon  -->
                     <div class="inputIcon">
                       <img :src="require('@/assets/imgs/document-text.svg')" alt="">

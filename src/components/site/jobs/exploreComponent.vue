@@ -27,7 +27,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="" class="fw-bold mb-2"> {{  $t('common.jobField')  }} </label>
-                                <Dropdown v-model="selectedEmp" :options="emps" optionLabel="title"
+                                <Dropdown v-model="selectedEmp" filter :options="emps" optionLabel="title"
                                     :placeholder="$t('common.fieldPlc')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" 
                                 />
@@ -38,7 +38,7 @@
                          <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="" class="fw-bold mb-2"> {{ $t('auth.specialSpec') }} </label>
-                                <Dropdown v-model="selectedSpec" :options="specs" optionLabel="title"
+                                <Dropdown v-model="selectedSpec" filter :options="specs" optionLabel="title"
                                     :placeholder="$t('auth.specialPlcSpec')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
@@ -48,7 +48,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="position-relative flex-auto form-group">
                                 <label for="" class="fw-bold mb-2"> {{ $t('common.jobType')  }} </label>
-                                <Dropdown v-model="type" :options="types" optionLabel="title"
+                                <Dropdown v-model="type" filter :options="types" optionLabel="title"
                                     :placeholder="$t('common.typePlc')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" 
                                 />
@@ -59,7 +59,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="" class="fw-bold mb-2"> {{ $t('common.edQual') }} </label>
-                                <Dropdown v-model="selectedQual" :options="qualifications" optionLabel="title"
+                                <Dropdown v-model="selectedQual" filter :options="qualifications" optionLabel="title"
                                     :placeholder="$t('common.qualPlc')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" 
                                 />
@@ -70,7 +70,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="" class="fw-bold mb-2"> {{ $t('common.exper') }} </label>
-                                <Dropdown v-model="selectedExp" :options="experiences" optionLabel="title"
+                                <Dropdown v-model="selectedExp" filter :options="experiences" optionLabel="title"
                                     :placeholder="$t('common.experPlc')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>

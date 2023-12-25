@@ -21,7 +21,7 @@
             // console.log('granted')
             // Generate token
             // we get the token from project setting => cloud messaging => generateKey
-            getToken( messaging , {PublicVapidKey:"AAAA-Jay4fU:APA91bFoWGqTH75MeNFrk6oUVUUbCLPJJNmALe4Nh9-3eQARYAG_UnZzobdJkqGan-qcnEW3nk70MRPUp4tUfJMIhWNM0vWXHqGvD3Ms8otOn8R-hjGM_vDGHbwQIBwDYh9LFfemUkiE"} )
+            getToken( messaging , {VapidKey:"BEQx7vTT5nW0uqwkBz1NLsHyv_wqF47KJhKU105VZPrXedZMk_agXCohOP27eCLncZgTqJzyGZvgVWZUugCJglc"} )
             // {vapidKey:"BFpjV9Ma8fIm3fnaCxRZMuQM_iPkZcyUpmje05C7sG-S7K7MNcep0DLwwim9mKV0w6hyLKaPtyHQDiXlJBol64w"}
             .then((currentToken) => {
   
@@ -42,7 +42,7 @@
               // this.toastTitle = message.notification.title
               // this.toastBody = message.notification.body
               // this.snackbar = true
-              // this.$toast.add({ severity: 'success', summary: message.notification.body, life: 3000 });
+              this.$toast.add({ severity: 'success', summary: message.notification.body, life: 3000 });
               console.log(message)           
             })
   
