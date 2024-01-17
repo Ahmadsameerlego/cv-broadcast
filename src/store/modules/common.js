@@ -40,6 +40,9 @@ export default{
         SET_QUAL(state, qualifications){
             state.qualifications = qualifications ;
         },
+        UPDATE_QUAL(state , updatedQualification){
+            state.qualifications = updatedQualification ;
+        },
         SET_EMP( state, emps ){
             state.emps = emps
         },
@@ -92,6 +95,23 @@ export default{
                 commit('SET_QUAL', response)
             })
         },
+        // update qualifications by emps 
+        updayeQualificationFromEmps( { commit } ,empId){
+            return axios.get(`user/employment/${empId}/qualifications`)
+            .then( (res)=>{
+                const response = res.data.data ;
+                commit('UPDATE_QUAL', response);
+            } )
+        },
+        // update qualifications by specs 
+        updayeQualificationFromSpecs( { commit } ,specID){
+            return axios.get(`user/specialization/${specID}/qualifications`)
+            .then( (res)=>{
+                const response = res.data.data ;
+                commit('UPDATE_QUAL', response);
+            } )
+        },
+
         // get employments 
         getEmployment( {commit} ){
             return axios.get('employments')

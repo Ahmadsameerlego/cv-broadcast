@@ -28,6 +28,7 @@
                             <div class="form-group">
                                 <label for="" class="fw-bold mb-2"> {{  $t('common.jobField')  }} </label>
                                 <Dropdown v-model="selectedEmp" filter :options="emps" optionLabel="title"
+                                    @change="getQualificationsByEmployments"
                                     :placeholder="$t('common.fieldPlc')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" 
                                 />
@@ -40,6 +41,7 @@
                                 <label for="" class="fw-bold mb-2"> {{ $t('auth.specialSpec') }} </label>
                                 <Dropdown v-model="selectedSpec" filter :options="specs" optionLabel="title"
                                     :placeholder="$t('auth.specialPlcSpec')"
+                                    @change="getQualificationsBySpecializations"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
                         </div>
@@ -132,6 +134,7 @@ import Message from 'primevue/message';
 
 import Skeleton from 'primevue/skeleton';
 
+// import axios from 'axios';
 export default {
     data() {
         return {
@@ -151,7 +154,17 @@ export default {
         ...mapGetters('logic', ['ads'])
     },
     methods:{
-        ...mapActions('common',['getEmployment', 'getSpecilizations', 'getTypes', 'getQualifications', 'getExperiences']),
+        ...mapActions('common',['getEmployment', 'getSpecilizations', 'getTypes', 'getQualifications', 'getExperiences', 'updayeQualificationFromEmps' , 'updayeQualificationFromSpecs']),
+
+        // get qualifications by employments 
+        async getQualificationsByEmployments(){
+            this.updayeQualificationFromEmps(this.selectedEmp.id);
+        },
+
+        // get qualifications by specializations 
+        async getQualificationsBySpecializations(){
+            this.updayeQualificationFromSpecs(this.selectedSpec.id);
+        },
 
         async search(){
             this.disabled = true ;

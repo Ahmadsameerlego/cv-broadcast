@@ -239,6 +239,7 @@
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.field') }} </label>
                                     <Dropdown v-model="employment" :options="emps" filter optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
+                                        @change="getQualificationsByEmployments"
                                         :placeholder="$t('auth.fieldPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -255,6 +256,7 @@
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.special') }} </label>
                                     <Dropdown v-model="specialization" :options="specs" filter optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
+                                        @change="getQualificationsBySpecializations"
                                         :placeholder="$t('auth.specialPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -862,6 +864,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions('common',['updayeQualificationFromEmps' ,'updayeQualificationFromSpecs' , 'getNations', 'getCities','getQualifications', 'getEmployment', 'getSpecilizations', 'getCertifications', 'getSkills', 'getExperiences', 'getCountries']),
         // add certification 
         async addNewCertification(){
           this.cer_disabled = true ;
@@ -912,7 +915,20 @@ export default {
           } )
           
         },
-        ...mapActions('common',['getNations', 'getCities','getQualifications', 'getEmployment', 'getSpecilizations', 'getCertifications', 'getSkills', 'getExperiences', 'getCountries']),
+
+
+
+        // get qualifications by employments 
+        async getQualificationsByEmployments(){
+            this.updayeQualificationFromEmps(this.employment.id);
+        },
+
+        // get qualifications by specializations 
+        async getQualificationsBySpecializations(){
+            this.updayeQualificationFromSpecs(this.specialization.id);
+        },
+
+
         chooseCountry(){
             document.querySelector('.p-dropdown-label').innerHTML = this.selectedCityPhone.key ;
         },
