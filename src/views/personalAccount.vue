@@ -223,6 +223,7 @@
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.qual') }} </label>
                                     <Dropdown v-model="qualification" :options="qualifications" filter optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
+                                        @change="updateSpecsAndEmpsByQual"
                                         :placeholder="$t('auth.qualPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -239,7 +240,7 @@
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.field') }} </label>
                                     <Dropdown v-model="employment" :options="emps" filter optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
-                                        @change="getQualificationsByEmployments"
+                                        
                                         :placeholder="$t('auth.fieldPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -256,7 +257,7 @@
                                     <label for="integeronly" class="label fw-6 block mb-2"> {{ $t('auth.special') }} </label>
                                     <Dropdown v-model="specialization" :options="specs" filter optionLabel="title"
                                         class="w-full md:w-14rem w-100 position-relative"
-                                        @change="getQualificationsBySpecializations"
+                                        
                                         :placeholder="$t('auth.specialPlc')" />
                                     <!-- icon  -->
                                     <div class="inputIcon">
@@ -864,7 +865,10 @@ export default {
         }
     },
     methods: {
-        ...mapActions('common',['updayeQualificationFromEmps' ,'updayeQualificationFromSpecs' , 'getNations', 'getCities','getQualifications', 'getEmployment', 'getSpecilizations', 'getCertifications', 'getSkills', 'getExperiences', 'getCountries']),
+        ...mapActions('common',['updayeQualificationFromEmps' ,'updayeQualificationFromSpecs' , 'getNations', 'getCities','getQualifications', 'getEmployment', 'getSpecilizations', 'getCertifications', 'getSkills', 'getExperiences', 'getCountries', 'updateSpecsAndEmps']),
+        async updateSpecsAndEmpsByQual(){
+            this.updateSpecsAndEmps(this.qualification.id)
+        },
         // add certification 
         async addNewCertification(){
           this.cer_disabled = true ;

@@ -22,13 +22,24 @@
                                 class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
                         </div>
-
+                        
+                        <!-- qualifications  -->
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="" class="fw-bold mb-2"> {{ $t('common.edQual') }} </label>
+                                <Dropdown v-model="selectedQual" filter :options="qualifications" optionLabel="title"
+                                    @change="updateSpecsAndEmpsByQual"
+                                    :placeholder="$t('common.qualPlc')"
+                                    class="jobInput position-relative w-100 w-full md:w-14rem" 
+                                />
+                            </div>
+                        </div>
                         <!-- employments  -->
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="" class="fw-bold mb-2"> {{  $t('common.jobField')  }} </label>
                                 <Dropdown v-model="selectedEmp" filter :options="emps" optionLabel="title"
-                                    @change="getQualificationsByEmployments"
+                                   
                                     :placeholder="$t('common.fieldPlc')"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" 
                                 />
@@ -36,12 +47,11 @@
                         </div>
 
                         <!-- specilizations  -->
-                         <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="" class="fw-bold mb-2"> {{ $t('auth.specialSpec') }} </label>
                                 <Dropdown v-model="selectedSpec" filter :options="specs" optionLabel="title"
                                     :placeholder="$t('auth.specialPlcSpec')"
-                                    @change="getQualificationsBySpecializations"
                                     class="jobInput position-relative w-100 w-full md:w-14rem" />
                             </div>
                         </div>
@@ -57,16 +67,7 @@
                           </div>
                         </div>
 
-                        <!-- qualifications  -->
-                        <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                                <label for="" class="fw-bold mb-2"> {{ $t('common.edQual') }} </label>
-                                <Dropdown v-model="selectedQual" filter :options="qualifications" optionLabel="title"
-                                    :placeholder="$t('common.qualPlc')"
-                                    class="jobInput position-relative w-100 w-full md:w-14rem" 
-                                />
-                            </div>
-                        </div>
+                        
 
                         <!-- experiences  -->
                         <div class="col-md-6 mb-3">
@@ -154,7 +155,7 @@ export default {
         ...mapGetters('logic', ['ads'])
     },
     methods:{
-        ...mapActions('common',['getEmployment', 'getSpecilizations', 'getTypes', 'getQualifications', 'getExperiences', 'updayeQualificationFromEmps' , 'updayeQualificationFromSpecs']),
+        ...mapActions('common',['getEmployment', 'getSpecilizations', 'getTypes', 'getQualifications', 'getExperiences', 'updayeQualificationFromEmps' , 'updayeQualificationFromSpecs', 'updateSpecsAndEmps']),
 
         // get qualifications by employments 
         async getQualificationsByEmployments(){
@@ -166,6 +167,9 @@ export default {
             this.updayeQualificationFromSpecs(this.selectedSpec.id);
         },
 
+        async updateSpecsAndEmpsByQual(){
+            this.updateSpecsAndEmps(this.selectedQual.id)
+        },
         async search(){
             this.disabled = true ;
             const fd =  new FormData();

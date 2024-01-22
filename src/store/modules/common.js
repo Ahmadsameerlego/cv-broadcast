@@ -26,6 +26,13 @@ export default{
         types : state => state.types ,
     },
     mutations : {
+        UPDATE_SPEC( state , specs ){
+            state.specs = specs ;
+        },
+        UPDATE_EMPLOYMENTS( state , emps ){
+            state.emps = emps ;
+        },
+
         // set countries 
         SET_COUNTRIES(state, countries){
             state.countries = countries
@@ -109,6 +116,21 @@ export default{
             .then( (res)=>{
                 const response = res.data.data ;
                 commit('UPDATE_QUAL', response);
+            } )
+        },
+
+        updateSpecsAndEmps( {commit} , qualId){
+            return axios.get(`user/qualification/${qualId}/specializations`)
+            .then( (res)=>{
+                const response = res.data.data ;
+                commit('UPDATE_SPEC', response)
+
+                // get employments 
+                return axios.get(`user/qualification/${qualId}/employments`)
+                .then( (res)=>{
+                    const emp_reponse = res.data.data ;
+                    commit('UPDATE_EMPLOYMENTS', emp_reponse)
+                } )
             } )
         },
 
