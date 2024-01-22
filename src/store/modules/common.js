@@ -29,9 +29,9 @@ export default{
         UPDATE_SPEC( state , specs ){
             state.specs = specs ;
         },
-        UPDATE_EMPLOYMENTS( state , emps ){
-            state.emps = emps ;
-        },
+        // UPDATE_EMPLOYMENTS( state , emps ){
+        //     state.emps = emps ;
+        // },
 
         // set countries 
         SET_COUNTRIES(state, countries){
@@ -125,12 +125,12 @@ export default{
                 const response = res.data.data ;
                 commit('UPDATE_SPEC', response)
 
-                // get employments 
-                return axios.get(`user/qualification/${qualId}/employments`)
-                .then( (res)=>{
-                    const emp_reponse = res.data.data ;
-                    commit('UPDATE_EMPLOYMENTS', emp_reponse)
-                } )
+                // // get employments 
+                // return axios.get(`user/qualification/${qualId}/employments`)
+                // .then( (res)=>{
+                //     const emp_reponse = res.data.data ;
+                //     commit('UPDATE_EMPLOYMENTS', emp_reponse)
+                // } )
             } )
         },
 
